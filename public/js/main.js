@@ -50,7 +50,6 @@ class CanvasDraw {
         }
         for (let x = 0; x < drawing.length; x++) {
             for (let y = 0; y < drawing[x].length; y++) {
-                ctx.imageSmoothingEnabled = false;
                 ctx.beginPath();
                 ctx.moveTo(x * pixelSize + pixelGapSize, y * pixelSize + pixelGapSize);
                 ctx.lineTo(x * pixelSize + pixelSize - pixelGapSize, y * pixelSize + pixelGapSize);
