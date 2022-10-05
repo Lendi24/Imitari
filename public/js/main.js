@@ -4,7 +4,7 @@ class Pixel {
         this.r = 0;
         this.g = 0;
         this.b = 0;
-        this.a = 0;
+        this.a = 255;
     }
     getRGBA() {
         return {
@@ -13,6 +13,13 @@ class Pixel {
             b: this.b,
             a: this.a,
         };
+    }
+    getStrRGBA() {
+        return ("rgba(" +
+            this.r + "," +
+            this.g + "," +
+            this.b + "," +
+            this.a + ")");
     }
     setRGBA(r, g, b, a) {
         this.r = Util.clamp(r, 255, 0);
@@ -56,7 +63,7 @@ class CanvasDraw {
                 ctx.lineTo(x * pixelSize + pixelSize - pixelGapSize, y * pixelSize + pixelSize - pixelGapSize);
                 ctx.lineTo(x * pixelSize + pixelGapSize, y * pixelSize + pixelSize - pixelGapSize);
                 ctx.lineTo(x * pixelSize + pixelGapSize, y * pixelSize + pixelGapSize);
-                ctx.fillStyle = "rgb(" + drawing[x][y].getRGBA().r + ", " + drawing[x][y].getRGBA().g + ", " + drawing[x][y].getRGBA().b + ")";
+                ctx.fillStyle = drawing[x][y].getStrRGBA();
                 ctx.fill();
             }
         }
