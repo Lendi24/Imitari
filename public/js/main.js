@@ -41,25 +41,13 @@ class CanvasDraw {
         canvas.style.imageRendering = "pixelated";
         let ctx = canvas.getContext("2d");
         ctx.imageSmoothingEnabled = false;
-        ctx['imageSmoothingEnabled'] = false; /* standard */
+        ctx['imageSmoothingEnabled'] = false;
         if (canvas.parentElement != null) {
-            /*
-            if (drawing[0].length > drawing.length) {
-                canvas.width = canvas.parentElement.clientWidth;
-
-            } else {
-                canvas.height = canvas.parentElement.clientHeight;
-
-            }*/
-            //canvas.width = canvas.parentElement.clientWidth;
-            //canvas.height = canvas.parentElement.clientHeight;    
             pixelSize = (Math.min(canvas.parentElement.clientWidth / drawing.length, canvas.parentElement.clientHeight / drawing[0].length));
             canvas.width = pixelSize * drawing.length;
             canvas.height = pixelSize * drawing[0].length;
             console.log(pixelSize);
         }
-        //let pixelSize = Util.pixelSize * Util.zoomFactor;
-        //Util.zoomFactor*=1.01;
         for (let x = 0; x < drawing.length; x++) {
             for (let y = 0; y < drawing[x].length; y++) {
                 ctx.imageSmoothingEnabled = false;
