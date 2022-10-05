@@ -54,9 +54,14 @@ class CanvasDraw {
     }
 
     drawToCanvas(drawing : Pixel[][]) {
-        let canvas = <HTMLCanvasElement>document.getElementById("drawing-area");
         let pixelSize = 5;
+        let pixelGapSize = 1;
+
+        let canvas = <HTMLCanvasElement>document.getElementById("drawing-area");
         
+        let ctx = canvas.getContext("2d")!;
+        ctx.imageSmoothingEnabled = false;
+        ctx['imageSmoothingEnabled'] = false;       /* standard */
 
         if (canvas.parentElement != null) {
             /*
@@ -74,27 +79,27 @@ class CanvasDraw {
             pixelSize = (Math.min(canvas.parentElement.clientHeight / drawing[0].length, canvas.parentElement.clientWidth / drawing.length));
             console.log(pixelSize)
         }
-        
-        let ctx = canvas.getContext("2d");
 
-        let pixelGapSize = 1;
+        
         //let pixelSize = Util.pixelSize * Util.zoomFactor;
         //Util.zoomFactor*=1.01;
 
 
         for (let x = 0; x < drawing.length; x++) {
             for (let y = 0; y < drawing[x].length; y++) {
+                ctx.imageSmoothingEnabled = false
 
-                ctx!.beginPath();
+                ctx.beginPath();
 
-                ctx!.moveTo(x*pixelSize+pixelGapSize,            y*pixelSize+pixelGapSize);
-                ctx!.lineTo(x*pixelSize+pixelSize-pixelGapSize,  y*pixelSize+pixelGapSize);
-                ctx!.lineTo(x*pixelSize+pixelSize-pixelGapSize,  y*pixelSize+pixelSize-pixelGapSize);
-                ctx!.lineTo(x*pixelSize+pixelGapSize,            y*pixelSize+pixelSize-pixelGapSize);
-                ctx!.lineTo(x*pixelSize+pixelGapSize,            y*pixelSize+pixelGapSize);
+                ctx.moveTo(x*pixelSize+pixelGapSize,            y*pixelSize+pixelGapSize);
+                ctx.lineTo(x*pixelSize+pixelSize-pixelGapSize,  y*pixelSize+pixelGapSize);
+                ctx.lineTo(x*pixelSize+pixelSize-pixelGapSize,  y*pixelSize+pixelSize-pixelGapSize);
+                ctx.lineTo(x*pixelSize+pixelGapSize,            y*pixelSize+pixelSize-pixelGapSize);
+                ctx.lineTo(x*pixelSize+pixelGapSize,            y*pixelSize+pixelGapSize);
 
-                ctx!.fillStyle = "rgb("+drawing[x][y].getRGBA().r+", "+drawing[x][y].getRGBA().g+", "+drawing[x][y].getRGBA().b+")"
-                ctx!.fill();    
+                ctx.fillStyle = "rgb("+drawing[x][y].getRGBA().r+", "+drawing[x][y].getRGBA().g+", "+drawing[x][y].getRGBA().b+")"
+                
+                ctx.fill();    
             }            
         }
     }
