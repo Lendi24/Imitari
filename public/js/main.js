@@ -4,7 +4,7 @@ class Pixel {
         this.r = 0;
         this.g = 0;
         this.b = 0;
-        this.a = 0;
+        this.a = 255;
     }
     getRGBA() {
         return {
@@ -13,6 +13,13 @@ class Pixel {
             b: this.b,
             a: this.a,
         };
+    }
+    getStrRGBA() {
+        return ("rgba(" +
+            this.r + "," +
+            this.g + "," +
+            this.b + "," +
+            this.a + ")");
     }
     setRGBA(r, g, b, a) {
         this.r = Util.clamp(r, 255, 0);
@@ -23,8 +30,10 @@ class Pixel {
 }
 class CanvasDraw {
     constructor(width, height) {
+        this.currentTool = new DrawTool();
         this.targetFPS = 30;
         this.drawing = [];
+        this.pixelSize = 5;
         for (let x = 0; x < width; x++) {
             this.drawing[x] = [];
             for (let y = 0; y < height; y++) {
@@ -34,8 +43,10 @@ class CanvasDraw {
         let obj = this;
         setInterval(function () { obj.drawToCanvas(obj.drawing); }, 1000 / this.targetFPS);
     }
+    placePixel(x, y) {
+        this.drawing[x][y].setRGBA(255, 255, 255, 255);
+    }
     drawToCanvas(drawing) {
-        let pixelSize = 5;
         let pixelGapSize = 1;
         let canvas = document.getElementById("drawing-area");
         canvas.style.imageRendering = "pixelated";
@@ -43,20 +54,19 @@ class CanvasDraw {
         ctx.imageSmoothingEnabled = false;
         ctx['imageSmoothingEnabled'] = false;
         if (canvas.parentElement != null) {
-            pixelSize = (Math.min(canvas.parentElement.clientWidth / drawing.length, canvas.parentElement.clientHeight / drawing[0].length));
-            canvas.width = pixelSize * drawing.length;
-            canvas.height = pixelSize * drawing[0].length;
-            console.log(pixelSize);
+            this.pixelSize = (Math.min(canvas.parentElement.clientWidth / drawing.length, canvas.parentElement.clientHeight / drawing[0].length));
+            canvas.width = this.pixelSize * drawing.length;
+            canvas.height = this.pixelSize * drawing[0].length;
         }
         for (let x = 0; x < drawing.length; x++) {
             for (let y = 0; y < drawing[x].length; y++) {
                 ctx.beginPath();
-                ctx.moveTo(x * pixelSize + pixelGapSize, y * pixelSize + pixelGapSize);
-                ctx.lineTo(x * pixelSize + pixelSize - pixelGapSize, y * pixelSize + pixelGapSize);
-                ctx.lineTo(x * pixelSize + pixelSize - pixelGapSize, y * pixelSize + pixelSize - pixelGapSize);
-                ctx.lineTo(x * pixelSize + pixelGapSize, y * pixelSize + pixelSize - pixelGapSize);
-                ctx.lineTo(x * pixelSize + pixelGapSize, y * pixelSize + pixelGapSize);
-                ctx.fillStyle = "rgb(" + drawing[x][y].getRGBA().r + ", " + drawing[x][y].getRGBA().g + ", " + drawing[x][y].getRGBA().b + ")";
+                ctx.moveTo(x * this.pixelSize + pixelGapSize, y * this.pixelSize + pixelGapSize);
+                ctx.lineTo(x * this.pixelSize + this.pixelSize - pixelGapSize, y * this.pixelSize + pixelGapSize);
+                ctx.lineTo(x * this.pixelSize + this.pixelSize - pixelGapSize, y * this.pixelSize + this.pixelSize - pixelGapSize);
+                ctx.lineTo(x * this.pixelSize + pixelGapSize, y * this.pixelSize + this.pixelSize - pixelGapSize);
+                ctx.lineTo(x * this.pixelSize + pixelGapSize, y * this.pixelSize + pixelGapSize);
+                ctx.fillStyle = drawing[x][y].getStrRGBA();
                 ctx.fill();
             }
         }
@@ -65,6 +75,7 @@ class CanvasDraw {
 class Util {
 }
 Util.clamp = (num, max, min) => Math.min(Math.max(num, min), max);
+Util.screenToCord = (cord) => Math.floor(cord / x.pixelSize);
 let x = new CanvasDraw(20, 10);
 function setLine(x1, y1, x2, y2) {
     console.log(x1 + ", " + y1 + " : " + x2 + ", " + y2);

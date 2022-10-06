@@ -9,7 +9,7 @@ class Pixel {
         this.r = 0;
         this.g = 0;
         this.b = 0;
-        this.a = 0;
+        this.a = 255;
     }
 
     getRGBA() {
@@ -21,26 +21,39 @@ class Pixel {
         }
     }
 
+    getStrRGBA() {
+        return (
+            "rgba("+
+            this.r+","+
+            this.g+","+
+            this.b+","+
+            this.a+")"
+        );
+    }
+
     setRGBA(r : number, g : number, b : number, a : number) {
         this.r = Util.clamp(r, 255, 0);
         this.g = Util.clamp(g, 255, 0);
         this.b = Util.clamp(b, 255, 0);
         this.b = Util.clamp(a, 255, 0);
     }
-
-
 }
 
 class CanvasDraw {
     private targetFPS: number;
+    private drawing: Pixel[][];
+    public pixelSize : number;
+    public currentTool : Tool;
 
-    drawing: Pixel[][];
+    placePixel(x : number, y : number) {
+        this.drawing[x][y].setRGBA(255,255,255,255);
+    }
 
     constructor(width : number, height : number) {
+        this.currentTool = new DrawTool();
         this.targetFPS = 30;
-
         this.drawing = [];
-        
+        this.pixelSize = 5;
 
         for (let x = 0; x < width; x++) {
             this.drawing[x] = [];
@@ -54,7 +67,6 @@ class CanvasDraw {
     }
 
     drawToCanvas(drawing : Pixel[][]) {
-        let pixelSize = 5;
         let pixelGapSize = 1;
 
         let canvas = <HTMLCanvasElement>document.getElementById("drawing-area");
@@ -65,25 +77,26 @@ class CanvasDraw {
         ctx['imageSmoothingEnabled'] = false;       /* standard */
 
         if (canvas.parentElement != null) {
-            pixelSize = (Math.min(canvas.parentElement.clientWidth / drawing.length, canvas.parentElement.clientHeight / drawing[0].length));
+            this.pixelSize = (Math.min(canvas.parentElement.clientWidth / drawing.length, canvas.parentElement.clientHeight / drawing[0].length));
 
-            canvas.width  = pixelSize * drawing.length;
-            canvas.height = pixelSize * drawing[0].length;
+            canvas.width  = this.pixelSize * drawing.length;
+            canvas.height = this.pixelSize * drawing[0].length;
             
-            console.log(pixelSize)
+            //console.log(pixelSize)
         }
 
         for (let x = 0; x < drawing.length; x++) {
             for (let y = 0; y < drawing[x].length; y++) {
                 ctx.beginPath();
 
-                ctx.moveTo(x*pixelSize+pixelGapSize,            y*pixelSize+pixelGapSize);
-                ctx.lineTo(x*pixelSize+pixelSize-pixelGapSize,  y*pixelSize+pixelGapSize);
-                ctx.lineTo(x*pixelSize+pixelSize-pixelGapSize,  y*pixelSize+pixelSize-pixelGapSize);
-                ctx.lineTo(x*pixelSize+pixelGapSize,            y*pixelSize+pixelSize-pixelGapSize);
-                ctx.lineTo(x*pixelSize+pixelGapSize,            y*pixelSize+pixelGapSize);
+                ctx.moveTo(x*this.pixelSize+pixelGapSize,                   y*this.pixelSize+pixelGapSize);
+                ctx.lineTo(x*this.pixelSize+this.pixelSize-pixelGapSize,    y*this.pixelSize+pixelGapSize);
+                ctx.lineTo(x*this.pixelSize+this.pixelSize-pixelGapSize,    y*this.pixelSize+this.pixelSize-pixelGapSize);
+                ctx.lineTo(x*this.pixelSize+pixelGapSize,                   y*this.pixelSize+this.pixelSize-pixelGapSize);
+                ctx.lineTo(x*this.pixelSize+pixelGapSize,                   y*this.pixelSize+pixelGapSize);
                 
-                ctx.fillStyle = "rgb("+drawing[x][y].getRGBA().r+", "+drawing[x][y].getRGBA().g+", "+drawing[x][y].getRGBA().b+")"
+                //ctx.fillStyle = "rgb("+drawing[x][y].getRGBA().r+", "+drawing[x][y].getRGBA().g+", "+drawing[x][y].getRGBA().b+")"
+                ctx.fillStyle = drawing[x][y].getStrRGBA();
                 ctx.fill();    
             }            
         }
@@ -92,6 +105,7 @@ class CanvasDraw {
 
 class Util {
     static clamp = (num : number, max : number, min : number,) => Math.min(Math.max(num, min), max);
+    static screenToCord = (cord : number) => Math.floor(cord / x.pixelSize); 
 }
 
 let x = new CanvasDraw(20,10)
