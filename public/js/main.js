@@ -77,26 +77,3 @@ class Util {
 Util.clamp = (num, max, min) => Math.min(Math.max(num, min), max);
 Util.screenToCord = (cord) => Math.floor(cord / x.pixelSize);
 let x = new CanvasDraw(20, 10);
-function setLine(x1, y1, x2, y2) {
-    console.log(x1 + ", " + y1 + " : " + x2 + ", " + y2);
-    let slopeFactor = (x1 - x2);
-    for (let i = 0; i < x.drawing.length; i++) {
-        for (let k = 0; k < x.drawing[i].length; k++) {
-        }
-    }
-}
-let secondClick = false;
-let x1, x2, y1, y2;
-document.getElementById("drawing-area").addEventListener("click", function (event) {
-    if (secondClick) {
-        x2 = event.clientX;
-        y2 = event.clientY;
-        secondClick = false;
-        setLine(x1, y1, x2, y2);
-    }
-    else {
-        x1 = event.clientX;
-        y1 = event.clientY;
-        secondClick = true;
-    }
-});
