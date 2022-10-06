@@ -1,4 +1,3 @@
-
 class Pixel {
     private r : number;
     private g : number;
@@ -39,7 +38,7 @@ class Pixel {
     }
 }
 
-class CanvasDraw {
+class DrawViewLayer {
     private targetFPS: number;
     private drawing: Pixel[][];
     public pixelSize : number;
@@ -103,9 +102,14 @@ class CanvasDraw {
     }
 }
 
-class Util {
-    static clamp = (num : number, max : number, min : number,) => Math.min(Math.max(num, min), max);
-    static screenToCord = (cord : number) => Math.floor(cord / x.pixelSize); 
-}
+class DrawView {
+    static layers = new Array();
 
-let x = new CanvasDraw(20,10)
+    static init(x : number,y : number) {
+        this.layers[0] = new DrawViewLayer(x,y);
+    }
+
+    static getLayer(i : number) {
+        return this.layers[i];
+    }
+}

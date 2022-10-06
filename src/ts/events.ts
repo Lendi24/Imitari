@@ -29,9 +29,9 @@ class CustomMouseEvent {
 
         this.e = e;
 
-        x.currentTool.onMouse(this);
+        DrawView.getLayer(0).currentTool.onMouse(this);
     }
 }
 
-
+ 
 
