@@ -1,5 +1,8 @@
 "use strict";
-window.onmousedown = function (e) { };
-window.onmousemove = function (e) { };
-window.onmouseup = function (e) { };
-window.onscroll = function (e) { console.log(e); };
+window.oncontextmenu = function () { return false; };
+window.onmousedown = function (e) { e.preventDefault; };
+window.onmousemove = function (e) { e.preventDefault; };
+window.onmouseup = function (e) { e.preventDefault; };
+window.onwheel = function (e) { e.preventDefault; };
+class CustomMouseEvent {
+}

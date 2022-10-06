@@ -1,5 +1,17 @@
-window.onmousedown  = function(e:MouseEvent) {};
-window.onmousemove  = function(e:MouseEvent) {};
-window.onmouseup    = function(e:MouseEvent) {};
+window.oncontextmenu = function() {return false;};
 
-window.onscroll     = function(e:Event) {console.log(e)};
+window.onmousedown   = function(e:MouseEvent) {e.preventDefault;};
+window.onmousemove   = function(e:MouseEvent) {e.preventDefault;};
+window.onmouseup     = function(e:MouseEvent) {e.preventDefault;};
+window.onwheel       = function(e:WheelEvent) {e.preventDefault;};
+
+class CustomMouseEvent {
+    static mouseX : number;
+    static mouseY : number;
+
+    static mouseLeftDown : boolean;
+    static mouseLeftChanged : boolean;
+
+    static mouseRightDown : boolean;
+    static mouseRightChanged : boolean;
+}
