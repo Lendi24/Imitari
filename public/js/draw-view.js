@@ -44,6 +44,9 @@ class DrawViewLayer {
     placePixel(x, y) {
         this.drawing[x][y].setRGBA(255, 255, 255, 255);
     }
+    getPixel(x, y) {
+        return this.drawing[x][y];
+    }
     drawToCanvas(drawing) {
         let canvas = DrawView.jsCanvas;
         canvas.style.imageRendering = "pixelated";
@@ -69,7 +72,7 @@ class DrawView {
     }
     static init(x, y) {
         this.jsCanvas.style.imageRendering = "pixelated";
-        this.currentTool = new DrawTool();
+        this.currentTool = new FillTool();
         this.newLayer(x, y);
         this.onResize();
     }

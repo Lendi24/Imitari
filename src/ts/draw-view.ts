@@ -46,6 +46,10 @@ class DrawViewLayer {
         this.drawing[x][y].setRGBA(255,255,255,255);
     }
 
+    getPixel(x : number, y : number){
+        return this.drawing[x][y];
+    }
+
     constructor(width : number, height : number) {
         //this.currentTool = new DrawTool();
         this.targetFPS = 30;
@@ -107,7 +111,7 @@ class DrawView {
 
     static init(x : number,y : number) {
         this.jsCanvas.style.imageRendering = "pixelated";
-        this.currentTool = new DrawTool();
+        this.currentTool = new FillTool();
         this.newLayer(x, y);
         this.onResize();
     }
