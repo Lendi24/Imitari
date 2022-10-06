@@ -30,7 +30,7 @@ class Pixel {
 }
 class CanvasDraw {
     constructor(width, height) {
-        this.currentTool = new DrawTool();
+        this.currentTool = new LineTool();
         this.targetFPS = 30;
         this.drawing = [];
         this.pixelSize = 5;
@@ -76,4 +76,4 @@ class Util {
 }
 Util.clamp = (num, max, min) => Math.min(Math.max(num, min), max);
 Util.screenToCord = (cord) => Math.floor(cord / x.pixelSize);
-let x = new CanvasDraw(20, 10);
+let x = new CanvasDraw(20, 20);
