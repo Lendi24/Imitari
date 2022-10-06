@@ -1,8 +1,8 @@
 "use strict";
-DrawView.init(20, 10);
 class Util {
 }
 Util.clamp = (num, max, min) => Math.min(Math.max(num, min), max);
-Util.screenToCordX = (cord) => { var _a; return Util.screenToCord(cord - (window.screen.width - ((_a = document.getElementById("drawing-area")) === null || _a === void 0 ? void 0 : _a.clientWidth)) / 2); };
-Util.screenToCordY = (cord) => { var _a; return Util.screenToCord(cord - (window.screen.height - ((_a = document.getElementById("drawing-area")) === null || _a === void 0 ? void 0 : _a.clientHeight)) / 2); };
-Util.screenToCord = (cord) => Math.floor(cord / DrawView.getLayer(0).pixelSize);
+Util.screenToCordX = (cord) => Util.clamp(Util.screenToCord(cord - (window.innerWidth - DrawView.jsCanvas.clientWidth) / 2), DrawView.getLayer(0).drawing.length - 1, 0);
+Util.screenToCordY = (cord) => Util.clamp(Util.screenToCord(cord - (window.innerHeight - DrawView.jsCanvas.clientHeight) / 2), DrawView.getLayer(0).drawing[0].length - 1, 0);
+Util.screenToCord = (cord) => Math.floor(cord / DrawView.pixelSize);
+DrawView.init(100, 80);

@@ -1,3 +1,5 @@
+window.onresize      = function() {DrawView.onResize();}
+
 window.oncontextmenu = function() {return false;};
 
 window.onmousedown   = function(e:MouseEvent) {e.preventDefault; CustomMouseEvent.tick(e.clientX, e.clientY, e.buttons == 1, e.buttons == 2, e)};
@@ -29,7 +31,7 @@ class CustomMouseEvent {
 
         this.e = e;
 
-        DrawView.getLayer(0).currentTool.onMouse(this);
+        DrawView.currentTool.onMouse(this);
     }
 }
 

@@ -41,18 +41,15 @@ class Pixel {
 class DrawViewLayer {
     private targetFPS: number;
     private drawing: Pixel[][];
-    public pixelSize : number;
-    public currentTool : Tool;
 
     placePixel(x : number, y : number) {
         this.drawing[x][y].setRGBA(255,255,255,255);
     }
 
     constructor(width : number, height : number) {
-        this.currentTool = new DrawTool();
+        //this.currentTool = new DrawTool();
         this.targetFPS = 30;
         this.drawing = [];
-        this.pixelSize = 5;
 
         for (let x = 0; x < width; x++) {
             this.drawing[x] = [];
@@ -66,33 +63,24 @@ class DrawViewLayer {
     }
 
     drawToCanvas(drawing : Pixel[][]) {
-        let pixelGapSize = 1;
 
-        let canvas = <HTMLCanvasElement>document.getElementById("drawing-area");
+        let canvas = DrawView.jsCanvas;
         canvas.style.imageRendering = "pixelated";
 
         let ctx = canvas.getContext("2d")!;
         ctx.imageSmoothingEnabled = false;
         ctx['imageSmoothingEnabled'] = false;       /* standard */
 
-        if (canvas.parentElement != null) {
-            this.pixelSize = (Math.min(canvas.parentElement.clientWidth / drawing.length, canvas.parentElement.clientHeight / drawing[0].length));
-
-            canvas.width  = this.pixelSize * drawing.length;
-            canvas.height = this.pixelSize * drawing[0].length;
-            
-            //console.log(pixelSize)
-        }
 
         for (let x = 0; x < drawing.length; x++) {
             for (let y = 0; y < drawing[x].length; y++) {
                 ctx.beginPath();
 
-                ctx.moveTo(x*this.pixelSize+pixelGapSize,                   y*this.pixelSize+pixelGapSize);
-                ctx.lineTo(x*this.pixelSize+this.pixelSize-pixelGapSize,    y*this.pixelSize+pixelGapSize);
-                ctx.lineTo(x*this.pixelSize+this.pixelSize-pixelGapSize,    y*this.pixelSize+this.pixelSize-pixelGapSize);
-                ctx.lineTo(x*this.pixelSize+pixelGapSize,                   y*this.pixelSize+this.pixelSize-pixelGapSize);
-                ctx.lineTo(x*this.pixelSize+pixelGapSize,                   y*this.pixelSize+pixelGapSize);
+                ctx.moveTo(x*DrawView.pixelSize+DrawView.pixelGapSize,                      y*DrawView.pixelSize+DrawView.pixelGapSize);
+                ctx.lineTo(x*DrawView.pixelSize+DrawView.pixelSize-DrawView.pixelGapSize,   y*DrawView.pixelSize+DrawView.pixelGapSize);
+                ctx.lineTo(x*DrawView.pixelSize+DrawView.pixelSize-DrawView.pixelGapSize,   y*DrawView.pixelSize+DrawView.pixelSize-DrawView.pixelGapSize);
+                ctx.lineTo(x*DrawView.pixelSize+DrawView.pixelGapSize,                      y*DrawView.pixelSize+DrawView.pixelSize-DrawView.pixelGapSize);
+                ctx.lineTo(x*DrawView.pixelSize+DrawView.pixelGapSize,                      y*DrawView.pixelSize+DrawView.pixelGapSize);
                 
                 //ctx.fillStyle = "rgb("+drawing[x][y].getRGBA().r+", "+drawing[x][y].getRGBA().g+", "+drawing[x][y].getRGBA().b+")"
                 ctx.fillStyle = drawing[x][y].getStrRGBA();
@@ -103,10 +91,39 @@ class DrawViewLayer {
 }
 
 class DrawView {
+    static jsCanvas = <HTMLCanvasElement>document.getElementById("drawing-area");
+    static jsCanvasCtx = DrawView.jsCanvas.getContext("2d");
+
+    static pixelSize = 5;
+    static pixelGapSize = 1;
+
+    static currentTool = new Tool();
+
     static layers = new Array();
 
+    static changePixelSize() {
+        
+    }
+
     static init(x : number,y : number) {
-        this.layers[0] = new DrawViewLayer(x,y);
+        this.jsCanvas.style.imageRendering = "pixelated";
+        this.currentTool = new DrawTool();
+        this.newLayer(x, y);
+        this.onResize();
+    }
+
+    static onResize(){
+        if (DrawView.jsCanvas.parentElement != null) {
+            DrawView.pixelSize = (Math.min(DrawView.jsCanvas.parentElement.clientWidth / DrawView.getLayer(0).drawing.length, DrawView.jsCanvas.parentElement.clientHeight / DrawView.getLayer(0).drawing[0].length));
+            DrawView.jsCanvas.width  = DrawView.pixelSize * DrawView.getLayer(0).drawing.length;
+            DrawView.jsCanvas.height = DrawView.pixelSize * DrawView.getLayer(0).drawing[0].length;
+
+            DrawView.pixelGapSize = Math.floor(DrawView.pixelSize*0.05);
+        }
+    }
+
+    static newLayer(x : number,y : number) {
+        this.layers[this.layers.length] = new DrawViewLayer(x,y);
     }
 
     static getLayer(i : number) {

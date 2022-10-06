@@ -30,10 +30,8 @@ class Pixel {
 }
 class DrawViewLayer {
     constructor(width, height) {
-        this.currentTool = new DrawTool();
         this.targetFPS = 30;
         this.drawing = [];
-        this.pixelSize = 5;
         for (let x = 0; x < width; x++) {
             this.drawing[x] = [];
             for (let y = 0; y < height; y++) {
@@ -47,25 +45,19 @@ class DrawViewLayer {
         this.drawing[x][y].setRGBA(255, 255, 255, 255);
     }
     drawToCanvas(drawing) {
-        let pixelGapSize = 1;
-        let canvas = document.getElementById("drawing-area");
+        let canvas = DrawView.jsCanvas;
         canvas.style.imageRendering = "pixelated";
         let ctx = canvas.getContext("2d");
         ctx.imageSmoothingEnabled = false;
         ctx['imageSmoothingEnabled'] = false;
-        if (canvas.parentElement != null) {
-            this.pixelSize = (Math.min(canvas.parentElement.clientWidth / drawing.length, canvas.parentElement.clientHeight / drawing[0].length));
-            canvas.width = this.pixelSize * drawing.length;
-            canvas.height = this.pixelSize * drawing[0].length;
-        }
         for (let x = 0; x < drawing.length; x++) {
             for (let y = 0; y < drawing[x].length; y++) {
                 ctx.beginPath();
-                ctx.moveTo(x * this.pixelSize + pixelGapSize, y * this.pixelSize + pixelGapSize);
-                ctx.lineTo(x * this.pixelSize + this.pixelSize - pixelGapSize, y * this.pixelSize + pixelGapSize);
-                ctx.lineTo(x * this.pixelSize + this.pixelSize - pixelGapSize, y * this.pixelSize + this.pixelSize - pixelGapSize);
-                ctx.lineTo(x * this.pixelSize + pixelGapSize, y * this.pixelSize + this.pixelSize - pixelGapSize);
-                ctx.lineTo(x * this.pixelSize + pixelGapSize, y * this.pixelSize + pixelGapSize);
+                ctx.moveTo(x * DrawView.pixelSize + DrawView.pixelGapSize, y * DrawView.pixelSize + DrawView.pixelGapSize);
+                ctx.lineTo(x * DrawView.pixelSize + DrawView.pixelSize - DrawView.pixelGapSize, y * DrawView.pixelSize + DrawView.pixelGapSize);
+                ctx.lineTo(x * DrawView.pixelSize + DrawView.pixelSize - DrawView.pixelGapSize, y * DrawView.pixelSize + DrawView.pixelSize - DrawView.pixelGapSize);
+                ctx.lineTo(x * DrawView.pixelSize + DrawView.pixelGapSize, y * DrawView.pixelSize + DrawView.pixelSize - DrawView.pixelGapSize);
+                ctx.lineTo(x * DrawView.pixelSize + DrawView.pixelGapSize, y * DrawView.pixelSize + DrawView.pixelGapSize);
                 ctx.fillStyle = drawing[x][y].getStrRGBA();
                 ctx.fill();
             }
@@ -73,11 +65,32 @@ class DrawViewLayer {
     }
 }
 class DrawView {
+    static changePixelSize() {
+    }
     static init(x, y) {
-        this.layers[0] = new DrawViewLayer(x, y);
+        this.jsCanvas.style.imageRendering = "pixelated";
+        this.currentTool = new DrawTool();
+        this.newLayer(x, y);
+        this.onResize();
+    }
+    static onResize() {
+        if (DrawView.jsCanvas.parentElement != null) {
+            DrawView.pixelSize = (Math.min(DrawView.jsCanvas.parentElement.clientWidth / DrawView.getLayer(0).drawing.length, DrawView.jsCanvas.parentElement.clientHeight / DrawView.getLayer(0).drawing[0].length));
+            DrawView.jsCanvas.width = DrawView.pixelSize * DrawView.getLayer(0).drawing.length;
+            DrawView.jsCanvas.height = DrawView.pixelSize * DrawView.getLayer(0).drawing[0].length;
+            DrawView.pixelGapSize = Math.floor(DrawView.pixelSize * 0.05);
+        }
+    }
+    static newLayer(x, y) {
+        this.layers[this.layers.length] = new DrawViewLayer(x, y);
     }
     static getLayer(i) {
         return this.layers[i];
     }
 }
+DrawView.jsCanvas = document.getElementById("drawing-area");
+DrawView.jsCanvasCtx = DrawView.jsCanvas.getContext("2d");
+DrawView.pixelSize = 5;
+DrawView.pixelGapSize = 1;
+DrawView.currentTool = new Tool();
 DrawView.layers = new Array();

@@ -1,4 +1,5 @@
 "use strict";
+window.onresize = function () { DrawView.onResize(); };
 window.oncontextmenu = function () { return false; };
 window.onmousedown = function (e) { e.preventDefault; CustomMouseEvent.tick(e.clientX, e.clientY, e.buttons == 1, e.buttons == 2, e); };
 window.onmousemove = function (e) { e.preventDefault; CustomMouseEvent.tick(e.clientX, e.clientY, e.buttons == 1, e.buttons == 2, e); };
@@ -13,6 +14,6 @@ class CustomMouseEvent {
         this.mouseRightChanged = !(mouseRightDown == this.mouseRightDown);
         this.mouseRightDown = mouseRightDown;
         this.e = e;
-        DrawView.getLayer(0).currentTool.onMouse(this);
+        DrawView.currentTool.onMouse(this);
     }
 }
