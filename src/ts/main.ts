@@ -34,7 +34,7 @@ class Pixel {
 class CanvasDraw {
     private targetFPS: number;
 
-    private drawing: Pixel[][];
+    drawing: Pixel[][];
 
     constructor(width : number, height : number) {
         this.targetFPS = 30;
@@ -95,3 +95,33 @@ class Util {
 }
 
 let x = new CanvasDraw(20,10)
+
+function setLine(x1: number, y1: number, x2: number, y2: number){
+    console.log(x1 + ", " + y1 + " : " + x2 + ", " + y2);
+
+    let slopeFactor = (x1 - x2)
+
+    for (let i = 0; i < x.drawing.length; i++) {
+        for (let k = 0; k < x.drawing[i].length; k++) {
+            
+        }
+    }
+    // x.drawing[7][6].setRGBA(22, 78, 100, 100);
+    // x.drawToCanvas(x.drawing);
+}
+
+let secondClick = false;
+let x1: number, x2: number, y1: number, y2: number;
+document.getElementById("drawing-area")!.addEventListener("click", function(event){
+    if (secondClick) {
+        x2 = event.clientX
+        y2 = event.clientY;
+        secondClick = false;
+        setLine(x1, y1, x2, y2);
+    }
+    else{
+        x1 = event.clientX;
+        y1 = event.clientY;
+        secondClick = true;
+    }
+})
