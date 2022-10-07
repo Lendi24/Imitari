@@ -24,40 +24,42 @@ class LineTool extends Tool {
 
                 //Resetar linjen
                 this.firstPoint = undefined;
-                this.secondPoint = undefined;
             }
         }
     }
 
     private setLine(cord1: coordinate, cord2: coordinate) {
-        // Iterators, counters required by algorithm
+
+        //Variabler för att räkna ut linjen
         let cordX, cordY, endPointX, endPointY;
-        // Calculate line deltas
         let deltaX = cord2["x"] - cord1["x"];
         let lengthX = Math.abs(deltaX);
         let deltaY = cord2["y"] - cord1["y"]
         let lengthY = Math.abs(deltaY);
 
-        // Calculate error intervals for both axis
-        let px = 2 * lengthY - lengthX;
-        let py = 2 * lengthX - lengthY;
+        //Beräknar error margin
+        let errorMarginX = 2 * lengthY - lengthX;
+        let errorMarginY = 2 * lengthX - lengthY;
 
-        // The line is X-axis dominant
+        //Om X axeln är störst
         if (lengthY <= lengthX) {
-            // Line is drawn left to right
+
+            //Ser till så att linjen alltid ritas från vänster till höger
             if (deltaX >= 0) {
                 cordX = cord1["x"]; cordY = cord1["y"]; endPointX = cord2["x"];
             }
-            else { // Line is drawn right to left (swap ends)
+            else {
                 cordX = cord2["x"]; cordY = cord2["y"]; endPointX = cord1["x"];
             }
-            x.placePixel(cordX, cordY); // Draw first pixel
-            // Rasterize the line
+
+            //Ritar ut första pixeln samt resten av linjen
+            x.placePixel(cordX, cordY);
             for (let i = 0; cordX < endPointX; i++) {
+
                 cordX += 1
-                // Deal with octants...
-                if (px < 0) {
-                    px += (2 * lengthY);
+
+                if (errorMarginX < 0) {
+                    errorMarginX += (2 * lengthY);
                 }
                 else {
                     if ((deltaX < 0 && deltaY < 0) || (deltaX > 0 && deltaY > 0)) {
@@ -66,38 +68,43 @@ class LineTool extends Tool {
                     else {
                         cordY -= 1;
                     }
-                    px += (2 * (lengthY - lengthX));
+                    errorMarginX += (2 * (lengthY - lengthX));
                 }
-                // Draw pixel from line span at
-                // currently rasterized position
+
                 x.placePixel(cordX, cordY);
+
             }
-        } else { // The line is Y-axis dominant
-            // Line is drawn bottom to top
+        }
+
+        //Om Y axeln är störst
+        else {
+
+            //Ser till så att linjen alltid ritas från botten upp
             if (deltaY >= 0) {
                 cordX = cord1["x"]; cordY = cord1["y"]; endPointY = cord2["y"];
             }
             else { // Line is drawn top to bottom
                 cordX = cord2["x"]; cordY = cord2["y"]; endPointY = cord1["y"];
             }
-            x.placePixel(cordX, cordY); // Draw first pixel
-            // Rasterize the line
+
+            //Ritar ut första pixeln samt resten av linjen
+            x.placePixel(cordX, cordY);
             for (let i = 0; cordY < endPointY; i++) {
                 cordY += 1;
                 // Deal with octants...
-                if (py <= 0) {
-                    py += (2 * lengthX);
+                if (errorMarginY <= 0) {
+                    errorMarginY += (2 * lengthX);
                 } else {
                     if ((deltaX < 0 && deltaY < 0) || (deltaX > 0 && deltaY > 0)) {
                         cordX += 1;
                     } else {
                         cordX -= 1;
                     }
-                    py += (2 * (lengthX - lengthY));
+                    errorMarginY += (2 * (lengthX - lengthY));
                 }
-                // Draw pixel from line span at
-                // currently rasterized position
+
                 x.placePixel(cordX, cordY);
+
             }
         }
     };

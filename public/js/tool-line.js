@@ -15,7 +15,6 @@ class LineTool extends Tool {
                 };
                 this.setLine(this.firstPoint, this.secondPoint);
                 this.firstPoint = undefined;
-                this.secondPoint = undefined;
             }
         }
     }
@@ -25,8 +24,8 @@ class LineTool extends Tool {
         let lengthX = Math.abs(deltaX);
         let deltaY = cord2["y"] - cord1["y"];
         let lengthY = Math.abs(deltaY);
-        let px = 2 * lengthY - lengthX;
-        let py = 2 * lengthX - lengthY;
+        let errorMarginX = 2 * lengthY - lengthX;
+        let errorMarginY = 2 * lengthX - lengthY;
         if (lengthY <= lengthX) {
             if (deltaX >= 0) {
                 cordX = cord1["x"];
@@ -41,8 +40,8 @@ class LineTool extends Tool {
             x.placePixel(cordX, cordY);
             for (let i = 0; cordX < endPointX; i++) {
                 cordX += 1;
-                if (px < 0) {
-                    px += (2 * lengthY);
+                if (errorMarginX < 0) {
+                    errorMarginX += (2 * lengthY);
                 }
                 else {
                     if ((deltaX < 0 && deltaY < 0) || (deltaX > 0 && deltaY > 0)) {
@@ -51,7 +50,7 @@ class LineTool extends Tool {
                     else {
                         cordY -= 1;
                     }
-                    px += (2 * (lengthY - lengthX));
+                    errorMarginX += (2 * (lengthY - lengthX));
                 }
                 x.placePixel(cordX, cordY);
             }
@@ -70,8 +69,8 @@ class LineTool extends Tool {
             x.placePixel(cordX, cordY);
             for (let i = 0; cordY < endPointY; i++) {
                 cordY += 1;
-                if (py <= 0) {
-                    py += (2 * lengthX);
+                if (errorMarginY <= 0) {
+                    errorMarginY += (2 * lengthX);
                 }
                 else {
                     if ((deltaX < 0 && deltaY < 0) || (deltaX > 0 && deltaY > 0)) {
@@ -80,7 +79,7 @@ class LineTool extends Tool {
                     else {
                         cordX -= 1;
                     }
-                    py += (2 * (lengthX - lengthY));
+                    errorMarginY += (2 * (lengthX - lengthY));
                 }
                 x.placePixel(cordX, cordY);
             }
