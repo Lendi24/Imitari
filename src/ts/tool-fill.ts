@@ -6,7 +6,7 @@ class FillTool extends Tool {
             let startPosY = Util.screenToCordY(CustomMouseEvent.mouseY);
             let oldColour = DrawView.getLayer(0).getPixel(startPosX, startPosY).getStrRGBA();
             let stack = [ {"x" : startPosX, "y" : startPosY} ];
-            let checked = [];
+            let checked = new Array();
             let iterations = 0;
             let iterationsLimit = DrawView.getLayer(0).drawing.length * DrawView.getLayer(0).drawing[0].length;
             //iterationsLimit = 99999999999;
@@ -16,18 +16,16 @@ class FillTool extends Tool {
 
                 //console.log(stack);
 
-                DrawView.getLayer(0).placePixel(
-                    (stack[0].x),
-                    (stack[0].y),
-                );    
-                /*
+  
+/*                let x = stack[0].x;
+                let y = stack[0].y;
+
                 setTimeout(() => {
                     DrawView.getLayer(0).placePixel(
-                        (0),
-                        (0),
+                        x,y,
                     );    
     
-                }, 500 * iterations+1);
+                }, 10 * iterations+1);
 */
                 checkPixel( {"x" : stack[0].x+1, "y" : stack[0].y}, stack);
                 checkPixel( {"x" : stack[0].x-1, "y" : stack[0].y}, stack);
@@ -50,17 +48,33 @@ class FillTool extends Tool {
                 if (DrawView.getLayer(0).getPixel(stack[0].x,stack[0].y-1).getStrRGBA() == oldColour) {
                     stack.push( {"x" : stack[0].x, "y" : stack[0].y-1} );
                 }  */  
-
+                //console.log(checked)
+                checked.push(stack[0]);
                 stack.shift();
             }
 
             function checkPixel(pos : any, stack : Array<Object>) {
                 if (pos.x >= 0 && pos.x < DrawView.getLayer(0).drawing.length && pos.y >= 0 && pos.y < DrawView.getLayer(0).drawing[0].length) {
+                    
+                    for (let i = 0; i < checked.length; i++) {
+                        if (checked[i].x == pos.x && checked[i].y == pos.y) {
+                            return;
+                        }
+                    }
+                    
                     if (stack.indexOf(pos) == -1) {
                         try {
                             if (DrawView.getLayer(0).getPixel(pos.x,pos.y).getStrRGBA() == oldColour) {
+                                //console.log(oldColour);
+                                //console.log(DrawView.getLayer(0).getPixel(pos.x,pos.y).getStrRGBA());
                                 stack.push( pos );
-                            }        
+
+                                DrawView.getLayer(0).placePixel(
+                                    (pos.x),
+                                    (pos.y),
+                                );    
+                
+                            }  else {console.log("feclr")}
                         } catch (e) { console.log("Error: fill tool") }
                     }    
                 }
