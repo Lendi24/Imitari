@@ -11,6 +11,11 @@ class FillTool extends Tool {
             let iterationsLimit = DrawView.getLayer(0).drawing.length * DrawView.getLayer(0).drawing[0].length;
             //iterationsLimit = 99999999999;
 
+            DrawView.getLayer(0).placePixel(
+                (startPosX),
+                (startPosY),
+            );    
+
             while (stack.length > 0 && iterations < iterationsLimit) {
                 iterations++;
 
@@ -36,8 +41,6 @@ class FillTool extends Tool {
                     if (stack.indexOf(pos) == -1) {
                         try {
                             if (DrawView.getLayer(0).getPixel(pos.x,pos.y).getStrRGBA() == oldColour) {
-                                //console.log(oldColour);
-                                //console.log(DrawView.getLayer(0).getPixel(pos.x,pos.y).getStrRGBA());
                                 stack.push( pos );
 
                                 DrawView.getLayer(0).placePixel(
@@ -45,7 +48,7 @@ class FillTool extends Tool {
                                     (pos.y),
                                 );    
                 
-                            }  else {console.log("feclr")}
+                            }  
                         } catch (e) { console.log("Error: fill tool") }
                     }    
                 }

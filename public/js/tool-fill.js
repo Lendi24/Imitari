@@ -9,6 +9,7 @@ class FillTool extends Tool {
             let checked = new Array();
             let iterations = 0;
             let iterationsLimit = DrawView.getLayer(0).drawing.length * DrawView.getLayer(0).drawing[0].length;
+            DrawView.getLayer(0).placePixel((startPosX), (startPosY));
             while (stack.length > 0 && iterations < iterationsLimit) {
                 iterations++;
                 checkPixel({ "x": stack[0].x + 1, "y": stack[0].y }, stack);
@@ -30,9 +31,6 @@ class FillTool extends Tool {
                             if (DrawView.getLayer(0).getPixel(pos.x, pos.y).getStrRGBA() == oldColour) {
                                 stack.push(pos);
                                 DrawView.getLayer(0).placePixel((pos.x), (pos.y));
-                            }
-                            else {
-                                console.log("feclr");
                             }
                         }
                         catch (e) {

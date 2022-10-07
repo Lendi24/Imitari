@@ -8,7 +8,6 @@ window.onmouseup     = function(e:MouseEvent) {e.preventDefault; CustomMouseEven
 window.onwheel       = function(e:WheelEvent) {e.preventDefault;};
 
 window.onkeydown     = function(e:KeyboardEvent) {
-    console.log(e);
     switch (e.key) {
         case "b": //brush
             DrawView.currentTool = new DrawTool();

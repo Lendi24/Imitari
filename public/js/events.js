@@ -6,7 +6,6 @@ window.onmousemove = function (e) { e.preventDefault; CustomMouseEvent.tick(e.cl
 window.onmouseup = function (e) { e.preventDefault; CustomMouseEvent.tick(e.clientX, e.clientY, e.buttons == 1, e.buttons == 2, e); };
 window.onwheel = function (e) { e.preventDefault; };
 window.onkeydown = function (e) {
-    console.log(e);
     switch (e.key) {
         case "b":
             DrawView.currentTool = new DrawTool();
