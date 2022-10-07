@@ -3,9 +3,9 @@ class LineTool extends Tool {
     firstPoint: coordinate | undefined;
     secondPoint: coordinate | undefined;
 
-    onMouse(event : CustomMouseEvent) {
+    onMouse(event: CustomMouseEvent) {
         if (CustomMouseEvent.mouseLeftDown && CustomMouseEvent.mouseLeftChanged) {
-            
+
             if (typeof this.firstPoint === "undefined") {
                 //Sätter första point
                 this.firstPoint = {
@@ -13,7 +13,7 @@ class LineTool extends Tool {
                     y: Util.screenToCord(CustomMouseEvent.mouseY)
                 }
             }
-            else{
+            else {
                 //Sätter andra point
                 this.secondPoint = {
                     x: Util.screenToCord(CustomMouseEvent.mouseX),
@@ -29,52 +29,80 @@ class LineTool extends Tool {
         }
     }
 
-    private setLine(cord1: coordinate, cord2: coordinate){
-        let lengthX = Math.abs(cord2["x"] - cord1["x"]);
-        let lengthY = Math.abs(cord2["y"] - cord1["y"]);
-        let directionY = false;              /*Default*/
+    private setLine(cord1: coordinate, cord2: coordinate) {
+        // Iterators, counters required by algorithm
+        let cordX, cordY, endPointX, endPointY;
+        // Calculate line deltas
+        let deltaX = cord2["x"] - cord1["x"];
+        let lengthX = Math.abs(deltaX);
+        let deltaY = cord2["y"] - cord1["y"]
+        let lengthY = Math.abs(deltaY);
 
-        if (lengthY >= lengthX) {
-            //Inverterar alla värden så att linjen skrivs ut i rätt riktning
-            [cord1["x"], cord1["y"], cord2["x"], cord2["y"], lengthX, lengthY] = [cord1["y"], cord1["x"], cord2["y"], cord2["x"], lengthY, lengthX];
-            directionY = true;
+        // Calculate error intervals for both axis
+        let px = 2 * lengthY - lengthX;
+        let py = 2 * lengthX - lengthY;
+
+        // The line is X-axis dominant
+        if (lengthY <= lengthX) {
+            // Line is drawn left to right
+            if (deltaX >= 0) {
+                cordX = cord1["x"]; cordY = cord1["y"]; endPointX = cord2["x"];
+            }
+            else { // Line is drawn right to left (swap ends)
+                cordX = cord2["x"]; cordY = cord2["y"]; endPointX = cord1["x"];
+            }
+            x.placePixel(cordX, cordY); // Draw first pixel
+            // Rasterize the line
+            for (let i = 0; cordX < endPointX; i++) {
+                cordX += 1
+                // Deal with octants...
+                if (px < 0) {
+                    px += (2 * lengthY);
+                }
+                else {
+                    if ((deltaX < 0 && deltaY < 0) || (deltaX > 0 && deltaY > 0)) {
+                        cordY += 1;
+                    }
+                    else {
+                        cordY -= 1;
+                    }
+                    px += (2 * (lengthY - lengthX));
+                }
+                // Draw pixel from line span at
+                // currently rasterized position
+                x.placePixel(cordX, cordY);
+            }
+        } else { // The line is Y-axis dominant
+            // Line is drawn bottom to top
+            if (deltaY >= 0) {
+                cordX = cord1["x"]; cordY = cord1["y"]; endPointY = cord2["y"];
+            }
+            else { // Line is drawn top to bottom
+                cordX = cord2["x"]; cordY = cord2["y"]; endPointY = cord1["y"];
+            }
+            x.placePixel(cordX, cordY); // Draw first pixel
+            // Rasterize the line
+            for (let i = 0; cordY < endPointY; i++) {
+                cordY += 1;
+                // Deal with octants...
+                if (py <= 0) {
+                    py += (2 * lengthX);
+                } else {
+                    if ((deltaX < 0 && deltaY < 0) || (deltaX > 0 && deltaY > 0)) {
+                        cordX += 1;
+                    } else {
+                        cordX -= 1;
+                    }
+                    py += (2 * (lengthX - lengthY));
+                }
+                // Draw pixel from line span at
+                // currently rasterized position
+                x.placePixel(cordX, cordY);
+            }
         }
-
-        let pk = 2 * (lengthY - lengthX);
-        for (let i = 0; i <= lengthX; i++) {
-            
-            /*Inkrementerar / dekrementerar beroende på om den första koordinaten är
-            större eller mindre än den andra (bestämmer vilken riktning linjen går)*/
-            if (cord1["x"] < cord2["x"]) {
-                cord1["x"]++;
-            }
-            else{
-                cord1["x"]--
-            }
-
-            if (pk < 0) {
-                if (directionY) {
-                    pk = pk + 2 * lengthY;
-                }
-                else{
-                    pk = pk + 2 * lengthX;
-                }
-            }
-            else{
-                if (cord1["y"] < cord2["y"]) {
-                    cord1["y"]++;
-                }
-                else{
-                    cord1["y"]--;
-                    pk = pk + (2 * lengthY) - (2 * lengthX);
-                }
-            }
-
-            x.placePixel(cord1["x"], cord1["y"])
-        }
-    }
+    };
 }
 
-interface coordinate{
+interface coordinate {
     [key: string]: number;
 }

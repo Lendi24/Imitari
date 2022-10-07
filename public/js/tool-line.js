@@ -20,39 +20,71 @@ class LineTool extends Tool {
         }
     }
     setLine(cord1, cord2) {
-        let lengthX = Math.abs(cord2["x"] - cord1["x"]);
-        let lengthY = Math.abs(cord2["y"] - cord1["y"]);
-        let directionY = false;
-        if (lengthY >= lengthX) {
-            [cord1["x"], cord1["y"], cord2["x"], cord2["y"], lengthX, lengthY] = [cord1["y"], cord1["x"], cord2["y"], cord2["x"], lengthY, lengthX];
-            directionY = true;
+        let cordX, cordY, endPointX, endPointY;
+        let deltaX = cord2["x"] - cord1["x"];
+        let lengthX = Math.abs(deltaX);
+        let deltaY = cord2["y"] - cord1["y"];
+        let lengthY = Math.abs(deltaY);
+        let px = 2 * lengthY - lengthX;
+        let py = 2 * lengthX - lengthY;
+        if (lengthY <= lengthX) {
+            if (deltaX >= 0) {
+                cordX = cord1["x"];
+                cordY = cord1["y"];
+                endPointX = cord2["x"];
+            }
+            else {
+                cordX = cord2["x"];
+                cordY = cord2["y"];
+                endPointX = cord1["x"];
+            }
+            x.placePixel(cordX, cordY);
+            for (let i = 0; cordX < endPointX; i++) {
+                cordX += 1;
+                if (px < 0) {
+                    px += (2 * lengthY);
+                }
+                else {
+                    if ((deltaX < 0 && deltaY < 0) || (deltaX > 0 && deltaY > 0)) {
+                        cordY += 1;
+                    }
+                    else {
+                        cordY -= 1;
+                    }
+                    px += (2 * (lengthY - lengthX));
+                }
+                x.placePixel(cordX, cordY);
+            }
         }
-        let pk = 2 * (lengthY - lengthX);
-        for (let i = 0; i <= lengthX; i++) {
-            if (cord1["x"] < cord2["x"]) {
-                cord1["x"]++;
+        else {
+            if (deltaY >= 0) {
+                cordX = cord1["x"];
+                cordY = cord1["y"];
+                endPointY = cord2["y"];
             }
             else {
-                cord1["x"]--;
+                cordX = cord2["x"];
+                cordY = cord2["y"];
+                endPointY = cord1["y"];
             }
-            if (pk < 0) {
-                if (directionY) {
-                    pk = pk + 2 * lengthY;
+            x.placePixel(cordX, cordY);
+            for (let i = 0; cordY < endPointY; i++) {
+                cordY += 1;
+                if (py <= 0) {
+                    py += (2 * lengthX);
                 }
                 else {
-                    pk = pk + 2 * lengthX;
+                    if ((deltaX < 0 && deltaY < 0) || (deltaX > 0 && deltaY > 0)) {
+                        cordX += 1;
+                    }
+                    else {
+                        cordX -= 1;
+                    }
+                    py += (2 * (lengthX - lengthY));
                 }
+                x.placePixel(cordX, cordY);
             }
-            else {
-                if (cord1["y"] < cord2["y"]) {
-                    cord1["y"]++;
-                }
-                else {
-                    cord1["y"]--;
-                    pk = pk + (2 * lengthY) - (2 * lengthX);
-                }
-            }
-            x.placePixel(cord1["x"], cord1["y"]);
         }
     }
+    ;
 }
