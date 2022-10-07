@@ -7,6 +7,27 @@ window.onmousemove   = function(e:MouseEvent) {e.preventDefault; CustomMouseEven
 window.onmouseup     = function(e:MouseEvent) {e.preventDefault; CustomMouseEvent.tick(e.clientX, e.clientY, e.buttons == 1, e.buttons == 2, e)};
 window.onwheel       = function(e:WheelEvent) {e.preventDefault;};
 
+window.onkeydown     = function(e:KeyboardEvent) {
+    console.log(e);
+    switch (e.key) {
+        case "b": //brush
+            DrawView.currentTool = new DrawTool();
+            break;
+    
+        case "l": //line
+            DrawView.currentTool = new LineTool();
+            break;
+
+
+        case "f": //fill
+            DrawView.currentTool = new FillTool();
+            break;
+    
+        default:
+            break;
+    }
+}
+
 class CustomMouseEvent {
     static mouseX : number;
     static mouseY : number;

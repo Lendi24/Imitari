@@ -72,7 +72,7 @@ class DrawView {
     }
     static init(x, y) {
         this.jsCanvas.style.imageRendering = "pixelated";
-        this.currentTool = new FillTool();
+        this.currentTool = new DrawTool();
         this.newLayer(x, y);
         this.onResize();
     }

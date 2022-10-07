@@ -14,41 +14,12 @@ class FillTool extends Tool {
             while (stack.length > 0 && iterations < iterationsLimit) {
                 iterations++;
 
-                //console.log(stack);
-
-  
-/*                let x = stack[0].x;
-                let y = stack[0].y;
-
-                setTimeout(() => {
-                    DrawView.getLayer(0).placePixel(
-                        x,y,
-                    );    
-    
-                }, 10 * iterations+1);
-*/
                 checkPixel( {"x" : stack[0].x+1, "y" : stack[0].y}, stack);
                 checkPixel( {"x" : stack[0].x-1, "y" : stack[0].y}, stack);
 
                 checkPixel( {"x" : stack[0].x, "y" : stack[0].y+1}, stack);
                 checkPixel( {"x" : stack[0].x, "y" : stack[0].y-1}, stack);
-/*
-                if (DrawView.getLayer(0).getPixel(stack[0].x+1,stack[0].y).getStrRGBA() == oldColour) {
-                    stack.push( {"x" : stack[0].x+1, "y" : stack[0].y} );
-                }        
 
-                if (DrawView.getLayer(0).getPixel(stack[0].x-1,stack[0].y).getStrRGBA() == oldColour) {
-                    stack.push( {"x" : stack[0].x-1, "y" : stack[0].y} );
-                }        
-
-                if (DrawView.getLayer(0).getPixel(stack[0].x,stack[0].y+1).getStrRGBA() == oldColour) {
-                    stack.push( {"x" : stack[0].x, "y" : stack[0].y+1} );
-                }        
-
-                if (DrawView.getLayer(0).getPixel(stack[0].x,stack[0].y-1).getStrRGBA() == oldColour) {
-                    stack.push( {"x" : stack[0].x, "y" : stack[0].y-1} );
-                }  */  
-                //console.log(checked)
                 checked.push(stack[0]);
                 stack.shift();
             }
