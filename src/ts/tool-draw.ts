@@ -1,10 +1,20 @@
-class DrawTool extends Tool {
+class DrawTool extends LineTool {
+
     onMouse(event : CustomMouseEvent) {
-        if (CustomMouseEvent.mouseLeftDown) {
-            DrawView.getLayer(0).placePixel(
-                Util.screenToCordX(CustomMouseEvent.mouseX),
-                Util.screenToCordY(CustomMouseEvent.mouseY),
-            );
+        if (CustomMouseEvent.mouseLeftDown && CustomMouseEvent.mouseLeftChanged) {
+            this.firstPoint = {
+                x: Util.screenToCordX(CustomMouseEvent.mouseX),
+                y: Util.screenToCordY(CustomMouseEvent.mouseY)
+            }
+            this.secondPoint = undefined;
+        }
+        else if (CustomMouseEvent.mouseLeftDown) {
+            this.secondPoint = {
+                x: Util.screenToCordX(CustomMouseEvent.mouseX),
+                y: Util.screenToCordY(CustomMouseEvent.mouseY)
+            }
+            this.setLine(this.firstPoint!, this.secondPoint!);
+            this.firstPoint = this.secondPoint;
         }
     }
 }
