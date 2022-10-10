@@ -28,7 +28,7 @@ class LineTool extends Tool {
         }
     }
 
-    private setLine(cord1: coordinate, cord2: coordinate) {
+    protected setLine(cord1: coordinate, cord2: coordinate) {
 
         //Variabler för att räkna ut linjen
         let cordX, cordY, endPointX, endPointY;

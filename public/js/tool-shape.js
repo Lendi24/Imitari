@@ -1,5 +1,5 @@
 "use strict";
-class DrawTool extends LineTool {
+class ShapeTool extends LineTool {
     onMouse(event) {
         if (CustomMouseEvent.mouseLeftDown && CustomMouseEvent.mouseLeftChanged) {
             this.firstPoint = {
