@@ -4,9 +4,20 @@ window.oncontextmenu = function () { return false; };
 DrawView.jsCanvas.onmousedown = function (e) { e.preventDefault; CustomMouseEvent.tick(e.clientX, e.clientY, e.buttons == 1, e.buttons == 2, e); };
 DrawView.jsCanvas.onmousemove = function (e) { e.preventDefault; CustomMouseEvent.tick(e.clientX, e.clientY, e.buttons == 1, e.buttons == 2, e); updateUIPos(); };
 DrawView.jsCanvas.onmouseup = function (e) { e.preventDefault; CustomMouseEvent.tick(e.clientX, e.clientY, e.buttons == 1, e.buttons == 2, e); };
-DrawView.jsCanvas.onwheel = function (e) { e.preventDefault; DrawView.zoom += e.deltaY; console.log(DrawView.zoom); };
 DrawView.jsCanvas.onmouseleave = function (e) { e.preventDefault; CustomMouseEvent.tick(e.clientX, e.clientY, false, false, e); };
 window.onkeydown = function (e) { switchTool(e.key); };
+window.onwheel = function (e) {
+    var _a;
+    e.preventDefault;
+    if (e.deltaY > 0) {
+        DrawView.zoom = Util.clamp(DrawView.zoom + DrawView.zoom * 0.1, 100, 0.01);
+    }
+    else {
+        DrawView.zoom = Util.clamp(DrawView.zoom - DrawView.zoom * 0.1, 100, 0.01);
+    }
+    (_a = document.getElementById("zoom")) === null || _a === void 0 ? void 0 : _a.innerText = Math.floor(DrawView.zoom * 100);
+    DrawView.jsCanvas.style.transform = `scale(${(DrawView.zoom)})`;
+};
 window.onload = function () {
     let classes = ["text-white", "border-2", "invert", "rounded", "hover:bg-green-700", "hover:scale-110", "transform", "transition-all", "mdi"];
     let htmlTools = (document.getElementById("tool-section"));

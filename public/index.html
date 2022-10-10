@@ -23,7 +23,7 @@
 
 </head>
 
-<body class="flex flex-col h-screen m-0">
+<body class="flex flex-col h-screen m-0 z-1">
     <div class="h-6 space-x-3">
         <span class="mdi mdi-brush ml-3"></span>
         <button>File</button>
@@ -32,19 +32,19 @@
         <button>About</button>
     </div>
 
-    <div class="flex flex-grow m-0 overflow-hidden">
-        <div class="bg-gray-600 "><!--Tools-->
+    <div class="flex flex-grow m-0 overflow-hidden bg-green-600">
+        <div class="bg-gray-600 z-20 bg-opacity-60 bg-blur-sm"><!--Tools-->
             <div class="space-y-3" id="tool-section"></div>
         </div> <!--Tools-->
-        <div class="canvas-div bg-green-600 m-0 flex justify-center items-center">
-            <canvas id="drawing-area"></canvas>
+        <div class="canvas-div  m-0 flex justify-center items-center">
+            <canvas id="drawing-area" class="z-10"></canvas>
         </div>
-        <div class="w-60 bg-gray-600"></div>
+        <div class="w-60 bg-gray-600 z-20 bg-opacity-60 bg-blur-sm"></div>
     </div>
     <div class="h-6 flex justify-between">
         <b class="ml-1 mr-1">Pos: X: <b id="posX">0</b>, Y: <b id="posY">0</b></b>
         <b class="ml-1 mr-1">Layer Size: 0 x 0</b>
-        <b class="ml-1 mr-1">Zoom: 100%</b>
+        <b class="ml-1 mr-1">Zoom: <b id="zoom">100</b>%</b>
     </div>
 </body>
 </html>
