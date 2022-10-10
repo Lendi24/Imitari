@@ -1,10 +1,11 @@
 "use strict";
 window.onresize = function () { DrawView.onResize(); };
 window.oncontextmenu = function () { return false; };
-window.onmousedown = function (e) { e.preventDefault; CustomMouseEvent.tick(e.clientX, e.clientY, e.buttons == 1, e.buttons == 2, e); };
-window.onmousemove = function (e) { e.preventDefault; CustomMouseEvent.tick(e.clientX, e.clientY, e.buttons == 1, e.buttons == 2, e); updateUIPos(); };
-window.onmouseup = function (e) { e.preventDefault; CustomMouseEvent.tick(e.clientX, e.clientY, e.buttons == 1, e.buttons == 2, e); };
-window.onwheel = function (e) { e.preventDefault; };
+DrawView.jsCanvas.onmousedown = function (e) { e.preventDefault; CustomMouseEvent.tick(e.clientX, e.clientY, e.buttons == 1, e.buttons == 2, e); };
+DrawView.jsCanvas.onmousemove = function (e) { e.preventDefault; CustomMouseEvent.tick(e.clientX, e.clientY, e.buttons == 1, e.buttons == 2, e); updateUIPos(); };
+DrawView.jsCanvas.onmouseup = function (e) { e.preventDefault; CustomMouseEvent.tick(e.clientX, e.clientY, e.buttons == 1, e.buttons == 2, e); };
+DrawView.jsCanvas.onwheel = function (e) { e.preventDefault; DrawView.zoom += e.deltaY; console.log(DrawView.zoom); };
+DrawView.jsCanvas.onmouseleave = function (e) { e.preventDefault; CustomMouseEvent.tick(e.clientX, e.clientY, false, false, e); };
 window.onkeydown = function (e) { switchTool(e.key); };
 window.onload = function () {
     let classes = ["text-white", "border-2", "invert", "rounded", "hover:bg-green-700", "hover:scale-110", "transform", "transition-all", "mdi"];
@@ -19,6 +20,7 @@ window.onload = function () {
         htmlTools.appendChild(newHTML);
         tools[tool].html = newHTML;
     }
+    switchTool("b");
 };
 function updateUIPos() {
     (document.getElementById("posX")).innerText = Util.screenToCordX(CustomMouseEvent.mouseX).toString();
@@ -31,8 +33,7 @@ let tools = {
 };
 function switchTool(val) {
     let tool = tools[val];
-    if (tool.obj) {
-        console.log(tool.html);
+    if (tool.obj && tool.html != DrawView.currentToolHTML) {
         tool.html.classList.add("bg-green-600");
         DrawView.currentToolHTML.classList.remove("bg-green-600");
         DrawView.currentToolHTML = tool.html;

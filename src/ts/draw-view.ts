@@ -101,6 +101,8 @@ class DrawView {
     static pixelSize = 5;
     static pixelGapSize = 1;
 
+    static zoom = 1;
+
     static currentTool = new Tool();
     static currentToolHTML = document.createElement("div");
 
