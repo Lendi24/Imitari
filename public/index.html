@@ -16,21 +16,32 @@
     <script defer src="./js/general.js"></script>
 
     <link rel="stylesheet" href="./css/style.css"> 
+    <link rel="stylesheet" href="./css/tools/icons/materialdesignicons.min.css"> 
     
     <title>Imitiari</title>
 
 </head>
 
-<body class="flex flex-column h-screen m-0">
-    <div class="w-10"></div>
+<body class="flex flex-col h-screen m-0 transition-all">
+    <div class="h-6"></div>
 
     <div class="flex flex-grow m-0 overflow-hidden">
-        <div class="w-10"></div>
+        <div class="bg-gray-600">
+            <div class="h-full flex flex-col items-center space-y-3 p-3 text-4xl flex-nowrap" id="tools">
+                <span class="mdi mdi-brush bg-green-600 rounded hover:bg-green-700 hover:scale-125 "></span>
+                <span class="mdi mdi-brush bg-green-600"></span>
+                <span class="mdi mdi-brush bg-green-600"></span>
+                <span class="mdi mdi-brush bg-green-600"></span>
+                <span class="mdi mdi-brush bg-green-600"></span>
+
+            </div>
+        </div> <!--Tools-->
         <div class="canvas-div bg-green-600 m-0 flex justify-center items-center">
             <canvas id="drawing-area"></canvas>
         </div>
-        <div class="w-40"></div>
-
+        <div class="w-40 bg-gray-600"></div>
     </div>
+    
+    <div class="h-6"></div>
 </body>
 </html>
