@@ -21,7 +21,11 @@ window.onkeydown     = function(e:KeyboardEvent) {
         case "f": //fill
             DrawView.currentTool = new FillTool();
             break;
-    
+        
+        case "s": //shape
+            DrawView.currentTool = new ShapeTool();
+            break;
+
         default:
             break;
     }

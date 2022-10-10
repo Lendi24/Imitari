@@ -42,10 +42,19 @@ class DrawViewLayer {
         setInterval(function () { obj.drawToCanvas(obj.drawing); }, 1000 / this.targetFPS);
     }
     placePixel(x, y) {
-        this.drawing[x][y].setRGBA(255, 255, 255, 255);
+        try {
+            this.drawing[x][y].setRGBA(255, 255, 255, 255);
+        }
+        catch (error) { }
     }
     getPixel(x, y) {
         return this.drawing[x][y];
+    }
+    getCanvasWidth() {
+        return this.drawing.length;
+    }
+    getCanvasHeight() {
+        return this.drawing[0].length;
     }
     drawToCanvas(drawing) {
         let canvas = DrawView.jsCanvas;

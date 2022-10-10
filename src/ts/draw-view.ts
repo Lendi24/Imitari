@@ -43,11 +43,21 @@ class DrawViewLayer {
     private drawing: Pixel[][];
 
     placePixel(x : number, y : number) {
-        this.drawing[x][y].setRGBA(255,255,255,255);
+        try {
+            this.drawing[x][y].setRGBA(255,255,255,255);
+        } catch (error) {  }
     }
 
     getPixel(x : number, y : number){
         return this.drawing[x][y];
+    }
+
+    getCanvasWidth(){
+        return this.drawing.length;
+    }
+
+    getCanvasHeight(){
+        return this.drawing[0].length;
     }
 
     constructor(width : number, height : number) {

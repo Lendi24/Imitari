@@ -16,6 +16,9 @@ window.onkeydown = function (e) {
         case "f":
             DrawView.currentTool = new FillTool();
             break;
+        case "s":
+            DrawView.currentTool = new ShapeTool();
+            break;
         default:
             break;
     }
