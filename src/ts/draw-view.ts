@@ -102,6 +102,7 @@ class DrawView {
     static pixelGapSize = 1;
 
     static currentTool = new Tool();
+    static currentToolHTML = document.createElement("div");
 
     static layers = new Array();
 

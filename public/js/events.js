@@ -5,21 +5,39 @@ window.onmousedown = function (e) { e.preventDefault; CustomMouseEvent.tick(e.cl
 window.onmousemove = function (e) { e.preventDefault; CustomMouseEvent.tick(e.clientX, e.clientY, e.buttons == 1, e.buttons == 2, e); };
 window.onmouseup = function (e) { e.preventDefault; CustomMouseEvent.tick(e.clientX, e.clientY, e.buttons == 1, e.buttons == 2, e); };
 window.onwheel = function (e) { e.preventDefault; };
-window.onkeydown = function (e) {
-    switch (e.key) {
-        case "b":
-            DrawView.currentTool = new DrawTool();
-            break;
-        case "l":
-            DrawView.currentTool = new LineTool();
-            break;
-        case "f":
-            DrawView.currentTool = new FillTool();
-            break;
-        default:
-            break;
+window.onkeydown = function (e) { switchTool(e.key); };
+window.onload = function () {
+    let classes = ["text-white", "border-2", "invert", "rounded", "hover:bg-green-700", "hover:scale-110", "transform", "transition-all", "mdi"];
+    let htmlTools = (document.getElementById("tool-section"));
+    for (let tool in tools) {
+        let newHTML = tools[tool].html = document.createElement("span");
+        newHTML.onclick = function () { switchTool(tool); };
+        classes.forEach(classStr => {
+            newHTML.classList.add(classStr);
+        });
+        newHTML.classList.add(tools[tool].icon);
+        htmlTools.appendChild(newHTML);
+        tools[tool].html = newHTML;
     }
 };
+let tools = {
+    "b": { obj: new DrawTool(), html: "", icon: "mdi-brush" },
+    "l": { obj: new LineTool(), html: "", icon: "mdi-pencil-ruler" },
+    "f": { obj: new FillTool(), html: "", icon: "mdi-format-color-fill" },
+};
+function switchTool(val) {
+    let tool = tools[val];
+    if (tool.obj) {
+        console.log(tool.html);
+        tool.html.classList.add("bg-green-600");
+        DrawView.currentToolHTML.classList.remove("bg-green-600");
+        DrawView.currentToolHTML = tool.html;
+        DrawView.currentTool = tool.obj;
+    }
+    else {
+        console.log("Not a tool");
+    }
+}
 class CustomMouseEvent {
     static tick(mouseX, mouseY, mouseLeftDown, mouseRightDown, e) {
         this.mouseX = mouseX;

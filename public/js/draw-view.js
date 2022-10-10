@@ -96,4 +96,5 @@ DrawView.jsCanvasCtx = DrawView.jsCanvas.getContext("2d");
 DrawView.pixelSize = 5;
 DrawView.pixelGapSize = 1;
 DrawView.currentTool = new Tool();
+DrawView.currentToolHTML = document.createElement("div");
 DrawView.layers = new Array();
