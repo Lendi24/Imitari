@@ -4,9 +4,9 @@ window.onresize      = function() {DrawView.onResize();}
 
 window.oncontextmenu = function() {return false;};
 
-window.onmousedown   = function(e:MouseEvent) {e.preventDefault; CustomMouseEvent.tick(e.clientX, e.clientY, e.buttons == 1, e.buttons == 2, e)};
-window.onmousemove   = function(e:MouseEvent) {e.preventDefault; CustomMouseEvent.tick(e.clientX, e.clientY, e.buttons == 1, e.buttons == 2, e)};
-window.onmouseup     = function(e:MouseEvent) {e.preventDefault; CustomMouseEvent.tick(e.clientX, e.clientY, e.buttons == 1, e.buttons == 2, e)};
+window.onmousedown   = function(e:MouseEvent) {e.preventDefault; CustomMouseEvent.tick(e.clientX, e.clientY, e.buttons == 1, e.buttons == 2, e);};
+window.onmousemove   = function(e:MouseEvent) {e.preventDefault; CustomMouseEvent.tick(e.clientX, e.clientY, e.buttons == 1, e.buttons == 2, e);updateUIPos();};
+window.onmouseup     = function(e:MouseEvent) {e.preventDefault; CustomMouseEvent.tick(e.clientX, e.clientY, e.buttons == 1, e.buttons == 2, e);};
 window.onwheel       = function(e:WheelEvent) {e.preventDefault;};
 
 window.onkeydown     = function(e:KeyboardEvent) {switchTool(e.key)}
@@ -26,11 +26,16 @@ window.onload = function() {
         newHTML.classList.add(tools[tool].icon);
 
         htmlTools.appendChild(newHTML);
-        tools[tool].html = newHTML;
-        
-        //htmlTools?.innerHTML += tools[tool].html;
+        tools[tool].html = newHTML;        
     }
 }
+
+function updateUIPos() {    
+    (<HTMLElement>(document.getElementById("posX"))).innerText = Util.screenToCordX(CustomMouseEvent.mouseX).toString();
+    (<HTMLElement>(document.getElementById("posY"))).innerText = Util.screenToCordY(CustomMouseEvent.mouseY).toString();
+}
+
+
 
 let tools: {[key: string]: any} = {
     "b" : {obj : new DrawTool(), html : "", icon : "mdi-brush"},

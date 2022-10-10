@@ -2,7 +2,7 @@
 window.onresize = function () { DrawView.onResize(); };
 window.oncontextmenu = function () { return false; };
 window.onmousedown = function (e) { e.preventDefault; CustomMouseEvent.tick(e.clientX, e.clientY, e.buttons == 1, e.buttons == 2, e); };
-window.onmousemove = function (e) { e.preventDefault; CustomMouseEvent.tick(e.clientX, e.clientY, e.buttons == 1, e.buttons == 2, e); };
+window.onmousemove = function (e) { e.preventDefault; CustomMouseEvent.tick(e.clientX, e.clientY, e.buttons == 1, e.buttons == 2, e); updateUIPos(); };
 window.onmouseup = function (e) { e.preventDefault; CustomMouseEvent.tick(e.clientX, e.clientY, e.buttons == 1, e.buttons == 2, e); };
 window.onwheel = function (e) { e.preventDefault; };
 window.onkeydown = function (e) { switchTool(e.key); };
@@ -20,6 +20,10 @@ window.onload = function () {
         tools[tool].html = newHTML;
     }
 };
+function updateUIPos() {
+    (document.getElementById("posX")).innerText = Util.screenToCordX(CustomMouseEvent.mouseX).toString();
+    (document.getElementById("posY")).innerText = Util.screenToCordY(CustomMouseEvent.mouseY).toString();
+}
 let tools = {
     "b": { obj: new DrawTool(), html: "", icon: "mdi-brush" },
     "l": { obj: new LineTool(), html: "", icon: "mdi-pencil-ruler" },
