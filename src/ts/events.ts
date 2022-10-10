@@ -15,14 +15,34 @@ window.onwheel = function(e:WheelEvent) {
     e.preventDefault; 
     //DrawView.zoom = Util.clamp(DrawView.zoom + DrawView.zoom * 0.1, 1000, 0.01);
 
-    if (e.deltaY > 0) { 
-        DrawView.zoom = Util.clamp(DrawView.zoom + DrawView.zoom * 0.1, 100, 0.01);
-      } else {
-        DrawView.zoom = Util.clamp(DrawView.zoom - DrawView.zoom * 0.1, 100, 0.01);
-      }
 
-    document.getElementById("zoom")?.innerText = Math.floor(DrawView.zoom * 100);
-    DrawView.jsCanvas.style.transform = `scale(${(DrawView.zoom)})`;
+    if (e.shiftKey) {
+        e.preventDefault();
+
+        if (e.deltaY < 0) { 
+            DrawView.zoom = Util.clamp(DrawView.zoom + DrawView.zoom * 0.1, 100, 0.01);
+          
+        } else {
+            DrawView.zoom = Util.clamp(DrawView.zoom - DrawView.zoom * 0.1, 100, 0.01);
+        }
+
+        document.getElementById("zoom")?.innerText = Math.floor(DrawView.zoom * 100);
+        DrawView.jsCanvas.style.transform = `scale(${(DrawView.zoom)})`;
+    } else {
+        console.log(DrawView.offsetTop)
+        
+        if (e.deltaY != 0 && e.deltaX == 0) {
+            DrawView.offsetTop = Util.clamp(DrawView.offsetTop + e.deltaY * 0.01, 150, -150);
+            DrawView.jsCanvas.parentElement.style.marginTop = -DrawView.offsetTop+"%";/*`${(DrawView.offsetTop)}px;`;*/
+
+        } else {
+            DrawView.offsetLeft = Util.clamp(DrawView.offsetLeft + e.deltaX * 0.01, 150, -150);
+            DrawView.jsCanvas.parentElement.style.marginLeft = -DrawView.offsetLeft+"%";/*`${(DrawView.offsetTop)}px;`;*/
+        }    
+
+    }
+
+
 
     /*
     DrawView.zoom += e.deltaY / 1000;

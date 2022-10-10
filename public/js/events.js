@@ -9,14 +9,28 @@ window.onkeydown = function (e) { switchTool(e.key); };
 window.onwheel = function (e) {
     var _a;
     e.preventDefault;
-    if (e.deltaY > 0) {
-        DrawView.zoom = Util.clamp(DrawView.zoom + DrawView.zoom * 0.1, 100, 0.01);
+    if (e.shiftKey) {
+        e.preventDefault();
+        if (e.deltaY < 0) {
+            DrawView.zoom = Util.clamp(DrawView.zoom + DrawView.zoom * 0.1, 100, 0.01);
+        }
+        else {
+            DrawView.zoom = Util.clamp(DrawView.zoom - DrawView.zoom * 0.1, 100, 0.01);
+        }
+        (_a = document.getElementById("zoom")) === null || _a === void 0 ? void 0 : _a.innerText = Math.floor(DrawView.zoom * 100);
+        DrawView.jsCanvas.style.transform = `scale(${(DrawView.zoom)})`;
     }
     else {
-        DrawView.zoom = Util.clamp(DrawView.zoom - DrawView.zoom * 0.1, 100, 0.01);
+        console.log(DrawView.offsetTop);
+        if (e.deltaY != 0 && e.deltaX == 0) {
+            DrawView.offsetTop = Util.clamp(DrawView.offsetTop + e.deltaY * 0.01, 150, -150);
+            DrawView.jsCanvas.parentElement.style.marginTop = -DrawView.offsetTop + "%";
+        }
+        else {
+            DrawView.offsetLeft = Util.clamp(DrawView.offsetLeft + e.deltaX * 0.01, 150, -150);
+            DrawView.jsCanvas.parentElement.style.marginLeft = -DrawView.offsetLeft + "%";
+        }
     }
-    (_a = document.getElementById("zoom")) === null || _a === void 0 ? void 0 : _a.innerText = Math.floor(DrawView.zoom * 100);
-    DrawView.jsCanvas.style.transform = `scale(${(DrawView.zoom)})`;
 };
 window.onload = function () {
     let classes = ["text-white", "border-2", "invert", "rounded", "hover:bg-green-700", "hover:scale-110", "transform", "transition-all", "mdi"];
