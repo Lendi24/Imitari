@@ -42,11 +42,12 @@ function updateUIPos() {
 
 
 
-let tools: {[key: string]: any} = {
-    "b" : {obj : new DrawTool(), html : "", icon : "mdi-brush"},
-    "l" : {obj : new LineTool(), html : "", icon : "mdi-pencil-ruler"},
-    "f" : {obj : new FillTool(), html : "", icon : "mdi-format-color-fill"},
-}
+let tools: {[key: string]: any} = { 
+    "b" : {obj : new DrawTool(),  html : "", icon : "mdi-brush"},
+    "l" : {obj : new LineTool(),  html : "", icon : "mdi-pencil-ruler"},
+    "f" : {obj : new FillTool(),  html : "", icon : "mdi-format-color-fill"},
+    "s" : {obj : new ShapeTool(), html : "", icon : "mdi-shape"},
+};
 
 function switchTool(val:string) {
     let tool = tools[val];
@@ -71,11 +72,7 @@ function switchTool(val:string) {
         case "f": //fill
             DrawView.currentTool = new FillTool();
             break;
-        
-        case "s": //shape
-            DrawView.currentTool = new ShapeTool();
-            break;
-
+    
         default:
             break;
     }*/

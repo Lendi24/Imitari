@@ -30,6 +30,7 @@ let tools = {
     "b": { obj: new DrawTool(), html: "", icon: "mdi-brush" },
     "l": { obj: new LineTool(), html: "", icon: "mdi-pencil-ruler" },
     "f": { obj: new FillTool(), html: "", icon: "mdi-format-color-fill" },
+    "s": { obj: new ShapeTool(), html: "", icon: "mdi-shape" },
 };
 function switchTool(val) {
     let tool = tools[val];
