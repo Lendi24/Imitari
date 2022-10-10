@@ -22,13 +22,20 @@
 
 </head>
 
-<body class="flex flex-col h-screen m-0 transition-all">
-    <div class="h-6"></div>
+<body class="flex flex-col h-screen m-0">
+    <div class="h-6 space-x-3">
+        <span class="mdi mdi-brush ml-3"></span>
+
+        <button>File</button>
+        <button>Tools</button>
+        <button>Settings</button>
+        <button>About</button>
+    </div>
 
     <div class="flex flex-grow m-0 overflow-hidden">
         <div class="bg-gray-600">
-            <div class="h-full flex flex-col items-center space-y-3 p-3 text-4xl flex-nowrap" id="tools">
-                <span class="mdi mdi-brush bg-green-600 rounded hover:bg-green-700 hover:scale-125 "></span>
+            <div class="space-y-3" id="tool-section">
+                <span class="mdi mdi-brush bg-green-600 rounded hover:bg-green-700 hover:scale-110 transform transition-all"></span>
                 <span class="mdi mdi-brush bg-green-600"></span>
                 <span class="mdi mdi-brush bg-green-600"></span>
                 <span class="mdi mdi-brush bg-green-600"></span>
@@ -39,9 +46,12 @@
         <div class="canvas-div bg-green-600 m-0 flex justify-center items-center">
             <canvas id="drawing-area"></canvas>
         </div>
-        <div class="w-40 bg-gray-600"></div>
+        <div class="w-60 bg-gray-600"></div>
     </div>
-    
-    <div class="h-6"></div>
+    <div class="h-6 flex justify-between">
+        <b>Pos: X: 0, Y: 0</b>
+        <b>Layer Size: 1920 x 1080</b>
+        <b>Zoom: 100%</b>
+    </div>
 </body>
 </html>
