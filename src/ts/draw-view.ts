@@ -115,6 +115,9 @@ class DrawView {
     static offsetLeft = 0;
     static offsetTop = 0;
 
+    static primaryColour = new Pixel();
+    static secondaryColour = new Pixel();
+
     static currentTool = new Tool();
     static currentToolHTML = document.createElement("div");
 
