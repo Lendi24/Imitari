@@ -6,6 +6,7 @@ class DrawTool extends LineTool {
                 x: Util.screenToCordX(CustomMouseEvent.mouseX),
                 y: Util.screenToCordY(CustomMouseEvent.mouseY)
             }
+            DrawView.getLayer(0).placePixel(this.firstPoint["x"], this.firstPoint["y"]);
             this.secondPoint = undefined;
         }
         else if (CustomMouseEvent.mouseLeftDown) {
