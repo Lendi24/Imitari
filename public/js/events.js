@@ -46,11 +46,73 @@ window.onload = function () {
         tools[tool].html = newHTML;
     }
     switchTool("b");
+    let topBarHtml = (document.getElementById("top-bar"));
+    for (let item in topBar) {
+        let dropdown = (document.createElement("drop"));
+        let dropname = (document.createElement("button"));
+        let dropcont = (document.createElement("drop-content"));
+        dropname.innerHTML = item;
+        for (let i = 0; i < topBar[item].length; i++) {
+            let dropitemscont = document.createElement("item-section");
+            for (let innerItem in topBar[item][i]) {
+                let innerItemHTML = document.createElement("item");
+                innerItemHTML.innerText = innerItem;
+                dropitemscont.appendChild(innerItemHTML);
+            }
+            dropcont.appendChild(dropitemscont);
+            console.log(topBar[item][i]);
+        }
+        dropdown.appendChild(dropname);
+        dropdown.appendChild(dropcont);
+        topBarHtml.appendChild(dropdown);
+    }
 };
 function updateUIPos() {
     (document.getElementById("posX")).innerText = Util.screenToCordX(CustomMouseEvent.mouseX).toString();
     (document.getElementById("posY")).innerText = Util.screenToCordY(CustomMouseEvent.mouseY).toString();
 }
+let topBar = {
+    "File": [
+        {
+            "New": Object,
+            "Open": Object,
+            "Save": Object,
+        },
+        {
+            "Import": Object,
+            "Export": Object,
+        }
+    ],
+    "Layer": [
+        {
+            "Create layer": Object,
+            "Remove layer": Object,
+        },
+        {
+            "Clear": Object,
+        }
+    ],
+    "Tools": [
+        {
+            "Tool": Object,
+        },
+    ],
+    "Settings": [
+        {
+            "Theme": Object,
+            "Zoom": Object,
+            "Offset": Object,
+            "Grid": Object,
+            "Render": Object,
+        },
+    ],
+    "About": [
+        {
+            "Imitari": Object,
+        },
+    ],
+};
+console.log(topBar);
 let tools = {
     "b": { obj: new DrawTool(), html: "", icon: "mdi-brush" },
     "l": { obj: new LineTool(), html: "", icon: "mdi-pencil-ruler" },

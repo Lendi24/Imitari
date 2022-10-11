@@ -7,14 +7,12 @@ window.oncontextmenu = function() {return false;};
 DrawView.jsCanvas.onmousedown   = function(e:MouseEvent) {e.preventDefault; CustomMouseEvent.tick(e.clientX, e.clientY, e.buttons == 1, e.buttons == 2, e);};
 DrawView.jsCanvas.onmousemove   = function(e:MouseEvent) {e.preventDefault; CustomMouseEvent.tick(e.clientX, e.clientY, e.buttons == 1, e.buttons == 2, e);updateUIPos();};
 DrawView.jsCanvas.onmouseup     = function(e:MouseEvent) {e.preventDefault; CustomMouseEvent.tick(e.clientX, e.clientY, e.buttons == 1, e.buttons == 2, e);};
-DrawView.jsCanvas.onmouseleave = function(e:MouseEvent) {e.preventDefault; CustomMouseEvent.tick(e.clientX, e.clientY, false, false, e);};
+DrawView.jsCanvas.onmouseleave  = function(e:MouseEvent) {e.preventDefault; CustomMouseEvent.tick(e.clientX, e.clientY, false, false, e);};
 
 window.onkeydown     = function(e:KeyboardEvent) {switchTool(e.key)}
 
 window.onwheel = function(e:WheelEvent) {
     e.preventDefault; 
-    //DrawView.zoom = Util.clamp(DrawView.zoom + DrawView.zoom * 0.1, 1000, 0.01);
-
 
     if (e.shiftKey) {
         e.preventDefault();
@@ -52,6 +50,8 @@ window.onwheel = function(e:WheelEvent) {
 
 
 window.onload = function() {
+
+    //Update UI: Tools
     let classes = ["text-white", "border-2", "invert", "rounded", "hover:bg-green-700", "hover:scale-110", "transform", "transition-all", "mdi"]
     let htmlTools = <HTMLElement>(document.getElementById("tool-section"));
 
@@ -71,6 +71,35 @@ window.onload = function() {
 
     switchTool("b");
 
+    //Update UI: Top-bar
+    let topBarHtml = <HTMLElement>(document.getElementById("top-bar"));
+    for (let item in topBar) {
+        let dropdown = <HTMLElement>(document.createElement("drop"));
+        let dropname = <HTMLElement>(document.createElement("button"));
+        let dropcont = <HTMLElement>(document.createElement("drop-content"));
+
+        dropname.innerHTML = item;
+
+
+        for (let i = 0; i < topBar[item].length; i++) {
+            let dropitemscont = document.createElement("item-section");
+
+            for (let innerItem in topBar[item][i]) {
+                let innerItemHTML = document.createElement("item");
+                innerItemHTML.innerText = innerItem;
+                dropitemscont.appendChild(innerItemHTML);
+                //const element = array[index];
+            }
+
+            dropcont.appendChild(dropitemscont);
+            console.log(topBar[item][i])
+        }
+
+        dropdown.appendChild(dropname);
+        dropdown.appendChild(dropcont);
+
+        topBarHtml.appendChild(dropdown);
+    }
 }
 
 function updateUIPos() {    
@@ -78,8 +107,56 @@ function updateUIPos() {
     (<HTMLElement>(document.getElementById("posY"))).innerText = Util.screenToCordY(CustomMouseEvent.mouseY).toString();
 }
 
+let topBar: {[key : string]: any} = {
+    "File"      : [
+        {
+            "New"           : Object,
+            "Open"          : Object,
+            "Save"          : Object,
+        },
 
 
+        {
+            "Import"        : Object,
+            "Export"        : Object,    
+        }
+    ],
+
+    "Layer"      : [
+        {
+            "Create layer"  : Object,
+            "Remove layer"  : Object,
+        },
+
+        {
+            "Clear"         : Object,
+        }
+],
+
+    "Tools"      : [
+        {
+            "Tool"          : Object,
+        },
+],
+
+    "Settings"      : [
+        {
+            "Theme"         : Object,
+            "Zoom"          : Object,
+            "Offset"        : Object,
+            "Grid"          : Object,
+            "Render"        : Object,
+        },
+],
+
+    "About"      : [
+        {
+            "Imitari"       : Object,
+        },
+],
+}
+
+console.log(topBar);
 let tools: {[key: string]: any} = { 
     "b" : {obj : new DrawTool(),  html : "", icon : "mdi-brush"},
     "l" : {obj : new LineTool(),  html : "", icon : "mdi-pencil-ruler"},

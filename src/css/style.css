@@ -37,17 +37,16 @@ drop drop-content {
     flex-direction: column;
 
     overflow-y: hidden;
-    transition: 1s;
+    transition: 0.1s;
 
     /*height: 0%;*/
 
     transform: scaleY(0);
     position: absolute;
-    display: none;
 
     min-width: 20vw;
 
-    z-index: 900;
+    z-index: 40;
 
 }
 drop drop-content item-section { 
