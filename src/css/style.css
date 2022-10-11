@@ -2,6 +2,58 @@
 @tailwind components;
 @tailwind utilities;
 
+/*
+li>ul                 { transform: translatex(100%) scale(0) }
+li:hover>ul           { transform: translatex(101%) scale(1) }
+li > button svg       { transform: rotate(-90deg) }
+li:hover > button svg { transform: rotate(-270deg) }
+*/
+
+drop {
+    margin: 1px;
+}
+
+drop button {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+drop drop-content {
+    height: 0%;
+    position: absolute;
+    display: none;
+}
+
+drop drop-content item {
+    margin: 1px;
+
+    padding-top: 2px;
+    padding-bottom: 2px;
+    padding-left: 10px;
+    padding-right: 10px;
+
+    cursor: pointer;
+}
+
+drop drop-content item:hover {
+    background-color: turquoise;
+}
+
+drop:hover button{
+    background-color: turquoise;
+}
+
+drop:hover drop-content {
+    height: unset;
+    display: flex;
+    z-index: 50;
+    background-color: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(15px);
+    min-width: 20vw;
+    flex-shrink: 1;
+    flex-grow: 0;
+}
+
 .canvas-div{
     width: 100%;
     height: 100%;

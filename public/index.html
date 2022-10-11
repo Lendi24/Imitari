@@ -23,18 +23,74 @@
 
 </head>
 
-<body class="flex flex-col h-screen m-0 z-1">
-    <div class="h-6 space-x-3">
+<body class="flex flex-col h-screen m-0 z-1 overflow-y-hidden">
+    <nav class="flex flex-row space-x-1">
         <span class="mdi mdi-brush ml-3"></span>
-        <button>File</button>
-        <button>Layer</button>
+        
+        <drop>
+            <button>File</button>
+            <drop-content class="flex flex-col z-30 overflow-y-hidden transition-all">
+                <item href="#">New</item>
+                <item href="#">Open</item>
+                <item href="#">Save</item>
+
+                <item href="#">Import</item>
+                <item href="#">Export</item>
+
+            </drop-content>
+        </drop>
+
+        <drop>
+            <button>Layer</button>
+            <drop-content class="flex flex-col z-30 overflow-y-hidden transition-all">
+                <item href="#">Clear</item>
+
+                <item href="#">New</item>
+                <item href="#">Remove</item>
+            </drop-content>
+        </drop>
+
+        <drop>
+            <button>Tools</button>
+            <drop-content class="flex flex-col z-30 overflow-y-hidden transition-all">
+                <item>Link 2</item>
+            </drop-content>
+        </drop>
+
+        <drop>
+            <button>Settings</button>
+            <drop-content class="flex flex-col z-30 overflow-y-hidden transition-all">
+                <item>Themes [end-item? ->]</item>
+                <item>Zoom</item>
+                <item>Offset</item>
+                <item>Grid</item>
+                <item>Render</item>
+
+            </drop-content>
+        </drop>
+
+        <drop>
+            <button>About</button>
+            <drop-content class="flex flex-col z-30 overflow-y-hidden transition-all">
+                <item>GitHub</item>
+                <item>---------------</item>
+                <item><b>Software developed by:</b></item>
+                <item>Fabian Lendic</item>
+                <item>Jonathan Nilsson</item>
+            </drop-content>
+        </drop>
+
+
+<!--
+            <button>Layer</button>
         <button>Tools</button>
         <button>Settings</button>
         <button>About</button>
-    </div>
 
-    <div class="flex flex-grow m-0 overflow-hidden bg-green-600 justify-between
-    ">
+-->
+    </nav>
+
+    <div class="flex flex-grow m-0 overflow-hidden bg-green-600 justify-between">
         <div class="bg-gray-600 z-20 bg-opacity-60 bg-blur-sm"><!--Tools-->
             <div class="space-y-3" id="tool-section"></div>
         </div> <!--Tools-->
