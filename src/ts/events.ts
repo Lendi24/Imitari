@@ -96,24 +96,6 @@ function switchTool(val:string) {
         DrawView.currentToolHTML = tool.html;
         DrawView.currentTool = tool.obj;
     } else { console.log("Not a tool"); }
-    /*
-    switch (val) {
-        case "b": //brush
-            DrawView.currentTool = new DrawTool();
-            break;
-    
-        case "l": //line
-            DrawView.currentTool = new LineTool();
-            break;
-
-
-        case "f": //fill
-            DrawView.currentTool = new FillTool();
-            break;
-    
-        default:
-            break;
-    }*/
 }
 
 class CustomMouseEvent {
