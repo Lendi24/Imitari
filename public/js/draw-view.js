@@ -1,31 +1,7 @@
 "use strict";
 class Pixel {
     constructor() {
-        this.r = 0;
-        this.g = 0;
-        this.b = 0;
-        this.a = 255;
-    }
-    getRGBA() {
-        return {
-            r: this.r,
-            g: this.g,
-            b: this.b,
-            a: this.a,
-        };
-    }
-    getStrRGBA() {
-        return ("rgba(" +
-            this.r + "," +
-            this.g + "," +
-            this.b + "," +
-            this.a + ")");
-    }
-    setRGBA(r, g, b, a) {
-        this.r = Util.clamp(r, 255, 0);
-        this.g = Util.clamp(g, 255, 0);
-        this.b = Util.clamp(b, 255, 0);
-        this.b = Util.clamp(a, 255, 0);
+        this.color = new Color(0, 0, 0, 1);
     }
 }
 class DrawViewLayer {
@@ -43,7 +19,7 @@ class DrawViewLayer {
     }
     placePixel(x, y) {
         try {
-            this.drawing[x][y].setRGBA(255, 255, 255, 255);
+            this.drawing[x][y].color = new Color(DrawView.primaryColour.r, DrawView.primaryColour.g, DrawView.primaryColour.b, DrawView.primaryColour.a);
         }
         catch (error) { }
     }
@@ -70,7 +46,7 @@ class DrawViewLayer {
                 ctx.lineTo(x * DrawView.pixelSize + DrawView.pixelSize - DrawView.pixelGapSize, y * DrawView.pixelSize + DrawView.pixelSize - DrawView.pixelGapSize);
                 ctx.lineTo(x * DrawView.pixelSize + DrawView.pixelGapSize, y * DrawView.pixelSize + DrawView.pixelSize - DrawView.pixelGapSize);
                 ctx.lineTo(x * DrawView.pixelSize + DrawView.pixelGapSize, y * DrawView.pixelSize + DrawView.pixelGapSize);
-                ctx.fillStyle = drawing[x][y].getStrRGBA();
+                ctx.fillStyle = drawing[x][y].color.getStrRGBA();
                 ctx.fill();
             }
         }
@@ -107,8 +83,9 @@ DrawView.pixelGapSize = 1;
 DrawView.zoom = 1;
 DrawView.offsetLeft = 0;
 DrawView.offsetTop = 0;
-DrawView.primaryColour = new Pixel();
-DrawView.secondaryColour = new Pixel();
+DrawView.primaryColour = new Color(0, 0, 0, 0);
+DrawView.secondaryColour = new Color(0, 0, 0, 0);
 DrawView.currentTool = new Tool();
 DrawView.currentToolHTML = document.createElement("div");
 DrawView.layers = new Array();
+DrawView.init(100, 80);

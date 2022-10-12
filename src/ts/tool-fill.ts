@@ -4,7 +4,7 @@ class FillTool extends Tool {
         if (CustomMouseEvent.mouseLeftDown && CustomMouseEvent.mouseLeftChanged) {
             let startPosX = Util.screenToCordX(CustomMouseEvent.mouseX);
             let startPosY = Util.screenToCordY(CustomMouseEvent.mouseY);
-            let oldColour = DrawView.getLayer(0).getPixel(startPosX, startPosY).getStrRGBA();
+            let oldColour = DrawView.getLayer(0).getPixel(startPosX, startPosY).color.getStrRGBA();
             let stack = [ {"x" : startPosX, "y" : startPosY} ];
             let checked = new Array();
             let iterations = 0;
@@ -40,7 +40,7 @@ class FillTool extends Tool {
                     
                     if (stack.indexOf(pos) == -1) {
                         try {
-                            if (DrawView.getLayer(0).getPixel(pos.x,pos.y).getStrRGBA() == oldColour) {
+                            if (DrawView.getLayer(0).getPixel(pos.x,pos.y).color.getStrRGBA() == oldColour) {
                                 stack.push( pos );
 
                                 DrawView.getLayer(0).placePixel(

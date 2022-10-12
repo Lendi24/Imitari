@@ -1,40 +1,8 @@
 class Pixel {
-    private r : number;
-    private g : number;
-    private b : number;
-    private a : number;
+    color: Color;
 
     constructor() {
-        this.r = 0;
-        this.g = 0;
-        this.b = 0;
-        this.a = 255;
-    }
-
-    getRGBA() {
-        return {
-            r: this.r,
-            g: this.g, 
-            b: this.b, 
-            a: this.a,
-        }
-    }
-
-    getStrRGBA() {
-        return (
-            "rgba("+
-            this.r+","+
-            this.g+","+
-            this.b+","+
-            this.a+")"
-        );
-    }
-
-    setRGBA(r : number, g : number, b : number, a : number) {
-        this.r = Util.clamp(r, 255, 0);
-        this.g = Util.clamp(g, 255, 0);
-        this.b = Util.clamp(b, 255, 0);
-        this.b = Util.clamp(a, 255, 0);
+        this.color = new Color(0, 0, 0, 1);
     }
 }
 
@@ -44,8 +12,13 @@ class DrawViewLayer {
 
     placePixel(x : number, y : number) {
         try {
-            this.drawing[x][y].setRGBA(255,255,255,255);
-        } catch (error) {  }
+            this.drawing[x][y].color = new Color (
+                DrawView.primaryColour.r,
+                DrawView.primaryColour.g,
+                DrawView.primaryColour.b,
+                DrawView.primaryColour.a,
+            );
+        } catch (error) {}
     }
 
     getPixel(x : number, y : number){
@@ -96,8 +69,9 @@ class DrawViewLayer {
                 ctx.lineTo(x*DrawView.pixelSize+DrawView.pixelGapSize,                      y*DrawView.pixelSize+DrawView.pixelSize-DrawView.pixelGapSize);
                 ctx.lineTo(x*DrawView.pixelSize+DrawView.pixelGapSize,                      y*DrawView.pixelSize+DrawView.pixelGapSize);
                 
-                //ctx.fillStyle = "rgb("+drawing[x][y].getRGBA().r+", "+drawing[x][y].getRGBA().g+", "+drawing[x][y].getRGBA().b+")"
-                ctx.fillStyle = drawing[x][y].getStrRGBA();
+                //ctx.fillStyle = "rgb(23, 25, 200)"
+                ctx.fillStyle = drawing[x][y].color.getStrRGBA();
+                //console.log(drawing[x][y].color.getStrRGBA());
                 ctx.fill();    
             }            
         }
@@ -115,8 +89,8 @@ class DrawView {
     static offsetLeft = 0;
     static offsetTop = 0;
 
-    static primaryColour = new Pixel();
-    static secondaryColour = new Pixel();
+    static primaryColour = new Color(0, 0, 0, 0);
+    static secondaryColour = new Color(0, 0, 0, 0);
 
     static currentTool = new Tool();
     static currentToolHTML = document.createElement("div");
@@ -152,3 +126,5 @@ class DrawView {
         return this.layers[i];
     }
 }
+
+DrawView.init(100,80);
