@@ -74,8 +74,8 @@ function updateUIPos() {
 let topBar = {
     "File": [
         {
-            "New": function () { new WinBox({ index: 100, title: "Create new project", }); },
-            "Open": function () { new WinBox({ index: 100, title: "Open a project", }); },
+            "New": function () { console.log("New"); },
+            "Open": function () { console.log("New"); },
             "Save": Object,
         },
         {
