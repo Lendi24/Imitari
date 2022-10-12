@@ -57,10 +57,10 @@ window.onload = function () {
             for (let innerItem in topBar[item][i]) {
                 let innerItemHTML = document.createElement("item");
                 innerItemHTML.innerText = innerItem;
+                innerItemHTML.onclick = topBar[item][i][innerItem];
                 dropitemscont.appendChild(innerItemHTML);
             }
             dropcont.appendChild(dropitemscont);
-            console.log(topBar[item][i]);
         }
         dropdown.appendChild(dropname);
         dropdown.appendChild(dropcont);
@@ -74,14 +74,20 @@ function updateUIPos() {
 let topBar = {
     "File": [
         {
-            "New": Object,
-            "Open": Object,
+            "New": function () { new WinBox({ index: 100, title: "Create new project", }); },
+            "Open": function () { new WinBox({ index: 100, title: "Open a project", }); },
             "Save": Object,
         },
         {
             "Import": Object,
             "Export": Object,
         }
+    ],
+    "Edit": [
+        {
+            "Undo": Object,
+            "Redo": Object,
+        },
     ],
     "Layer": [
         {
@@ -112,7 +118,6 @@ let topBar = {
         },
     ],
 };
-console.log(topBar);
 let tools = {
     "b": { obj: new DrawTool(), html: "", icon: "mdi-brush" },
     "l": { obj: new LineTool(), html: "", icon: "mdi-pencil-ruler" },

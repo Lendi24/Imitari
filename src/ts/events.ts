@@ -87,12 +87,12 @@ window.onload = function() {
             for (let innerItem in topBar[item][i]) {
                 let innerItemHTML = document.createElement("item");
                 innerItemHTML.innerText = innerItem;
+                innerItemHTML.onclick = topBar[item][i][innerItem];
                 dropitemscont.appendChild(innerItemHTML);
                 //const element = array[index];
             }
 
             dropcont.appendChild(dropitemscont);
-            console.log(topBar[item][i])
         }
 
         dropdown.appendChild(dropname);
@@ -110,8 +110,8 @@ function updateUIPos() {
 let topBar: {[key : string]: any} = {
     "File"      : [
         {
-            "New"           : Object,
-            "Open"          : Object,
+            "New"           : function () { new WinBox({index:100, title:"Create new project",}); },
+            "Open"          : function () { new WinBox({index:100, title:"Open a project",}); },
             "Save"          : Object,
         },
 
@@ -120,6 +120,13 @@ let topBar: {[key : string]: any} = {
             "Import"        : Object,
             "Export"        : Object,    
         }
+    ],
+
+    "Edit"      : [
+        {
+            "Undo"           : Object,
+            "Redo"           : Object,
+        },
     ],
 
     "Layer"      : [
@@ -156,7 +163,6 @@ let topBar: {[key : string]: any} = {
 ],
 }
 
-console.log(topBar);
 let tools: {[key: string]: any} = { 
     "b" : {obj : new DrawTool(),  html : "", icon : "mdi-brush"},
     "l" : {obj : new LineTool(),  html : "", icon : "mdi-pencil-ruler"},
