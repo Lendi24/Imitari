@@ -5,7 +5,14 @@ DrawView.jsCanvas.onmousedown = function (e) { e.preventDefault; CustomMouseEven
 DrawView.jsCanvas.onmousemove = function (e) { e.preventDefault; CustomMouseEvent.tick(e.clientX, e.clientY, e.buttons == 1, e.buttons == 2, e); updateUIPos(); };
 DrawView.jsCanvas.onmouseup = function (e) { e.preventDefault; CustomMouseEvent.tick(e.clientX, e.clientY, e.buttons == 1, e.buttons == 2, e); };
 DrawView.jsCanvas.onmouseleave = function (e) { e.preventDefault; CustomMouseEvent.tick(e.clientX, e.clientY, false, false, e); };
-window.onkeydown = function (e) { switchTool(e.key); };
+window.onkeydown = function (e) {
+    if (e.ctrlKey) {
+        commands(e.key);
+    }
+    else {
+        switchTool(e.key);
+    }
+};
 window.onwheel = function (e) {
     var _a;
     e.preventDefault;
@@ -69,6 +76,16 @@ function switchTool(val) {
         console.log("Not a tool");
     }
 }
+function commands(val) {
+    switch (val) {
+        case "z":
+            DrawView.undo();
+            break;
+        case "y":
+            DrawView.redo();
+            break;
+    }
+}
 class CustomMouseEvent {
     static tick(mouseX, mouseY, mouseLeftDown, mouseRightDown, e) {
         this.mouseX = mouseX;
@@ -78,6 +95,6 @@ class CustomMouseEvent {
         this.mouseRightChanged = !(mouseRightDown == this.mouseRightDown);
         this.mouseRightDown = mouseRightDown;
         this.e = e;
-        DrawView.currentTool.onMouse(this);
+        DrawView.currentTool.toolLogic(this);
     }
 }

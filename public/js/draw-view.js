@@ -25,7 +25,7 @@ class Pixel {
         this.r = Util.clamp(r, 255, 0);
         this.g = Util.clamp(g, 255, 0);
         this.b = Util.clamp(b, 255, 0);
-        this.b = Util.clamp(a, 255, 0);
+        this.a = Util.clamp(a, 255, 0);
     }
 }
 class DrawViewLayer {
@@ -39,7 +39,7 @@ class DrawViewLayer {
             }
         }
         let obj = this;
-        setInterval(function () { obj.drawToCanvas(obj.drawing); }, 1000 / this.targetFPS);
+        setInterval(function () { obj.drawToCanvas(); }, 1000 / this.targetFPS);
     }
     placePixel(x, y) {
         try {
@@ -56,21 +56,21 @@ class DrawViewLayer {
     getCanvasHeight() {
         return this.drawing[0].length;
     }
-    drawToCanvas(drawing) {
+    drawToCanvas() {
         let canvas = DrawView.jsCanvas;
         canvas.style.imageRendering = "pixelated";
         let ctx = canvas.getContext("2d");
         ctx.imageSmoothingEnabled = false;
         ctx['imageSmoothingEnabled'] = false;
-        for (let x = 0; x < drawing.length; x++) {
-            for (let y = 0; y < drawing[x].length; y++) {
+        for (let x = 0; x < this.drawing.length; x++) {
+            for (let y = 0; y < this.drawing[x].length; y++) {
                 ctx.beginPath();
                 ctx.moveTo(x * DrawView.pixelSize + DrawView.pixelGapSize, y * DrawView.pixelSize + DrawView.pixelGapSize);
                 ctx.lineTo(x * DrawView.pixelSize + DrawView.pixelSize - DrawView.pixelGapSize, y * DrawView.pixelSize + DrawView.pixelGapSize);
                 ctx.lineTo(x * DrawView.pixelSize + DrawView.pixelSize - DrawView.pixelGapSize, y * DrawView.pixelSize + DrawView.pixelSize - DrawView.pixelGapSize);
                 ctx.lineTo(x * DrawView.pixelSize + DrawView.pixelGapSize, y * DrawView.pixelSize + DrawView.pixelSize - DrawView.pixelGapSize);
                 ctx.lineTo(x * DrawView.pixelSize + DrawView.pixelGapSize, y * DrawView.pixelSize + DrawView.pixelGapSize);
-                ctx.fillStyle = drawing[x][y].getStrRGBA();
+                ctx.fillStyle = this.drawing[x][y].getStrRGBA();
                 ctx.fill();
             }
         }
@@ -84,6 +84,35 @@ class DrawView {
         this.currentTool = new DrawTool();
         this.newLayer(x, y);
         this.onResize();
+        DrawView.history.push(DrawView.getLayer(0).drawing);
+    }
+    static undo() {
+        if (DrawView.currHistoryIndex > 0) {
+            let newDrawing = DrawView.history[DrawView.currHistoryIndex];
+            for (let x = 0; x < newDrawing.length; x++) {
+                this.getLayer(0).drawing[x] = [];
+                for (let y = 0; y < newDrawing[x].length; y++) {
+                    this.getLayer(0).drawing[x][y] = new Pixel();
+                    this.getLayer(0).drawing[x][y].setRGBA(newDrawing[x][y].r, newDrawing[x][y].g, newDrawing[x][y].b, newDrawing[x][y].a);
+                }
+            }
+            DrawView.currHistoryIndex--;
+            console.log(DrawView.currHistoryIndex);
+        }
+    }
+    static redo() {
+        if (DrawView.currHistoryIndex < DrawView.history.length - 1) {
+            DrawView.currHistoryIndex++;
+            let newDrawing = DrawView.history[DrawView.currHistoryIndex];
+            for (let x = 0; x < newDrawing.length; x++) {
+                this.getLayer(0).drawing[x] = [];
+                for (let y = 0; y < newDrawing[x].length; y++) {
+                    this.getLayer(0).drawing[x][y] = new Pixel();
+                    this.getLayer(0).drawing[x][y].setRGBA(newDrawing[x][y].r, newDrawing[x][y].g, newDrawing[x][y].b, newDrawing[x][y].a);
+                }
+            }
+            console.log(DrawView.currHistoryIndex);
+        }
     }
     static onResize() {
         if (DrawView.jsCanvas.parentElement != null) {
@@ -112,3 +141,5 @@ DrawView.secondaryColour = new Pixel();
 DrawView.currentTool = new Tool();
 DrawView.currentToolHTML = document.createElement("div");
 DrawView.layers = new Array();
+DrawView.currHistoryIndex = 0;
+DrawView.history = new Array();

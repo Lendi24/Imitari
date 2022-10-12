@@ -20,6 +20,10 @@ class LineTool extends Tool {
                     y: Util.screenToCordY(CustomMouseEvent.mouseY)
                 }
 
+                if (this.secondPoint["x"] && this.secondPoint["y"]) {
+                    this.onBegin();
+                }
+
                 this.setLine(this.firstPoint, this.secondPoint);
 
                 //Resetar linjen
