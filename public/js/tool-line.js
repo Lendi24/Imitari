@@ -13,8 +13,12 @@ class LineTool extends Tool {
                     x: Util.screenToCordX(CustomMouseEvent.mouseX),
                     y: Util.screenToCordY(CustomMouseEvent.mouseY)
                 };
+                if (this.secondPoint["x"] && this.secondPoint["y"]) {
+                    this.onBegin();
+                }
                 this.setLine(this.firstPoint, this.secondPoint);
                 this.firstPoint = undefined;
+                this.onEnd();
             }
         }
     }

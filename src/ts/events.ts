@@ -9,7 +9,13 @@ DrawView.jsCanvas.onmousemove   = function(e:MouseEvent) {e.preventDefault; Cust
 DrawView.jsCanvas.onmouseup     = function(e:MouseEvent) {e.preventDefault; CustomMouseEvent.tick(e.clientX, e.clientY, e.buttons == 1, e.buttons == 2, e);};
 DrawView.jsCanvas.onmouseleave  = function(e:MouseEvent) {e.preventDefault; CustomMouseEvent.tick(e.clientX, e.clientY, false, false, e);};
 
-window.onkeydown     = function(e:KeyboardEvent) {switchTool(e.key)}
+window.onkeydown     = function(e:KeyboardEvent) {
+    if (e.ctrlKey) {
+        commands(e.key);
+    } else {
+        switchTool(e.key);
+    }
+}
 
 window.onwheel = function(e:WheelEvent) {
     e.preventDefault; 
@@ -181,15 +187,26 @@ function switchTool(val:string) {
     } else { console.log("Not a tool"); }
 }
 
+function commands(val: string){
+    switch (val) {
+        case "z":
+            DrawView.undo();
+            break;
+        case "y":
+            DrawView.redo();
+            break;
+    }
+}
+
 class CustomMouseEvent {
     static mouseX : number;
     static mouseY : number;
 
-    static mouseLeftDown : boolean;
-    static mouseLeftChanged : boolean;
+    static mouseLeftDown     = false;
+    static mouseLeftChanged  = false;
 
-    static mouseRightDown : boolean;
-    static mouseRightChanged : boolean;
+    static mouseRightDown    = false;
+    static mouseRightChanged = false;
     
     static e : MouseEvent;
 

@@ -13,6 +13,10 @@ class ShapeTool extends LineTool {
                 y: Util.screenToCordY(CustomMouseEvent.mouseY)
             }
 
+            if (this.center["x"] && this.center["y"]) {
+                this.onBegin();
+            }
+
             //Variabler
             this.radius = 10; /* I bitmap pixlar */
             this.numberOfSides = 4;
@@ -38,6 +42,9 @@ class ShapeTool extends LineTool {
                 this.setLine(this.firstPoint, this.secondPoint);
                 this.firstPoint = this.secondPoint;
             }
+
+            //Funktionen har utförts
+            this.onEnd();
         }
 
     }

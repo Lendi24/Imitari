@@ -6,6 +6,9 @@ class ShapeTool extends LineTool {
                 x: Util.screenToCordX(CustomMouseEvent.mouseX),
                 y: Util.screenToCordY(CustomMouseEvent.mouseY)
             };
+            if (this.center["x"] && this.center["y"]) {
+                this.onBegin();
+            }
             this.radius = 10;
             this.numberOfSides = 4;
             let angle = (2 * Math.PI) / this.numberOfSides;
@@ -21,6 +24,7 @@ class ShapeTool extends LineTool {
                 this.setLine(this.firstPoint, this.secondPoint);
                 this.firstPoint = this.secondPoint;
             }
+            this.onEnd();
         }
     }
 }

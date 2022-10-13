@@ -29,6 +29,9 @@ class FillTool extends Tool {
                 stack.shift();
             }
 
+            //Funktionen har utförts
+            this.onEnd();
+
             function checkPixel(pos : any, stack : Array<Object>) {
                 if (pos.x >= 0 && pos.x < DrawView.getLayer(0).drawing.length && pos.y >= 0 && pos.y < DrawView.getLayer(0).drawing[0].length) {
                     
