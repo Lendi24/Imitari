@@ -18,6 +18,7 @@ class LineTool extends Tool {
                 }
                 this.setLine(this.firstPoint, this.secondPoint);
                 this.firstPoint = undefined;
+                this.onEnd();
             }
         }
     }

@@ -84,11 +84,11 @@ class DrawView {
         this.currentTool = new DrawTool();
         this.newLayer(x, y);
         this.onResize();
-        DrawView.history.push(DrawView.getLayer(0).drawing);
+        DrawView.history.push(JSON.parse(JSON.stringify(DrawView.getLayer(0).drawing)));
     }
     static undo() {
         if (DrawView.currHistoryIndex > 0) {
-            let newDrawing = DrawView.history[DrawView.currHistoryIndex];
+            let newDrawing = DrawView.history[--DrawView.currHistoryIndex];
             for (let x = 0; x < newDrawing.length; x++) {
                 this.getLayer(0).drawing[x] = [];
                 for (let y = 0; y < newDrawing[x].length; y++) {
@@ -96,14 +96,11 @@ class DrawView {
                     this.getLayer(0).drawing[x][y].setRGBA(newDrawing[x][y].r, newDrawing[x][y].g, newDrawing[x][y].b, newDrawing[x][y].a);
                 }
             }
-            DrawView.currHistoryIndex--;
-            console.log(DrawView.currHistoryIndex);
         }
     }
     static redo() {
         if (DrawView.currHistoryIndex < DrawView.history.length - 1) {
-            DrawView.currHistoryIndex++;
-            let newDrawing = DrawView.history[DrawView.currHistoryIndex];
+            let newDrawing = DrawView.history[++DrawView.currHistoryIndex];
             for (let x = 0; x < newDrawing.length; x++) {
                 this.getLayer(0).drawing[x] = [];
                 for (let y = 0; y < newDrawing[x].length; y++) {
@@ -111,7 +108,6 @@ class DrawView {
                     this.getLayer(0).drawing[x][y].setRGBA(newDrawing[x][y].r, newDrawing[x][y].g, newDrawing[x][y].b, newDrawing[x][y].a);
                 }
             }
-            console.log(DrawView.currHistoryIndex);
         }
     }
     static onResize() {

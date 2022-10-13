@@ -42,6 +42,9 @@ class ShapeTool extends LineTool {
                 this.setLine(this.firstPoint, this.secondPoint);
                 this.firstPoint = this.secondPoint;
             }
+
+            //Funktionen har utförts
+            this.onEnd();
         }
 
     }

@@ -1,19 +1,16 @@
 class Tool {
     constructor() {}
-    toolLogic(event: CustomMouseEvent) {
-        this.onMouse(event);
-    }
     onMouse(event : CustomMouseEvent) {}
-    onBegin() {
+    onBegin() {}
+    onEnd() {
+        
+        DrawView.history[++DrawView.currHistoryIndex] = JSON.parse(JSON.stringify(DrawView.getLayer(0).drawing));
 
-        DrawView.currHistoryIndex++;
-        DrawView.history[DrawView.currHistoryIndex] = JSON.parse(JSON.stringify(DrawView.getLayer(0).drawing));
-
-        if (DrawView.currHistoryIndex + 1 != DrawView.history.length) {
-            for (let i = DrawView.currHistoryIndex; i < DrawView.history.length; i++) {
-                DrawView.history[i].pop;
+        if (DrawView.currHistoryIndex + 1 < DrawView.history.length) {
+            let historyLength = DrawView.history.length;
+            for (let i = DrawView.currHistoryIndex + 1; i < historyLength; i++) {
+                DrawView.history.pop();
             }   
         }
     }
-    onEnd() {}
 }

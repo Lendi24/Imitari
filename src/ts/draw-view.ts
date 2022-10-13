@@ -134,14 +134,15 @@ class DrawView {
         this.currentTool = new DrawTool();
         this.newLayer(x, y);
         this.onResize();
-        DrawView.history.push(DrawView.getLayer(0).drawing);
+        DrawView.history.push(JSON.parse(JSON.stringify(DrawView.getLayer(0).drawing)));
     }
 
     static undo(){
+
         //Undo-ar bara om det finns saker att undo-a
         if (DrawView.currHistoryIndex > 0) {
-            
-            let newDrawing = DrawView.history[DrawView.currHistoryIndex]
+
+            let newDrawing = DrawView.history[--DrawView.currHistoryIndex];
             for (let x = 0; x < newDrawing.length; x++) {
                 this.getLayer(0).drawing[x] = [];
                 for (let y = 0; y < newDrawing[x].length; y++) {
@@ -154,20 +155,15 @@ class DrawView {
                     );
                 }
             }
-            
-            DrawView.currHistoryIndex--;
-            console.log(DrawView.currHistoryIndex);
-
         }
     }
 
     static redo(){
+
         //Redo-ar bara om det finns saker att redo-a
-        //console.log(DrawView.currHistoryIndex + " : " + DrawView.history.length);
         if (DrawView.currHistoryIndex < DrawView.history.length - 1) {
-            DrawView.currHistoryIndex++;
-            let newDrawing = DrawView.history[DrawView.currHistoryIndex];
-            
+
+            let newDrawing = DrawView.history[++DrawView.currHistoryIndex];
             for (let x = 0; x < newDrawing.length; x++) {
                 this.getLayer(0).drawing[x] = [];
                 for (let y = 0; y < newDrawing[x].length; y++) {
@@ -180,8 +176,6 @@ class DrawView {
                     );
                 }
             }
-            //console.log(this.getLayer(0).drawing);
-            console.log(DrawView.currHistoryIndex);
         }
     }
 

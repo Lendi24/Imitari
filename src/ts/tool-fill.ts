@@ -4,9 +4,6 @@ class FillTool extends Tool {
         if (CustomMouseEvent.mouseLeftDown && CustomMouseEvent.mouseLeftChanged) {
             let startPosX = Util.screenToCordX(CustomMouseEvent.mouseX);
             let startPosY = Util.screenToCordY(CustomMouseEvent.mouseY);
-            if (startPosX && startPosY) {
-                this.onBegin();
-            }
             let oldColour = DrawView.getLayer(0).getPixel(startPosX, startPosY).getStrRGBA();
             let stack = [ {"x" : startPosX, "y" : startPosY} ];
             let checked = new Array();
@@ -31,6 +28,9 @@ class FillTool extends Tool {
                 checked.push(stack[0]);
                 stack.shift();
             }
+
+            //Funktionen har utförts
+            this.onEnd();
 
             function checkPixel(pos : any, stack : Array<Object>) {
                 if (pos.x >= 0 && pos.x < DrawView.getLayer(0).drawing.length && pos.y >= 0 && pos.y < DrawView.getLayer(0).drawing[0].length) {

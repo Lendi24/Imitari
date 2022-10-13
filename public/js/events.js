@@ -95,6 +95,10 @@ class CustomMouseEvent {
         this.mouseRightChanged = !(mouseRightDown == this.mouseRightDown);
         this.mouseRightDown = mouseRightDown;
         this.e = e;
-        DrawView.currentTool.toolLogic(this);
+        DrawView.currentTool.onMouse(this);
     }
 }
+CustomMouseEvent.mouseLeftDown = false;
+CustomMouseEvent.mouseLeftChanged = false;
+CustomMouseEvent.mouseRightDown = false;
+CustomMouseEvent.mouseRightChanged = false;

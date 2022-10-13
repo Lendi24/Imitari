@@ -28,6 +28,9 @@ class LineTool extends Tool {
 
                 //Resetar linjen
                 this.firstPoint = undefined;
+
+                //Funktionen har utförts
+                this.onEnd();
             }
         }
     }

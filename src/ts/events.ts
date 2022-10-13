@@ -137,11 +137,11 @@ class CustomMouseEvent {
     static mouseX : number;
     static mouseY : number;
 
-    static mouseLeftDown : boolean;
-    static mouseLeftChanged : boolean;
+    static mouseLeftDown     = false;
+    static mouseLeftChanged  = false;
 
-    static mouseRightDown : boolean;
-    static mouseRightChanged : boolean;
+    static mouseRightDown    = false;
+    static mouseRightChanged = false;
     
     static e : MouseEvent;
 
@@ -157,7 +157,7 @@ class CustomMouseEvent {
 
         this.e = e;
 
-        DrawView.currentTool.toolLogic(this);
+        DrawView.currentTool.onMouse(this);
     }
 }
 

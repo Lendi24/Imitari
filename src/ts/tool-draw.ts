@@ -16,12 +16,19 @@ class DrawTool extends LineTool {
             this.secondPoint = undefined;
         }
         else if (CustomMouseEvent.mouseLeftDown) {
+
             this.secondPoint = {
                 x: Util.screenToCordX(CustomMouseEvent.mouseX),
                 y: Util.screenToCordY(CustomMouseEvent.mouseY)
             }
+
             this.setLine(this.firstPoint!, this.secondPoint!);
             this.firstPoint = this.secondPoint;
+        }
+        else if (!CustomMouseEvent.mouseLeftDown && CustomMouseEvent.mouseLeftChanged) {
+
+            //Funktionen har utförts
+            this.onEnd();
         }
     }
 }

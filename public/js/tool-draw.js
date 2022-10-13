@@ -20,5 +20,8 @@ class DrawTool extends LineTool {
             this.setLine(this.firstPoint, this.secondPoint);
             this.firstPoint = this.secondPoint;
         }
+        else if (!CustomMouseEvent.mouseLeftDown && CustomMouseEvent.mouseLeftChanged) {
+            this.onEnd();
+        }
     }
 }
