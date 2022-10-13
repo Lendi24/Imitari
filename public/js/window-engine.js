@@ -1,8 +1,8 @@
 "use strict";
 let winIndex = 100;
+let winOff = 100;
 class CustomWindow {
     constructor(title, contentURL) {
-        this.index = 100;
         this.minWidth = 0;
         this.minHeight = 0;
         this.buttons = {
@@ -12,22 +12,24 @@ class CustomWindow {
         };
         this.classes = ["window", "window-model"];
         this.parent = document.body;
-        let window = document.createElement("custom-window");
+        let customWindow = document.createElement("custom-window");
         this.classes.forEach(clss => {
-            window.classList.add(clss);
+            customWindow.classList.add(clss);
         });
+        customWindow.onmousedown = function (e) {
+            customWindow.style.zIndex = (++winIndex).toString();
+        };
         let windowHead = document.createElement("div");
         windowHead.classList.add("head");
-        window.onmousedown = function (e) {
-            window.style.zIndex = (++winIndex).toString();
-        };
         windowHead.onmousedown = function (e) {
             e.preventDefault();
             let offsetX = windowHead.getBoundingClientRect().left - e.clientX;
             let offsetY = windowHead.getBoundingClientRect().top - e.clientY;
             document.onmousemove = function (e) {
-                window.style.left = (e.clientX + (offsetX)) + "px";
-                window.style.top = (e.clientY + (offsetY)) + "px";
+                customWindow.style.left = Util.clamp((e.clientX + (offsetX)), window.innerWidth - customWindow.getBoundingClientRect().width, 0) + "px";
+                customWindow.style.top = Util.clamp((e.clientY + (offsetY)), window.innerHeight - customWindow.getBoundingClientRect().height, 0) + "px";
+                if (customWindow.getBoundingClientRect().right < window.innerWidth) {
+                }
             };
             document.onmouseup = function (e) {
                 document.onmousemove = null;
@@ -39,6 +41,8 @@ class CustomWindow {
         xhttp.onload = function () {
             if (xhttp.status === 200) {
                 windowContent.innerHTML = (this.responseText);
+                customWindow.style.left = ((window.innerWidth - customWindow.clientWidth) / 2) + "px";
+                customWindow.style.top = ((window.innerHeight - customWindow.clientHeight) / 2) + "px";
             }
             else {
                 console.log("(🔴) Could not find requested page \"" + contentURL + "\"" + " on the server or in cache");
@@ -56,12 +60,12 @@ class CustomWindow {
             buttonCont.appendChild(button);
         }
         windowFoot.appendChild(buttonCont);
-        window.style.minWidth = this.minWidth + "vw";
-        window.style.minHeight = this.minHeight + "vh";
-        window.style.zIndex = this.index.toString();
-        window.appendChild(windowHead);
-        window.appendChild(windowContent);
-        window.appendChild(windowFoot);
-        return (this.parent.appendChild(window));
+        customWindow.style.minWidth = this.minWidth + "vw";
+        customWindow.style.minHeight = this.minHeight + "vh";
+        customWindow.style.zIndex = winIndex.toString();
+        customWindow.appendChild(windowHead);
+        customWindow.appendChild(windowContent);
+        customWindow.appendChild(windowFoot);
+        customWindow = this.parent.appendChild(customWindow);
     }
 }

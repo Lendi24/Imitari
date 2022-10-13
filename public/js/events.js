@@ -55,7 +55,7 @@ window.onload = function () {
             for (let innerItem in topBar[item][i]) {
                 let innerItemHTML = document.createElement("item");
                 innerItemHTML.innerText = innerItem;
-                innerItemHTML.onclick = topBar[item][i][innerItem];
+                innerItemHTML.onmousedown = topBar[item][i][innerItem];
                 dropitemscont.appendChild(innerItemHTML);
             }
             dropcont.appendChild(dropitemscont);
@@ -96,11 +96,6 @@ let topBar = {
             "Clear": Object,
         }
     ],
-    "Tools": [
-        {
-            "Tool": Object,
-        },
-    ],
     "Settings": [
         {
             "Theme": Object,
@@ -112,7 +107,7 @@ let topBar = {
     ],
     "About": [
         {
-            "Imitari": Object,
+            "Imitari": function () { new CustomWindow("re", "http://127.0.0.1:5500/public/html/windows/top-bar/about/Imitari.html"); },
         },
     ],
 };
@@ -123,15 +118,16 @@ let tools = {
     "s": { obj: new ShapeTool(), html: "", icon: "mdi-shape" },
 };
 function switchTool(val) {
-    let tool = tools[val];
-    if (tool.obj && tool.html != DrawView.currentToolHTML) {
-        tool.html.classList.add("bg-green-600");
-        DrawView.currentToolHTML.classList.remove("bg-green-600");
-        DrawView.currentToolHTML = tool.html;
-        DrawView.currentTool = tool.obj;
+    try {
+        let tool = tools[val];
+        if (tool.obj && tool.html != DrawView.currentToolHTML) {
+            tool.html.classList.add("bg-green-600");
+            DrawView.currentToolHTML.classList.remove("bg-green-600");
+            DrawView.currentToolHTML = tool.html;
+            DrawView.currentTool = tool.obj;
+        }
     }
-    else {
-        console.log("Not a tool");
+    catch (error) {
     }
 }
 class CustomMouseEvent {

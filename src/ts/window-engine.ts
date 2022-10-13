@@ -1,12 +1,12 @@
 let winIndex = 100;
+let winOff = 100;
 class CustomWindow {
-    index = 100;
 
     minWidth = 0;
     minHeight = 0;
 
     buttons = {
-        "Done" : function() {(this.parentElement.parentElement.parentElement).remove();
+        "Done" : function() {( this.parentElement.parentElement.parentElement ).remove();
         }
     };
     
@@ -17,18 +17,19 @@ class CustomWindow {
     constructor(title : string, contentURL : string) {
 
         // WINDOW //
-        let window = document.createElement("custom-window");
+        let customWindow = document.createElement("custom-window");
 
         this.classes.forEach(clss => {
-            window.classList.add(clss);
+            customWindow.classList.add(clss);
         });
+
+        customWindow.onmousedown = function(e) {
+            customWindow.style.zIndex = (++winIndex).toString();
+        }
 
         // HEAD //
         let windowHead = document.createElement("div");
         windowHead.classList.add("head");
-        window.onmousedown = function(e) {
-            window.style.zIndex = (++winIndex).toString();
-        }
         windowHead.onmousedown = function(e) {
             e.preventDefault();
 
@@ -38,14 +39,16 @@ class CustomWindow {
 
             //MouseDrag move event  
             document.onmousemove = function(e) {
-                window.style.left    =  (e.clientX + ( offsetX )) + "px"; 
-                window.style.top     =  (e.clientY + ( offsetY )) + "px"; 
+                customWindow.style.left    =  Util.clamp((e.clientX + ( offsetX )), window.innerWidth  - customWindow.getBoundingClientRect().width,  0) + "px"; 
+                customWindow.style.top     =  Util.clamp((e.clientY + ( offsetY )), window.innerHeight - customWindow.getBoundingClientRect().height, 0) + "px"; 
+
+                if (customWindow.getBoundingClientRect().right < window.innerWidth) {
+                }
             }
 
             //MouseDrag stop event
             document.onmouseup = function(e) {
                 document.onmousemove = null;
-                //newWindow.style.zIndex = "1";
             }
         };
         // CONTENT //
@@ -57,7 +60,10 @@ class CustomWindow {
         xhttp.onload = function () {
             if (xhttp.status === 200) {
                 windowContent.innerHTML = (this.responseText);
+                customWindow.style.left = ((window.innerWidth  - customWindow.clientWidth )/2)+"px";
+                customWindow.style.top =  ((window.innerHeight - customWindow.clientHeight)/2)+"px";
             }
+
             else {
                 console.log("(🔴) Could not find requested page \""+contentURL+"\"" + " on the server or in cache"); 
             }
@@ -81,15 +87,15 @@ class CustomWindow {
 
 
 
-        window.style.minWidth = this.minWidth+"vw";
-        window.style.minHeight = this.minHeight+"vh";
-        window.style.zIndex = this.index.toString();
+        customWindow.style.minWidth = this.minWidth+"vw";
+        customWindow.style.minHeight = this.minHeight+"vh";
+        customWindow.style.zIndex = winIndex.toString();
 
-        window.appendChild(windowHead);
-        window.appendChild(windowContent);
-        window.appendChild(windowFoot);
+        customWindow.appendChild(windowHead);
+        customWindow.appendChild(windowContent);
+        customWindow.appendChild(windowFoot);
 
-        return (this.parent.appendChild(window));
-        //parent.appendChild(this.addContent(window));
+        customWindow = this.parent.appendChild(customWindow);
+
     }
 }

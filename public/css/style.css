@@ -31231,6 +31231,23 @@ video {
 --------------WINDOW--------------
 --------------------------------*/
 
+#window-model {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 0vh;
+  background-color: #ffffff3d;
+  -webkit-backdrop-filter: blur(14px);
+          backdrop-filter: blur(14px);
+  z-index: 99;
+  transition: 0.5s;
+}
+
+#window-model:hover {
+  height: 100vh;
+}
+
 .window {
   background-color: #fff;
   position: fixed;
@@ -31288,6 +31305,24 @@ video {
 .window>.foot>window-buttons {
   display: flex;
   flex-direction: row-reverse;
+  height: 100%;
+}
+
+.window>.foot>window-buttons>button {
+  color: white;
+  /*background-color: black;*/
+  margin: 10px;
+  padding: 5px;
+  border-width: 1px;
+  border-radius: 10px;
+  transition: 0.4s;
+  text-align: center;
+}
+
+.window>.foot>window-buttons>button:hover {
+  scale: 1.1;
+  border-radius: 5px;
+  background-color: green;
 }
 
 /*
@@ -31365,6 +31400,11 @@ drop:hover drop-content {
           backdrop-filter: blur(15px);
   flex-shrink: 1;
   flex-grow: 0;
+}
+
+drop drop-content:active {
+  height: 0px;
+  transform: scaleY(0);
 }
 
 .canvas-div{
