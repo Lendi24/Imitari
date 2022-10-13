@@ -137,6 +137,28 @@ class DrawView {
         DrawView.history.push(JSON.parse(JSON.stringify(DrawView.getLayer(0).drawing)));
     }
 
+    static save(){
+
+        //För canvas
+        localStorage.setItem("pixelSize", this.pixelSize.toString());
+        localStorage.setItem("pixelGapSize", this.pixelGapSize.toString());
+        localStorage.setItem("zoom", this.zoom.toString());
+        localStorage.setItem("offsetLeft", this.offsetLeft.toString());
+        localStorage.setItem("offsetTop", this.offsetTop.toString());
+
+        //Tools & Layers
+        localStorage.setItem("layers", JSON.stringify(this.layers));
+            //Current tool (Save tool name)
+        
+        //History
+        localStorage.setItem("history", JSON.stringify(this.history));
+        localStorage.setItem("currHistoryIndex", this.currHistoryIndex.toString());
+
+        //Färger
+        localStorage.setItem("primaryColor", JSON.stringify(this.primaryColour));
+        localStorage.setItem("secondaryColor", JSON.stringify(this.secondaryColour));
+    }
+
     static undo(){
 
         //Undo-ar bara om det finns saker att undo-a

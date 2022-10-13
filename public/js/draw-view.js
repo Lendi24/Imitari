@@ -86,6 +86,18 @@ class DrawView {
         this.onResize();
         DrawView.history.push(JSON.parse(JSON.stringify(DrawView.getLayer(0).drawing)));
     }
+    static save() {
+        localStorage.setItem("pixelSize", this.pixelSize.toString());
+        localStorage.setItem("pixelGapSize", this.pixelGapSize.toString());
+        localStorage.setItem("zoom", this.zoom.toString());
+        localStorage.setItem("offsetLeft", this.offsetLeft.toString());
+        localStorage.setItem("offsetTop", this.offsetTop.toString());
+        localStorage.setItem("layers", JSON.stringify(this.layers));
+        localStorage.setItem("history", JSON.stringify(this.history));
+        localStorage.setItem("currHistoryIndex", this.currHistoryIndex.toString());
+        localStorage.setItem("primaryColor", JSON.stringify(this.primaryColour));
+        localStorage.setItem("secondaryColor", JSON.stringify(this.secondaryColour));
+    }
     static undo() {
         if (DrawView.currHistoryIndex > 0) {
             let newDrawing = DrawView.history[--DrawView.currHistoryIndex];
