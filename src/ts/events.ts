@@ -24,18 +24,17 @@ window.onwheel = function(e:WheelEvent) {
             DrawView.zoom = Util.clamp(DrawView.zoom - DrawView.zoom * 0.1, 100, 0.01);
         }
 
-        document.getElementById("zoom")?.innerText = Math.floor(DrawView.zoom * 100);
+        (<HTMLElement>(document.getElementById("zoom"))).innerText = (Math.floor(DrawView.zoom * 100)).toString();
         DrawView.jsCanvas.style.transform = `scale(${(DrawView.zoom)})`;
     } else {
-        console.log(DrawView.offsetTop)
         
         if (e.deltaY != 0 && e.deltaX == 0) {
             DrawView.offsetTop = Util.clamp(DrawView.offsetTop + e.deltaY * 0.01, 150, -150);
-            DrawView.jsCanvas.parentElement.style.marginTop = -DrawView.offsetTop+"%";/*`${(DrawView.offsetTop)}px;`;*/
+            DrawView.jsCanvas.parentElement!.style.marginTop = -DrawView.offsetTop+"%";/*`${(DrawView.offsetTop)}px;`;*/
 
         } else {
             DrawView.offsetLeft = Util.clamp(DrawView.offsetLeft + e.deltaX * 0.01, 150, -150);
-            DrawView.jsCanvas.parentElement.style.marginLeft = -DrawView.offsetLeft+"%";/*`${(DrawView.offsetTop)}px;`;*/
+            DrawView.jsCanvas.parentElement!.style.marginLeft = -DrawView.offsetLeft+"%";/*`${(DrawView.offsetTop)}px;`;*/
         }    
 
     }
