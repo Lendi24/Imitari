@@ -1,8 +1,8 @@
 class Pixel {
-    private r : number;
-    private g : number;
-    private b : number;
-    private a : number;
+    r : number;
+    g : number;
+    b : number;
+    a : number;
 
     constructor() {
         this.r = 0;
@@ -123,7 +123,7 @@ class DrawView {
     static layers = new Array();
 
     static currHistoryIndex = 0;
-    static history: Array<Array<Pixel>> = new Array();
+    static history: Array<Array<Array<Pixel>>> = new Array();
 
     static changePixelSize() {
         
