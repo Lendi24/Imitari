@@ -12,5 +12,8 @@ class Tool {
                 DrawView.history.pop();
             }   
         }
+
+        //Sparar nuvarande stadiet av allting till local storage
+        DrawView.save();
     }
 }

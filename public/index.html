@@ -2,8 +2,12 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link defer rel="stylesheet" href="./css/style.css"> 
+    <link defer rel="stylesheet" href="./tools/material-icons/icons/materialdesignicons.min.css"> 
+
+    <script defer src="./js/window-engine.js"></script>
 
     <script defer src="./js/tool.js"></script>
     <script defer src="./js/tool-line.js"></script>
@@ -14,28 +18,23 @@
 
     <script defer src="./js/draw-view.js"></script>
 
+    <script defer src="./js/ui-loader.js"></script>
+
     <script defer src="./js/events.js"></script>
     <script defer src="./js/general.js"></script>
-
-    <link rel="stylesheet" href="./css/style.css"> 
-    <link rel="stylesheet" href="./css/tools/icons/materialdesignicons.min.css"> 
     
     <title>Imitiari</title>
 
 </head>
 
-<body class="flex flex-col h-screen m-0 z-1">
-    <div class="h-6 space-x-3">
+<body class="flex flex-col h-screen m-0 z-1 overflow-y-hidden">
+    
+    <nav class="flex flex-row space-x-1 z-30" id="top-bar">
         <span class="mdi mdi-brush ml-3"></span>
-        <button>File</button>
-        <button>Tools</button>
-        <button>Settings</button>
-        <button>About</button>
-    </div>
+    </nav>
 
-    <div class="flex flex-grow m-0 overflow-hidden bg-green-600 justify-between
-    ">
-        <div class="bg-gray-600 z-20 bg-opacity-60 bg-blur-sm"><!--Tools-->
+    <div class="flex flex-grow m-0 overflow-hidden bg-green-600 justify-between">
+        <div class="bg-gray-600 z-20 bg-opacity-60 bg-blur-sm background-blur"><!--Tools-->
             <div class="space-y-3" id="tool-section"></div>
         </div> <!--Tools-->
         <div class="canvas-div  m-0 flex justify-center items-center">
@@ -46,10 +45,14 @@
             </div>
         </div>
     </div>
-    <div class="h-6 flex justify-between">
+    <fot class="h-6 flex justify-between z-30">
         <b class="ml-1 mr-1">Pos: X: <b id="posX">0</b>, Y: <b id="posY">0</b></b>
         <b class="ml-1 mr-1">Layer Size: 0 x 0</b>
         <b class="ml-1 mr-1">Zoom: <b id="zoom">100</b>%</b>
+    </fot>
+
+    <div id = "window-cont">
+        <div id = "window-model"></div>
     </div>
 </body>
 </html>

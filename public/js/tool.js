@@ -11,5 +11,6 @@ class Tool {
                 DrawView.history.pop();
             }
         }
+        DrawView.save();
     }
 }
