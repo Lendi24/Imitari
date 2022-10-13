@@ -1,3 +1,4 @@
+let winIndex = 100;
 class CustomWindow {
     index = 100;
 
@@ -5,7 +6,8 @@ class CustomWindow {
     minHeight = 0;
 
     buttons = {
-        "Done" : function(){console.log("Done!")}
+        "Done" : function() {(this.parentElement.parentElement.parentElement).remove();
+        }
     };
     
     classes = ["window", "window-model"];
@@ -13,6 +15,8 @@ class CustomWindow {
     //parent = document.getElementById("window-container");
 
     constructor(title : string, contentURL : string) {
+
+        // WINDOW //
         let window = document.createElement("custom-window");
 
         this.classes.forEach(clss => {
@@ -22,8 +26,28 @@ class CustomWindow {
         // HEAD //
         let windowHead = document.createElement("div");
         windowHead.classList.add("head");
+        window.onmousedown = function(e) {
+            window.style.zIndex = (++winIndex).toString();
+        }
+        windowHead.onmousedown = function(e) {
+            e.preventDefault();
+
+            let offsetX = windowHead.getBoundingClientRect().left - e.clientX;
+            let offsetY = windowHead.getBoundingClientRect().top -  e.clientY;
 
 
+            //MouseDrag move event  
+            document.onmousemove = function(e) {
+                window.style.left    =  (e.clientX + ( offsetX )) + "px"; 
+                window.style.top     =  (e.clientY + ( offsetY )) + "px"; 
+            }
+
+            //MouseDrag stop event
+            document.onmouseup = function(e) {
+                document.onmousemove = null;
+                //newWindow.style.zIndex = "1";
+            }
+        };
         // CONTENT //
         let windowContent = document.createElement("div");
         windowContent.classList.add("content");

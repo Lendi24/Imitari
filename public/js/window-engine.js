@@ -1,11 +1,14 @@
 "use strict";
+let winIndex = 100;
 class CustomWindow {
     constructor(title, contentURL) {
         this.index = 100;
         this.minWidth = 0;
         this.minHeight = 0;
         this.buttons = {
-            "Done": function () { console.log("Done!"); }
+            "Done": function () {
+                (this.parentElement.parentElement.parentElement).remove();
+            }
         };
         this.classes = ["window", "window-model"];
         this.parent = document.body;
@@ -15,6 +18,21 @@ class CustomWindow {
         });
         let windowHead = document.createElement("div");
         windowHead.classList.add("head");
+        window.onmousedown = function (e) {
+            window.style.zIndex = (++winIndex).toString();
+        };
+        windowHead.onmousedown = function (e) {
+            e.preventDefault();
+            let offsetX = windowHead.getBoundingClientRect().left - e.clientX;
+            let offsetY = windowHead.getBoundingClientRect().top - e.clientY;
+            document.onmousemove = function (e) {
+                window.style.left = (e.clientX + (offsetX)) + "px";
+                window.style.top = (e.clientY + (offsetY)) + "px";
+            };
+            document.onmouseup = function (e) {
+                document.onmousemove = null;
+            };
+        };
         let windowContent = document.createElement("div");
         windowContent.classList.add("content");
         let xhttp = new XMLHttpRequest();
