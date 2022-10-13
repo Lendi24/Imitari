@@ -127,15 +127,15 @@ class DrawView {
 }
 DrawView.jsCanvas = document.getElementById("drawing-area");
 DrawView.jsCanvasCtx = DrawView.jsCanvas.getContext("2d");
-DrawView.pixelSize = 5;
-DrawView.pixelGapSize = 1;
-DrawView.zoom = 1;
-DrawView.offsetLeft = 0;
-DrawView.offsetTop = 0;
-DrawView.primaryColour = new Pixel();
-DrawView.secondaryColour = new Pixel();
+DrawView.pixelSize = (localStorage.getItem("pixelSize")) ? parseInt(localStorage.getItem("pixelSize")) : 5;
+DrawView.pixelGapSize = (localStorage.getItem("pixelGapSize")) ? parseInt(localStorage.getItem("pixelGapSize")) : 1;
+DrawView.zoom = (localStorage.getItem("zoom")) ? parseInt(localStorage.getItem("zoom")) : 1;
+DrawView.offsetLeft = (localStorage.getItem("offsetLeft")) ? parseInt(localStorage.getItem("offsetLeft")) : 0;
+DrawView.offsetTop = (localStorage.getItem("offsetTop")) ? parseInt(localStorage.getItem("offsetTop")) : 0;
+DrawView.primaryColour = (localStorage.getItem("primaryColor")) ? JSON.parse(localStorage.getItem("primaryColor")) : new Pixel();
+DrawView.secondaryColour = (localStorage.getItem("secondaryColor")) ? JSON.parse(localStorage.getItem("secondaryColor")) : new Pixel();
 DrawView.currentTool = new Tool();
 DrawView.currentToolHTML = document.createElement("div");
-DrawView.layers = new Array();
-DrawView.currHistoryIndex = 0;
-DrawView.history = new Array();
+DrawView.layers = (localStorage.getItem("layers")) ? JSON.parse(localStorage.getItem("layers")) : new Array();
+DrawView.currHistoryIndex = (localStorage.getItem("currHistoryIndex")) ? parseInt(localStorage.getItem("currHistoryIndex")) : 0;
+DrawView.history = (localStorage.getItem("history")) ? JSON.parse(localStorage.getItem("history")) : new Array();
