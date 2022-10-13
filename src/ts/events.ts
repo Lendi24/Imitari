@@ -87,10 +87,11 @@ function updateUIPos() {
 
 
 let tools: {[key: string]: any} = { 
-    "b" : {obj : new DrawTool(),  html : "", icon : "mdi-brush"},
-    "l" : {obj : new LineTool(),  html : "", icon : "mdi-pencil-ruler"},
-    "f" : {obj : new FillTool(),  html : "", icon : "mdi-format-color-fill"},
-    "s" : {obj : new ShapeTool(), html : "", icon : "mdi-shape"},
+    "b" : {obj : new DrawTool(),   html : "", icon : "mdi-brush"},
+    "l" : {obj : new LineTool(),   html : "", icon : "mdi-pencil-ruler"},
+    "f" : {obj : new FillTool(),   html : "", icon : "mdi-format-color-fill"},
+    "s" : {obj : new ShapeTool(),  html : "", icon : "mdi-shape"},
+    "m" : {obj : new MoveTool(),   html : "", icon : "mdi-cursor-move"},
 };
 
 function switchTool(val:string) {
