@@ -80,8 +80,8 @@ let topBar: {[key : string]: any} = {
 
     "Edit"      : [
         {
-            "Undo"           : Object,
-            "Redo"           : Object,
+            "Undo"           : function () { DrawView.undo(); },
+            "Redo"           : function () { DrawView.redo(); },
         },
     ],
 

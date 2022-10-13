@@ -56,8 +56,8 @@ let topBar = {
     ],
     "Edit": [
         {
-            "Undo": Object,
-            "Redo": Object,
+            "Undo": function () { DrawView.undo(); },
+            "Redo": function () { DrawView.redo(); },
         },
     ],
     "Layer": [
