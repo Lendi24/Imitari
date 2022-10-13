@@ -4,6 +4,7 @@
   },
   "dependencies": {
     "@mdi/font": "^7.0.96",
-    "tailwind": "^4.0.0"
+    "tailwind": "^4.0.0",
+    "winbox": "^0.2.6"
   }
 }
