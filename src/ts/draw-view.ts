@@ -125,6 +125,9 @@ class DrawView {
     static currHistoryIndex = 0;
     static history: Array<Array<Array<Pixel>>> = new Array();
 
+    static lockedHTML = document.getElementById("lock")!;
+    static locked = false;
+
     static changePixelSize() {
         
     }

@@ -139,3 +139,5 @@ DrawView.currentToolHTML = document.createElement("div");
 DrawView.layers = new Array();
 DrawView.currHistoryIndex = 0;
 DrawView.history = new Array();
+DrawView.lockedHTML = document.getElementById("lock");
+DrawView.locked = false;

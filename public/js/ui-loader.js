@@ -20,7 +20,7 @@ class uiLoader {
         switchTool("b");
     }
     static loadTopMenu() {
-        let topBarHtml = (document.getElementById("top-bar"));
+        let dropDownBox = (document.getElementById("dropdowns"));
         for (let item in topBar) {
             let dropdown = (document.createElement("drop"));
             let dropname = (document.createElement("button"));
@@ -38,7 +38,7 @@ class uiLoader {
             }
             dropdown.appendChild(dropname);
             dropdown.appendChild(dropcont);
-            topBarHtml.appendChild(dropdown);
+            dropDownBox.appendChild(dropdown);
         }
     }
 }

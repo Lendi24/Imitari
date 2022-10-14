@@ -248,3 +248,8 @@ drop drop-content:active {
 body {
     user-select: none;
 }
+
+#lock {
+    margin-right: 10px;
+    margin-left: auto;
+}

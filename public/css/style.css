@@ -31445,6 +31445,11 @@ body {
           user-select: none;
 }
 
+#lock {
+  margin-right: 10px;
+  margin-left: auto;
+}
+
 @media (min-width: 640px) {
   .sm\:container {
     width: 100%;

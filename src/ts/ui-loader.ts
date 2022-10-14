@@ -30,7 +30,7 @@ class uiLoader {
     static loadTopMenu() {
         
     //Update UI: Top-bar
-    let topBarHtml = <HTMLElement>(document.getElementById("top-bar"));
+    let dropDownBox = <HTMLElement>(document.getElementById("dropdowns"));
     for (let item in topBar) {
         let dropdown = <HTMLElement>(document.createElement("drop"));
         let dropname = <HTMLElement>(document.createElement("button"));
@@ -56,7 +56,7 @@ class uiLoader {
         dropdown.appendChild(dropname);
         dropdown.appendChild(dropcont);
 
-        topBarHtml.appendChild(dropdown);
+        dropDownBox.appendChild(dropdown);
     }
 
     }
