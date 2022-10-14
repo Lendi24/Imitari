@@ -1,6 +1,19 @@
 "use strict";
 window.onresize = function () { DrawView.onResize(); };
 window.oncontextmenu = function () { return false; };
+DrawView.lockedHTML.onclick = function () {
+    DrawView.locked = !DrawView.locked;
+    if (DrawView.locked) {
+        DrawView.jsCanvas.classList.add("cursor-not-allowed");
+        DrawView.lockedHTML.classList.add("mdi-lock");
+        DrawView.lockedHTML.classList.remove("mdi-lock-open-variant");
+    }
+    else {
+        DrawView.jsCanvas.classList.remove("cursor-not-allowed");
+        DrawView.lockedHTML.classList.remove("mdi-lock");
+        DrawView.lockedHTML.classList.add("mdi-lock-open-variant");
+    }
+};
 DrawView.jsCanvas.onmousedown = function (e) { e.preventDefault; CustomMouseEvent.tick(e.clientX, e.clientY, e.buttons == 1, e.buttons == 2, e); };
 DrawView.jsCanvas.onmousemove = function (e) { e.preventDefault; CustomMouseEvent.tick(e.clientX, e.clientY, e.buttons == 1, e.buttons == 2, e); updateUIPos(); };
 DrawView.jsCanvas.onmouseup = function (e) { e.preventDefault; CustomMouseEvent.tick(e.clientX, e.clientY, e.buttons == 1, e.buttons == 2, e); };
@@ -77,7 +90,9 @@ class CustomMouseEvent {
         this.mouseRightChanged = !(mouseRightDown == this.mouseRightDown);
         this.mouseRightDown = mouseRightDown;
         this.e = e;
-        DrawView.currentTool.onMouse(this);
+        if (!DrawView.locked) {
+            DrawView.currentTool.onMouse(this);
+        }
     }
 }
 CustomMouseEvent.mouseLeftDown = false;

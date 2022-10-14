@@ -244,3 +244,8 @@ drop drop-content:active {
 
     transform: scale(1.25);
 }
+
+#lock{
+    margin-right: 10px;
+    margin-left: auto;
+}
