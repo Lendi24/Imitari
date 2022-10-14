@@ -29,36 +29,35 @@ class uiLoader {
     
     static loadTopMenu() {
         
-    //Update UI: Top-bar
-    let dropDownBox = <HTMLElement>(document.getElementById("dropdowns"));
-    for (let item in topBar) {
-        let dropdown = <HTMLElement>(document.createElement("drop"));
-        let dropname = <HTMLElement>(document.createElement("button"));
-        let dropcont = <HTMLElement>(document.createElement("drop-content"));
+        //Update UI: Top-bar
+        let dropDownBox = <HTMLElement>(document.getElementById("top-bar"));
+        for (let item in topBar) {
+            let dropdown = <HTMLElement>(document.createElement("drop"));
+            let dropname = <HTMLElement>(document.createElement("button"));
+            let dropcont = <HTMLElement>(document.createElement("drop-content"));
 
-        dropname.innerHTML = item;
+            dropname.innerHTML = item;
 
 
-        for (let i = 0; i < topBar[item].length; i++) {
-            let dropitemscont = document.createElement("item-section");
+            for (let i = 0; i < topBar[item].length; i++) {
+                let dropitemscont = document.createElement("item-section");
 
-            for (let innerItem in topBar[item][i]) {
-                let innerItemHTML = document.createElement("item");
-                innerItemHTML.innerText = innerItem;
-                innerItemHTML.onmousedown = topBar[item][i][innerItem];
-                dropitemscont.appendChild(innerItemHTML);
-                //const element = array[index];
+                for (let innerItem in topBar[item][i]) {
+                    let innerItemHTML = document.createElement("item");
+                    innerItemHTML.innerText = innerItem;
+                    innerItemHTML.onmousedown = topBar[item][i][innerItem];
+                    dropitemscont.appendChild(innerItemHTML);
+                    //const element = array[index];
+                }
+
+                dropcont.appendChild(dropitemscont);
             }
 
-            dropcont.appendChild(dropitemscont);
+            dropdown.appendChild(dropname);
+            dropdown.appendChild(dropcont);
+
+            dropDownBox.appendChild(dropdown);
         }
-
-        dropdown.appendChild(dropname);
-        dropdown.appendChild(dropcont);
-
-        dropDownBox.appendChild(dropdown);
-    }
-
     }
 }
 
@@ -71,12 +70,14 @@ let topBar: {[key : string]: any} = {
             "Save"          : Object,
         },
 
+        
 
         {
             "Import"        : Object,
             "Export"        : Object,    
         }
     ],
+    
 
     "Edit"      : [
         {
@@ -123,7 +124,7 @@ let tools: {[key: string]: any} = {
     "b" : {obj : new DrawTool(),  html : "", icon : "mdi-brush"},
     "l" : {obj : new LineTool(),  html : "", icon : "mdi-pencil-ruler"},
     "f" : {obj : new FillTool(),  html : "", icon : "mdi-format-color-fill"},
-    "q" : {obj : new StampTool(), html : "", icon : "mdi-stamper"},
+    "c" : {obj : new StampTool(), html : "", icon : "mdi-stamper"}, //Clone?
     "s" : {obj : new ShapeTool(), html : "", icon : "mdi-shape"},
     "m" : {obj : new MoveTool(),  html : "", icon : "mdi-cursor-move"},
 };

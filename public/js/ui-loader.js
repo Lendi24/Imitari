@@ -20,7 +20,7 @@ class uiLoader {
         switchTool("b");
     }
     static loadTopMenu() {
-        let dropDownBox = (document.getElementById("dropdowns"));
+        let dropDownBox = (document.getElementById("top-bar"));
         for (let item in topBar) {
             let dropdown = (document.createElement("drop"));
             let dropname = (document.createElement("button"));
@@ -88,7 +88,7 @@ let tools = {
     "b": { obj: new DrawTool(), html: "", icon: "mdi-brush" },
     "l": { obj: new LineTool(), html: "", icon: "mdi-pencil-ruler" },
     "f": { obj: new FillTool(), html: "", icon: "mdi-format-color-fill" },
-    "q": { obj: new StampTool(), html: "", icon: "mdi-stamper" },
+    "c": { obj: new StampTool(), html: "", icon: "mdi-stamper" },
     "s": { obj: new ShapeTool(), html: "", icon: "mdi-shape" },
     "m": { obj: new MoveTool(), html: "", icon: "mdi-cursor-move" },
 };
