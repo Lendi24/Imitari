@@ -14,9 +14,7 @@ window.onkeydown = function (e) {
     }
 };
 window.onwheel = function (e) {
-    e.preventDefault;
     if (e.shiftKey) {
-        e.preventDefault();
         if (e.deltaY < 0) {
             DrawView.zoom = Util.clamp(DrawView.zoom + DrawView.zoom * 0.1, 100, 0.01);
         }
