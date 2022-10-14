@@ -4,11 +4,11 @@ class Pixel {
     b : number;
     a : number;
 
-    constructor() {
-        this.r = 0;
-        this.g = 0;
-        this.b = 0;
-        this.a = 255;
+    constructor(r : number, g : number, b : number, a : number) {
+        this.r = r;
+        this.g = g;
+        this.b = b;
+        this.a = a;
     }
 
     getRGBA() {
@@ -68,7 +68,7 @@ class DrawViewLayer {
         for (let x = 0; x < width; x++) {
             this.drawing[x] = [];
             for (let y = 0; y < height; y++) {
-                this.drawing[x][y] = new Pixel();
+                this.drawing[x][y] = new Pixel(0, 0, 0, 255);
             }
         }
 
@@ -114,8 +114,8 @@ class DrawView {
     static offsetLeft = 0;
     static offsetTop = 0;
 
-    static primaryColour = new Pixel();
-    static secondaryColour = new Pixel();
+    static primaryColour = new Pixel(0, 0, 0, 255);
+    static secondaryColour = new Pixel(0, 0, 0, 255);
 
     static currentTool = new Tool();
     static currentToolHTML = document.createElement("div");
@@ -146,7 +146,7 @@ class DrawView {
             for (let x = 0; x < newDrawing.length; x++) {
                 this.getLayer(0).drawing[x] = [];
                 for (let y = 0; y < newDrawing[x].length; y++) {
-                    this.getLayer(0).drawing[x][y] = new Pixel();
+                    this.getLayer(0).drawing[x][y] = new Pixel(0, 0, 0, 255);
                     this.getLayer(0).drawing[x][y].setRGBA(
                         newDrawing[x][y].r,
                         newDrawing[x][y].g,
@@ -167,7 +167,7 @@ class DrawView {
             for (let x = 0; x < newDrawing.length; x++) {
                 this.getLayer(0).drawing[x] = [];
                 for (let y = 0; y < newDrawing[x].length; y++) {
-                    this.getLayer(0).drawing[x][y] = new Pixel();
+                    this.getLayer(0).drawing[x][y] = new Pixel(0, 0, 0, 255);
                     this.getLayer(0).drawing[x][y].setRGBA(
                         newDrawing[x][y].r,
                         newDrawing[x][y].g,

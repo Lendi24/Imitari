@@ -1,10 +1,10 @@
 "use strict";
 class Pixel {
-    constructor() {
-        this.r = 0;
-        this.g = 0;
-        this.b = 0;
-        this.a = 255;
+    constructor(r, g, b, a) {
+        this.r = r;
+        this.g = g;
+        this.b = b;
+        this.a = a;
     }
     getRGBA() {
         return {
@@ -35,7 +35,7 @@ class DrawViewLayer {
         for (let x = 0; x < width; x++) {
             this.drawing[x] = [];
             for (let y = 0; y < height; y++) {
-                this.drawing[x][y] = new Pixel();
+                this.drawing[x][y] = new Pixel(0, 0, 0, 255);
             }
         }
         let obj = this;
@@ -92,7 +92,7 @@ class DrawView {
             for (let x = 0; x < newDrawing.length; x++) {
                 this.getLayer(0).drawing[x] = [];
                 for (let y = 0; y < newDrawing[x].length; y++) {
-                    this.getLayer(0).drawing[x][y] = new Pixel();
+                    this.getLayer(0).drawing[x][y] = new Pixel(0, 0, 0, 255);
                     this.getLayer(0).drawing[x][y].setRGBA(newDrawing[x][y].r, newDrawing[x][y].g, newDrawing[x][y].b, newDrawing[x][y].a);
                 }
             }
@@ -104,7 +104,7 @@ class DrawView {
             for (let x = 0; x < newDrawing.length; x++) {
                 this.getLayer(0).drawing[x] = [];
                 for (let y = 0; y < newDrawing[x].length; y++) {
-                    this.getLayer(0).drawing[x][y] = new Pixel();
+                    this.getLayer(0).drawing[x][y] = new Pixel(0, 0, 0, 255);
                     this.getLayer(0).drawing[x][y].setRGBA(newDrawing[x][y].r, newDrawing[x][y].g, newDrawing[x][y].b, newDrawing[x][y].a);
                 }
             }
@@ -132,8 +132,8 @@ DrawView.pixelGapSize = 1;
 DrawView.zoom = 1;
 DrawView.offsetLeft = 0;
 DrawView.offsetTop = 0;
-DrawView.primaryColour = new Pixel();
-DrawView.secondaryColour = new Pixel();
+DrawView.primaryColour = new Pixel(0, 0, 0, 255);
+DrawView.secondaryColour = new Pixel(0, 0, 0, 255);
 DrawView.currentTool = new Tool();
 DrawView.currentToolHTML = document.createElement("div");
 DrawView.layers = new Array();
