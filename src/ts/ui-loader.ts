@@ -125,6 +125,7 @@ let tools: {[key: string]: any} = {
     "l" : {obj : new LineTool(),  html : "", icon : "mdi-pencil-ruler"},
     "f" : {obj : new FillTool(),  html : "", icon : "mdi-format-color-fill"},
     "c" : {obj : new StampTool(), html : "", icon : "mdi-stamper"}, //Clone?
+    "t" : {obj : new TextTool(),  html : "", icon : "mdi-format-color-text"}, 
     "s" : {obj : new ShapeTool(), html : "", icon : "mdi-shape"},
     "m" : {obj : new MoveTool(),  html : "", icon : "mdi-cursor-move"},
 };

@@ -37,6 +37,7 @@ class StampTool extends Tool {
         if (CustomMouseEvent.mouseLeftDown && CustomMouseEvent.mouseLeftChanged) {
             console.log(this.stamps);
             this.blit(this.stamps, DrawView.getLayer(0).drawing, 0, 0, 4, 5, Util.screenToCordX(CustomMouseEvent.mouseX), Util.screenToCordY(CustomMouseEvent.mouseY));
+            this.onEnd();
         }
     }
     blit(srcRef, dstRef, sx, sy, sw, sh, dx, dy) {
