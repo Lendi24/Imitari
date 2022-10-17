@@ -5,7 +5,7 @@ class ColorPicker{
     static b = 0;
     static a = 0;
     static rgbaInputs = document.querySelectorAll(".color-input") as NodeListOf<HTMLInputElement>;
-    static rgbaPreview = document.getElementById("colorDisplay")!;
+    static rgbaPreview = document.getElementById("color-display")!;
 
     constructor(){
         ColorPicker.rgbaInputs.forEach(input => {

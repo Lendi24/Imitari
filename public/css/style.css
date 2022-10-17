@@ -31412,6 +31412,13 @@ drop drop-content:active {
   height: 100%;
 }
 
+canvas, #color-display-container{
+  background-image: url(../img/transp.png);
+  background-repeat: repeat;
+  border: solid black 1px;
+  box-shadow: 1px 1px 1px 1px black;
+}
+
 #tool-section {
   height: 100%;
   display: flex;

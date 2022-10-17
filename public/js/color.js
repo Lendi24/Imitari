@@ -55,5 +55,5 @@ ColorPicker.g = 0;
 ColorPicker.b = 0;
 ColorPicker.a = 0;
 ColorPicker.rgbaInputs = document.querySelectorAll(".color-input");
-ColorPicker.rgbaPreview = document.getElementById("colorDisplay");
+ColorPicker.rgbaPreview = document.getElementById("color-display");
 let test = new ColorPicker();

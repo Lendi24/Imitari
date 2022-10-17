@@ -43,7 +43,16 @@ class DrawViewLayer {
     }
     placePixel(x, y) {
         try {
-            this.drawing[x][y].setRGBA(ColorPicker.r, ColorPicker.g, ColorPicker.b, ColorPicker.a);
+            if (ColorPicker.a == 0) {
+                this.drawing[x][y].setRGBA(ColorPicker.r, ColorPicker.g, ColorPicker.b, ColorPicker.a);
+            }
+            else if (ColorPicker.a < 1) {
+                let oldValues = JSON.parse(JSON.stringify(this.drawing[x][y].getRGBA()));
+                this.drawing[x][y].setRGBA(((ColorPicker.r + oldValues["r"]) / 2) * Util.clamp((ColorPicker.a + oldValues["a"]), 1, 0), ((ColorPicker.g + oldValues["g"]) / 2) * Util.clamp((ColorPicker.a + oldValues["a"]), 1, 0), ((ColorPicker.b + oldValues["b"]) / 2) * Util.clamp((ColorPicker.a + oldValues["a"]), 1, 0), oldValues["a"]);
+            }
+            else {
+                this.drawing[x][y].setRGBA(ColorPicker.r, ColorPicker.g, ColorPicker.b, ColorPicker.a);
+            }
         }
         catch (error) { }
     }
