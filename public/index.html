@@ -16,13 +16,15 @@
     <script defer src="./js/tool-fill.js"></script>
     <script defer src="./js/tool-move.js"></script>
     <script defer src="./js/tool-stamp.js"></script>
+    <script defer src="./js/tool-pipette.js"></script>
 
+    <script defer src="./js/general.js"></script>
+    <script defer src="./js/color.js"></script>
     <script defer src="./js/draw-view.js"></script>
 
     <script defer src="./js/ui-loader.js"></script>
 
     <script defer src="./js/events.js"></script>
-    <script defer src="./js/general.js"></script>
     
     <title>Imitiari</title>
 
@@ -44,7 +46,16 @@
             <canvas id="drawing-area" class="z-10"></canvas>
         </div>
         <div class="w-60 bg-gray-600 z-20 bg-opacity-60 bg-blur-sm">
-            <div>
+            <div class="p-3" id="colorDiv">
+                <label for="red">Red</label>
+                <input class="color-input w-full" name="red" type="range" min="0" max="255" placeholder="0" value="255">
+                <label for="green">Green</label>
+                <input class="color-input w-full" name="green" type="range" min="0" max="255" placeholder="0" value="255">
+                <label for="blue">Blue</label>
+                <input class="color-input w-full" name="blue" type="range" min="0" max="255" placeholder="0" value="255">
+                <label for="alpha">Alpha</label>
+                <input class="color-input w-full" name="alpha" type="range" min="0" max="255" placeholder="0" value="255">
+                <div id="colorDisplay" class="w-full h-10"></div>
             </div>
         </div>
     </div>
