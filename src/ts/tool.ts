@@ -1,4 +1,7 @@
 class Tool {
+    conf = {
+    }
+    
     constructor() {}
     onMouse(event : CustomMouseEvent) {}
     onBegin() {}

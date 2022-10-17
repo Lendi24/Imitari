@@ -2,7 +2,9 @@
 class TextTool extends Tool {
     constructor() {
         super(...arguments);
-        this.space = 1;
+        this.conf = {
+            space: 1,
+        };
         this.letters = {
             " ": [
                 [
@@ -828,7 +830,7 @@ class TextTool extends Tool {
                                 }
                             }
                         }
-                        textCursorPosX += (letter.length + this.space);
+                        textCursorPosX += (letter.length + this.conf.space);
                     }
                     catch (error) {
                         console.log('[TextTool] Could not print "' + inputText[i] + '"');

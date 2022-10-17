@@ -1,5 +1,8 @@
 class TextTool extends Tool {
-    space = 1;
+    conf = {
+        space : 1,
+    }
+
     letters = {
         " " : [
             [ 
@@ -944,7 +947,7 @@ class TextTool extends Tool {
                         }
 
                         
-                        textCursorPosX += (letter.length + this.space);    
+                        textCursorPosX += (letter.length + this.conf.space);    
                     } catch (error) {
                         console.log('[TextTool] Could not print "'+inputText[i]+'"');   
                     }

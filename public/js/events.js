@@ -64,6 +64,15 @@ function switchTool(val) {
             DrawView.currentToolHTML.classList.remove("bg-green-600");
             DrawView.currentToolHTML = tool.html;
             DrawView.currentTool = tool.obj;
+            let toolSettingsHTML = document.getElementById("side-section-layer");
+            for (const property in DrawView.currentTool.conf) {
+                let propertyHTML = document.createElement("input");
+                propertyHTML.innerHTML = property;
+                propertyHTML.onchange = function () { DrawView.currentTool.conf[property] = parseInt(propertyHTML.value); };
+                console.log(`${property}`);
+                console.log(`${typeof (DrawView.currentTool.conf[property])}`);
+                toolSettingsHTML === null || toolSettingsHTML === void 0 ? void 0 : toolSettingsHTML.appendChild(propertyHTML);
+            }
         }
     }
     catch (error) {
