@@ -66,7 +66,7 @@ let topBar = {
             "Remove layer": Object,
         },
         {
-            "Clear": Object,
+            "Clear": function () { DrawView.getLayer(0).clearCurrentLayer(); },
         }
     ],
     "Settings": [
@@ -92,4 +92,5 @@ let tools = {
     "t": { obj: new TextTool(), html: "", icon: "mdi-format-color-text" },
     "s": { obj: new ShapeTool(), html: "", icon: "mdi-shape" },
     "m": { obj: new MoveTool(), html: "", icon: "mdi-cursor-move" },
+    "p": { obj: new PipetteTool(), html: "", icon: "mdi-eyedropper" }
 };

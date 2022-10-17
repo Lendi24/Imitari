@@ -93,7 +93,7 @@ let topBar: {[key : string]: any} = {
         },
 
         {
-            "Clear"         : Object,
+            "Clear"         : function () { DrawView.getLayer(0).clearCurrentLayer(); },
         }
 ],
 /*
@@ -128,4 +128,5 @@ let tools: {[key: string]: any} = {
     "t" : {obj : new TextTool(),  html : "", icon : "mdi-format-color-text"}, 
     "s" : {obj : new ShapeTool(), html : "", icon : "mdi-shape"},
     "m" : {obj : new MoveTool(),  html : "", icon : "mdi-cursor-move"},
+    "p" : {obj : new PipetteTool(), html: "", icon : "mdi-eyedropper"}
 };

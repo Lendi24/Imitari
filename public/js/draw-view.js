@@ -43,7 +43,7 @@ class DrawViewLayer {
     }
     placePixel(x, y) {
         try {
-            this.drawing[x][y].setRGBA(255, 255, 255, 255);
+            this.drawing[x][y].setRGBA(ColorPicker.r, ColorPicker.g, ColorPicker.b, ColorPicker.a);
         }
         catch (error) { }
     }
@@ -74,6 +74,14 @@ class DrawViewLayer {
                 ctx.fill();
             }
         }
+    }
+    clearCurrentLayer() {
+        for (let x = 0; x < this.drawing.length; x++) {
+            for (let y = 0; y < this.drawing[x].length; y++) {
+                this.drawing[x][y].setRGBA(0, 0, 0, 255);
+            }
+        }
+        DrawView.history[++DrawView.currHistoryIndex] = JSON.parse(JSON.stringify(DrawView.getLayer(0).drawing));
     }
 }
 class DrawView {
@@ -141,3 +149,4 @@ DrawView.currHistoryIndex = 0;
 DrawView.history = new Array();
 DrawView.lockedHTML = document.getElementById("lock");
 DrawView.locked = false;
+DrawView.init(100, 80);
