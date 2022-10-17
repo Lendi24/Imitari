@@ -925,10 +925,15 @@ class TextTool extends StampTool {
 
             if (inputText != null) {
                 let textCursorPos = 0;
+                
                 for (let i = 0; i < inputText.length; i++) {
-                    let letter = this.letters[inputText[i].toUpperCase()];
-                    this.blit(letter, DrawView.getLayer(0).drawing, 0, 0, letter.length, letter[0].length, Util.screenToCordX(CustomMouseEvent.mouseX) + textCursorPos, Util.screenToCordY(CustomMouseEvent.mouseY));
-                    textCursorPos += (letter.length + this.space);
+                    try {
+                        let letter = this.letters[inputText[i].toUpperCase()];
+                        this.blit(letter, DrawView.getLayer(0).drawing, 0, 0, letter.length, letter[0].length, Util.screenToCordX(CustomMouseEvent.mouseX) + textCursorPos, Util.screenToCordY(CustomMouseEvent.mouseY));
+                        textCursorPos += (letter.length + this.space);    
+                    } catch (error) {
+                        console.log('[TextTool] Could not print "'+inputText[i]+'"');   
+                    }
                 }
             }          
                         
