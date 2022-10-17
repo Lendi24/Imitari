@@ -1,6 +1,12 @@
 class TextTool extends StampTool {
-
+    space = 1;
     letters = {
+        " " : [
+            [ 
+                new Pixel(0, 0, 0, 255),        
+            ],
+        ],
+
         "A" : [
             [
                 new Pixel(0, 0, 0, 255),       
@@ -912,8 +918,20 @@ class TextTool extends StampTool {
 
     onMouse(event : CustomMouseEvent) {
         if (CustomMouseEvent.mouseLeftDown && CustomMouseEvent.mouseLeftChanged) { 
-            let letter = this.letters["I"];
-            this.blit(letter, DrawView.getLayer(0).drawing, 0, 0, letter.length, letter[0].length, Util.screenToCordX(CustomMouseEvent.mouseX), Util.screenToCordY(CustomMouseEvent.mouseY) )
+            let inputText = prompt(
+                "Enter the text you wish to print on screen", 
+                "the quick brown fox jumps over the lazy dog"
+            );
+
+            if (inputText != null) {
+                let textCursorPos = 0;
+                for (let i = 0; i < inputText.length; i++) {
+                    let letter = this.letters[inputText[i].toUpperCase()];
+                    this.blit(letter, DrawView.getLayer(0).drawing, 0, 0, letter.length, letter[0].length, Util.screenToCordX(CustomMouseEvent.mouseX) + textCursorPos, Util.screenToCordY(CustomMouseEvent.mouseY));
+                    textCursorPos += (letter.length + this.space);
+                }
+            }          
+                        
             this.onEnd()
         }
     }
