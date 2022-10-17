@@ -62,6 +62,7 @@ class DrawViewLayer {
         let ctx = canvas.getContext("2d");
         ctx.imageSmoothingEnabled = false;
         ctx['imageSmoothingEnabled'] = false;
+        ctx.clearRect(0, 0, this.drawing.length * DrawView.pixelSize, this.drawing[0].length * DrawView.pixelSize);
         for (let x = 0; x < this.drawing.length; x++) {
             for (let y = 0; y < this.drawing[x].length; y++) {
                 ctx.beginPath();
