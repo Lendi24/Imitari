@@ -21,9 +21,11 @@ DrawView.lockedHTML.onclick = function() {
 }
 
 DrawView.jsCanvas.onmousedown   = function(e:MouseEvent) {e.preventDefault; CustomMouseEvent.tick(e.clientX, e.clientY, e.buttons == 1, e.buttons == 2, e);};
-DrawView.jsCanvas.onmousemove   = function(e:MouseEvent) {e.preventDefault; CustomMouseEvent.tick(e.clientX, e.clientY, e.buttons == 1, e.buttons == 2, e);updateUIPos();};
+DrawView.jsCanvas.onmousemove   = function(e:MouseEvent) {e.preventDefault; CustomMouseEvent.tick(e.clientX, e.clientY, e.buttons == 1, e.buttons == 2, e);};
 DrawView.jsCanvas.onmouseup     = function(e:MouseEvent) {e.preventDefault; CustomMouseEvent.tick(e.clientX, e.clientY, e.buttons == 1, e.buttons == 2, e);};
 DrawView.jsCanvas.onmouseleave  = function(e:MouseEvent) {e.preventDefault; CustomMouseEvent.tick(e.clientX, e.clientY, false, false, e);};
+
+window.onmousemove              = function(e:MouseEvent) {updateUIPos(e);}
 
 window.onkeydown     = function(e:KeyboardEvent) {
     if (e.ctrlKey) {
@@ -33,8 +35,13 @@ window.onkeydown     = function(e:KeyboardEvent) {
     }
 }
 
-window.onwheel = function(e:WheelEvent) {
 
+window.onload = function() {
+    uiLoader.loadTools();
+    uiLoader.loadTopMenu();
+}
+
+window.onwheel = function(e:WheelEvent) {
     if (e.shiftKey) {
 
         if (e.deltaY < 0) { 
@@ -49,23 +56,11 @@ window.onwheel = function(e:WheelEvent) {
     } else {
         
         if (e.deltaY != 0 && e.deltaX == 0) {
-            DrawView.offsetTop = Util.clamp(DrawView.offsetTop + e.deltaY * 0.01, 150, -150);
-            DrawView.jsCanvas.parentElement!.style.marginTop = -DrawView.offsetTop+"%";/*`${(DrawView.offsetTop)}px;`;*/
-
+            moveCanvasY(e.deltaY * 0.01);
         } else {
-            DrawView.offsetLeft = Util.clamp(DrawView.offsetLeft + e.deltaX * 0.01, 150, -150);
-            if (DrawView.offsetLeft>0) {
-                DrawView.jsCanvas.parentElement!.style.marginLeft = -DrawView.offsetLeft+"%";/*`${(DrawView.offsetTop)}px;`;*/
-                DrawView.jsCanvas.parentElement!.style.marginRight = "";
-            } else {
-                DrawView.jsCanvas.parentElement!.style.marginLeft = "";
-                DrawView.jsCanvas.parentElement!.style.marginRight = DrawView.offsetLeft+"%";/*`${(DrawView.offsetTop)}px;`;*/
-            }
+            moveCanvasX(e.deltaX * 0.01)
         }    
-
     }
-
-
 
     /*
     DrawView.zoom += e.deltaY / 1000;
@@ -74,17 +69,36 @@ window.onwheel = function(e:WheelEvent) {
 };
 
 
-window.onload = function() {
-    uiLoader.loadTools();
-    uiLoader.loadTopMenu();
+
+
+function moveCanvasY(deltaY : number) {
+    //DrawView.offsetTop = Util.clamp(DrawView.offsetTop + deltaY, 2.50 * window.innerHeight, -2.50 * window.innerHeight);
+    DrawView.offsetTop += deltaY;
+    DrawView.jsCanvas.parentElement!.style.marginTop = -DrawView.offsetTop+"px";/*`${(DrawView.offsetTop)}px;`;*/
 
 }
 
-function updateUIPos() {    
+function moveCanvasX(deltaX : number) {
+    //DrawView.offsetLeft = Util.clamp(DrawView.offsetLeft + deltaX, 2.50 * window.innerWidth, -2.50 * window.innerWidth);
+    DrawView.offsetLeft += deltaX;
+    if (DrawView.offsetLeft>0) {
+        DrawView.jsCanvas.parentElement!.style.marginLeft = -DrawView.offsetLeft+"px";/*`${(DrawView.offsetTop)}px;`;*/
+        DrawView.jsCanvas.parentElement!.style.marginRight = "";
+    } else {
+        DrawView.jsCanvas.parentElement!.style.marginLeft = "";
+        DrawView.jsCanvas.parentElement!.style.marginRight = DrawView.offsetLeft+"px";/*`${(DrawView.offsetTop)}px;`;*/
+    }
+}
+
+function updateUIPos(e : MouseEvent) {    
     (<HTMLElement>(document.getElementById("posX"))).innerText = Util.screenToCordX(CustomMouseEvent.mouseX).toString();
     (<HTMLElement>(document.getElementById("posY"))).innerText = Util.screenToCordY(CustomMouseEvent.mouseY).toString();
-}
 
+    if (e.buttons == 4) {
+        moveCanvasX(-e.movementX);
+        moveCanvasY(-e.movementY);
+    }
+}
 
 function switchTool(val:string) {
     try {
