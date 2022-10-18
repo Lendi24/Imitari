@@ -1,34 +1,49 @@
-class DrawTool extends LineTool {
+class DrawTool extends ShapeTool {
 
-    onMouse(event : CustomMouseEvent) {
+    point1: coordinate | undefined
+    point2: coordinate | undefined;
+    size = 5;
+    numberOfBrushSides = 1000;
+
+    onMouse(event: CustomMouseEvent) {
         if (CustomMouseEvent.mouseLeftDown && CustomMouseEvent.mouseLeftChanged) {
 
-            this.firstPoint = {
+            this.point1 = {
                 x: Util.screenToCordX(CustomMouseEvent.mouseX),
                 y: Util.screenToCordY(CustomMouseEvent.mouseY)
             }
 
-            if (this.firstPoint["x"] && this.firstPoint["y"]) {
+            if (this.point1["x"] && this.point1["y"]) {
                 this.onBegin();
             }
 
-            DrawView.getLayer(0).placePixel(this.firstPoint["x"], this.firstPoint["y"]);
-            this.secondPoint = undefined;
+            this.drawStroke(this.size, this.numberOfBrushSides, this.point1, this.point1);
+            this.point2 = undefined;
         }
         else if (CustomMouseEvent.mouseLeftDown) {
 
-            this.secondPoint = {
+            this.point2 = {
                 x: Util.screenToCordX(CustomMouseEvent.mouseX),
                 y: Util.screenToCordY(CustomMouseEvent.mouseY)
             }
 
-            this.setLine(this.firstPoint!, this.secondPoint!);
-            this.firstPoint = this.secondPoint;
+            this.drawStroke(this.size, this.numberOfBrushSides, this.point1!, this.point2);
+            this.point1 = this.point2;
+
         }
         else if (!CustomMouseEvent.mouseLeftDown && CustomMouseEvent.mouseLeftChanged) {
 
             //Funktionen har utförts
             this.onEnd();
         }
+    }
+
+    drawStroke(size: number, sides: number, cord1: coordinate, cord2: coordinate) {
+        let lineCoords = this.setLine(cord1, cord2);
+        lineCoords.forEach(cord => {
+            for (let i = 0; i <= size; i++) {
+                this.drawShape(sides, i, cord);
+            }
+        });
     }
 }

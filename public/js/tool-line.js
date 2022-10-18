@@ -23,6 +23,11 @@ class LineTool extends Tool {
         }
     }
     setLine(cord1, cord2) {
+        let lineCoords = new Array();
+        if (cord1 === cord2) {
+            lineCoords.push({ x: cord1["x"], y: cord1["y"] });
+            return lineCoords;
+        }
         let cordX, cordY, endPointX, endPointY;
         let deltaX = cord2["x"] - cord1["x"];
         let lengthX = Math.abs(deltaX);
@@ -57,6 +62,7 @@ class LineTool extends Tool {
                     errorMarginX += (2 * (lengthY - lengthX));
                 }
                 DrawView.getLayer(0).placePixel(cordX, cordY);
+                lineCoords.push({ x: cordX, y: cordY });
             }
         }
         else {
@@ -86,8 +92,9 @@ class LineTool extends Tool {
                     errorMarginY += (2 * (lengthX - lengthY));
                 }
                 DrawView.getLayer(0).placePixel(cordX, cordY);
+                lineCoords.push({ x: cordX, y: cordY });
             }
         }
+        return lineCoords;
     }
-    ;
 }

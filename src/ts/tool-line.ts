@@ -6,6 +6,8 @@ class LineTool extends Tool {
     onMouse(event: CustomMouseEvent) {
         if (CustomMouseEvent.mouseLeftDown && CustomMouseEvent.mouseLeftChanged) {
 
+            //Resetar line-coo
+
             if (typeof this.firstPoint === "undefined") {
                 //Sätter första point
                 this.firstPoint = {
@@ -36,6 +38,14 @@ class LineTool extends Tool {
     }
 
     protected setLine(cord1: coordinate, cord2: coordinate) {
+
+        //Array för linjens koordinater
+        let lineCoords = new Array<coordinate>();
+
+        if (cord1 === cord2) {
+            lineCoords.push({x: cord1["x"], y: cord1["y"]});
+            return lineCoords;
+        }
 
         //Variabler för att räkna ut linjen
         let cordX, cordY, endPointX, endPointY;
@@ -79,6 +89,7 @@ class LineTool extends Tool {
                 }
 
                 DrawView.getLayer(0).placePixel(cordX, cordY);
+                lineCoords.push({x: cordX, y: cordY});  
 
             }
         }
@@ -111,10 +122,13 @@ class LineTool extends Tool {
                 }
 
                 DrawView.getLayer(0).placePixel(cordX, cordY);
+                lineCoords.push({x: cordX, y: cordY}); 
 
             }
         }
-    };
+
+        return lineCoords;
+    }
 }
 
 interface coordinate {
