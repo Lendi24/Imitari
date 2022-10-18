@@ -5,12 +5,15 @@
 /*--------------------------------
 -----------TOOL-SETTINGS----------
 --------------------------------*/
-#side-section-tool {
-    
+
+#side-section-color>input {
+    margin-bottom: 5px;
 }
 
-#side-section-tool>div {
+#side-section-tool>div,#side-section-color {
+    margin:  10px;
     padding: 10px;
+
     border-radius: 15px;
     background-color: rgba(0, 0, 0, 0.075);
     color: white;
