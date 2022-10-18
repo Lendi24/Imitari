@@ -7,7 +7,7 @@ class DrawTool extends ShapeTool {
             step : 1, 
             min : 1, 
             max : 50, 
-            icon : "mdi-format-letter-spacing-variant", 
+            icon : "mdi-fountain-pen-tip", 
 
         },
     }
@@ -16,7 +16,6 @@ class DrawTool extends ShapeTool {
     point2: coordinate | undefined;
     //size = 5;
     numberOfBrushSides = 1000;
-    angle = 45;
 
     onMouse(event: CustomMouseEvent) {
         if (CustomMouseEvent.mouseLeftDown && CustomMouseEvent.mouseLeftChanged) {
@@ -30,7 +29,7 @@ class DrawTool extends ShapeTool {
                 this.onBegin();
             }
 
-            this.drawStroke(this.conf["Size"].value-1, this.numberOfBrushSides, this.angle, this.point1, this.point1);
+            this.drawStroke(this.conf["Size"].value-1, this.numberOfBrushSides, 0, this.point1, this.point1);
             this.point2 = undefined;
         }
         else if (CustomMouseEvent.mouseLeftDown) {
@@ -40,7 +39,7 @@ class DrawTool extends ShapeTool {
                 y: Util.screenToCordY(CustomMouseEvent.mouseY)
             }
 
-            this.drawStroke(this.conf["Size"].value-1, this.numberOfBrushSides, this.angle, this.point1!, this.point2);
+            this.drawStroke(this.conf["Size"].value-1, this.numberOfBrushSides, 0, this.point1!, this.point2);
             this.point1 = this.point2;
 
         }

@@ -1,5 +1,34 @@
 "use strict";
 class ShapeTool extends LineTool {
+    constructor() {
+        super(...arguments);
+        this.conf = {
+            "Corners": {
+                value: 6,
+                type: "number",
+                step: 1,
+                min: 1,
+                max: 100,
+                icon: "mdi-shape-polygon-plus",
+            },
+            "Radius": {
+                value: 8,
+                type: "number",
+                step: 1,
+                min: 1,
+                max: 100,
+                icon: "mdi-radius-outline",
+            },
+            "Rotation": {
+                value: 0,
+                type: "range",
+                step: 1,
+                min: 0,
+                max: 360,
+                icon: "mdi-format-rotate-90",
+            },
+        };
+    }
     onMouse(event) {
         if (CustomMouseEvent.mouseLeftDown && CustomMouseEvent.mouseLeftChanged) {
             this.center = {
@@ -9,10 +38,10 @@ class ShapeTool extends LineTool {
             if (this.center["x"] && this.center["y"]) {
                 this.onBegin();
             }
-            this.radius = 10;
-            this.numberOfSides = 4;
-            this.offset = 45 * (Math.PI / 180);
-            this.drawShape(this.numberOfSides, this.radius, this.offset, this.center);
+            let radius = this.conf["Radius"].value;
+            let numberOfSides = this.conf["Corners"].value;
+            let offset = this.conf["Rotation"].value * (Math.PI / 180);
+            this.drawShape(numberOfSides, radius, offset, this.center);
             this.onEnd();
         }
     }

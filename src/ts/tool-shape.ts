@@ -1,9 +1,35 @@
 class ShapeTool extends LineTool {
 
-    numberOfSides: number | undefined;
+    conf = {
+        "Corners" : {
+            value : 6, 
+            type : "number", 
+            step : 1, 
+            min : 1, 
+            max : 100, 
+            icon : "mdi-shape-polygon-plus", 
+        },
+
+        "Radius" : {
+            value : 8, 
+            type : "number", 
+            step : 1, 
+            min : 1, 
+            max : 100, 
+            icon : "mdi-radius-outline", 
+        },
+
+        "Rotation": {
+            value: 0,
+            type: "range",
+            step: 1,
+            min: 0,
+            max: 360,
+            icon: "mdi-format-rotate-90",
+        },
+    }
+    
     center: coordinate | undefined;
-    radius: number | undefined;
-    offset: number | undefined;
 
     onMouse(event: CustomMouseEvent) {
         if (CustomMouseEvent.mouseLeftDown && CustomMouseEvent.mouseLeftChanged) {
@@ -18,13 +44,12 @@ class ShapeTool extends LineTool {
                 this.onBegin();
             }
 
-            //Variabler
-            this.radius = 10; /* I bitmap pixlar */
-            this.numberOfSides = 4;
-            this.offset = 45 * (Math.PI / 180);
+            let radius = this.conf["Radius"].value;
+            let numberOfSides = this.conf["Corners"].value;
+            let offset = this.conf["Rotation"].value * (Math.PI / 180);
 
             //Ritar ut formen
-            this.drawShape(this.numberOfSides, this.radius, this.offset, this.center);
+            this.drawShape(numberOfSides, radius, offset, this.center);
             
             //Funktionen har utförts
             this.onEnd();
