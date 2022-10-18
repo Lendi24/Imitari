@@ -54,7 +54,13 @@ window.onwheel = function(e:WheelEvent) {
 
         } else {
             DrawView.offsetLeft = Util.clamp(DrawView.offsetLeft + e.deltaX * 0.01, 150, -150);
-            DrawView.jsCanvas.parentElement!.style.marginLeft = -DrawView.offsetLeft+"%";/*`${(DrawView.offsetTop)}px;`;*/
+            if (DrawView.offsetLeft>0) {
+                DrawView.jsCanvas.parentElement!.style.marginLeft = -DrawView.offsetLeft+"%";/*`${(DrawView.offsetTop)}px;`;*/
+                DrawView.jsCanvas.parentElement!.style.marginRight = "";
+            } else {
+                DrawView.jsCanvas.parentElement!.style.marginLeft = "";
+                DrawView.jsCanvas.parentElement!.style.marginRight = DrawView.offsetLeft+"%";/*`${(DrawView.offsetTop)}px;`;*/
+            }
         }    
 
     }
