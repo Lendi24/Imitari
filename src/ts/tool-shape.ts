@@ -19,7 +19,29 @@ class ShapeTool extends LineTool {
 
             //Variabler
             this.radius = 10; /* I bitmap pixlar */
-            this.numberOfSides = 4;
+            this.numberOfSides = 6;
+            let angle = (2 * Math.PI) / this.numberOfSides;
+
+            //Sätter den första koordinaten
+            this.firstPoint = {
+                x: this.center["x"] + Math.round(this.radius * Math.cos(angle)),
+                y: this.center["y"] + Math.round(this.radius * Math.sin(angle))
+            }
+
+            //Loopar igenom och skriver ut linjer för så många sidor som specificerats
+            for (let i = 0; i <= this.numberOfSides; i++) {
+
+                //Sätter den andra koordinaten
+                this.secondPoint = {
+                    x: this.center["x"] + Math.round(this.radius * Math.cos(angle * i)),
+                    y: this.center["y"] + Math.round(this.radius * Math.sin(angle * i))
+                }
+
+                /*Skriver ut linjen mellan den första och andra koordinaten och
+                sätter den första koordinaten till den föredetta andra*/
+                this.setLine(this.firstPoint, this.secondPoint);
+                this.firstPoint = this.secondPoint;
+            }
 
             //Ritar ut formen
             this.drawShape(this.numberOfSides, this.radius, this.center);

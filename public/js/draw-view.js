@@ -70,6 +70,7 @@ class DrawViewLayer {
         canvas.style.imageRendering = "pixelated";
         let ctx = canvas.getContext("2d");
         ctx.imageSmoothingEnabled = false;
+        ctx.imageSmoothingEnabled = false;
         ctx['imageSmoothingEnabled'] = false;
         ctx.clearRect(0, 0, this.drawing.length * DrawView.pixelSize, this.drawing[0].length * DrawView.pixelSize);
         for (let x = 0; x < this.drawing.length; x++) {
@@ -134,6 +135,8 @@ class DrawView {
             DrawView.jsCanvas.width = DrawView.pixelSize * DrawView.getLayer(0).drawing.length;
             DrawView.jsCanvas.height = DrawView.pixelSize * DrawView.getLayer(0).drawing[0].length;
             DrawView.pixelGapSize = Math.floor(DrawView.pixelSize * 0.05);
+            console.log(DrawView.pixelGapSize);
+            DrawView.pixelGapSize = 1;
         }
     }
     static newLayer(x, y) {

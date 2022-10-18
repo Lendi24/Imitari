@@ -95,6 +95,7 @@ class DrawViewLayer {
         canvas.style.imageRendering = "pixelated";
 
         let ctx = canvas.getContext("2d")!;
+        ctx.imageSmoothingEnabled = false; 
         ctx.imageSmoothingEnabled = false;
         ctx['imageSmoothingEnabled'] = false;       /* standard */
 
@@ -218,6 +219,8 @@ class DrawView {
             DrawView.jsCanvas.height = DrawView.pixelSize * DrawView.getLayer(0).drawing[0].length;
 
             DrawView.pixelGapSize = Math.floor(DrawView.pixelSize*0.05);
+            console.log(DrawView.pixelGapSize)
+            DrawView.pixelGapSize = 1;
         }
     }
 

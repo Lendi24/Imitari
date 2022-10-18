@@ -89,6 +89,46 @@ function switchTool(val:string) {
             DrawView.currentToolHTML.classList.remove("bg-green-600");
             DrawView.currentToolHTML = tool.html;
             DrawView.currentTool = tool.obj;
+
+            let toolSettingsHTML = document.getElementById("side-section-tool");
+            toolSettingsHTML?.innerHTML = "";
+
+            for (const property in DrawView.currentTool.conf) {
+
+                let containerHTML = document.createElement("div");
+                let labelHTML = document.createElement("div");
+                let propertyHTML = document.createElement("input");
+
+                labelHTML.innerHTML += property;
+                propertyHTML.value = DrawView.currentTool.conf[property].value;
+
+
+                try { propertyHTML.type = DrawView.currentTool.conf[property].type  } finally {};
+                try { propertyHTML.min = DrawView.currentTool.conf[property].min    } finally {};
+                try { propertyHTML.max = DrawView.currentTool.conf[property].max    } finally {};
+                try { propertyHTML.step = DrawView.currentTool.conf[property].step  } finally {};
+
+                try {labelHTML.classList.add("mdi"); labelHTML.classList.add(DrawView.currentTool.conf[property].icon); } finally {};
+
+
+                switch (propertyHTML.type) {
+                    case "number":
+                        propertyHTML.oninput = function() {DrawView.currentTool.conf[property].value = parseInt(propertyHTML.value); console.log(propertyHTML.value)};
+                        break;
+                
+                    default:
+                        propertyHTML.oninput = function() {DrawView.currentTool.conf[property].value = (propertyHTML.value);};
+                        break;
+                }
+
+                console.log(`${property}`);
+                console.log(`${typeof(DrawView.currentTool.conf[property])}`);
+
+                containerHTML?.appendChild(labelHTML);
+                containerHTML?.appendChild(propertyHTML);
+
+                toolSettingsHTML?.appendChild(containerHTML);
+            } 
         } 
     } catch (error) {
         

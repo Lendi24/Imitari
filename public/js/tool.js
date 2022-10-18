@@ -1,6 +1,8 @@
 "use strict";
 class Tool {
-    constructor() { }
+    constructor() {
+        this.conf = {};
+    }
     onMouse(event) { }
     onBegin() { }
     onEnd() {
