@@ -9,7 +9,7 @@ class DrawTool extends ShapeTool {
                 step: 1,
                 min: 1,
                 max: 50,
-                icon: "mdi-format-letter-spacing-variant",
+                icon: "mdi-fountain-pen-tip",
             },
         };
         this.numberOfBrushSides = 1000;
