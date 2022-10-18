@@ -90,7 +90,7 @@ function switchTool(val:string) {
             DrawView.currentToolHTML = tool.html;
             DrawView.currentTool = tool.obj;
 
-            let toolSettingsHTML = document.getElementById("side-section-layer");
+            let toolSettingsHTML = document.getElementById("side-section-tool");
             toolSettingsHTML?.innerHTML = "";
 
             for (const property in DrawView.currentTool.conf) {

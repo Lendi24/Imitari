@@ -64,7 +64,7 @@ function switchTool(val) {
             DrawView.currentToolHTML.classList.remove("bg-green-600");
             DrawView.currentToolHTML = tool.html;
             DrawView.currentTool = tool.obj;
-            let toolSettingsHTML = document.getElementById("side-section-layer");
+            let toolSettingsHTML = document.getElementById("side-section-tool");
             toolSettingsHTML === null || toolSettingsHTML === void 0 ? void 0 : toolSettingsHTML.innerHTML = "";
             for (const property in DrawView.currentTool.conf) {
                 let containerHTML = document.createElement("div");

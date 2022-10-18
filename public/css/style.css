@@ -31228,6 +31228,39 @@ video {
 }
 
 /*--------------------------------
+-----------TOOL-SETTINGS----------
+--------------------------------*/
+
+#side-section-tool {
+}
+
+#side-section-tool>div {
+  padding: 10px;
+  border-radius: 15px;
+  background-color: rgba(0, 0, 0, 0.075);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+#side-section-tool>div>div {
+  padding-bottom: 5px;
+}
+
+#side-section-tool>div>div::before {
+  margin-right: 5px;
+}
+
+#side-section-tool>div>input {
+  border-radius: 15px;
+  padding-left: 10px;
+  padding-right: 10px;
+  overflow: hidden;
+  color: black;
+}
+
+/*--------------------------------
 --------------WINDOW--------------
 --------------------------------*/
 
