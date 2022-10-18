@@ -91,11 +91,27 @@ function switchTool(val:string) {
             DrawView.currentTool = tool.obj;
 
             let toolSettingsHTML = document.getElementById("side-section-layer");
+            toolSettingsHTML?.innerHTML = "";
 
             for (const property in DrawView.currentTool.conf) {
                 let propertyHTML = document.createElement("input");
                 propertyHTML.innerHTML = property;
-                propertyHTML.onchange = function() {DrawView.currentTool.conf[property] = parseInt(propertyHTML.value)};
+                propertyHTML.value = DrawView.currentTool.conf[property].value;
+
+                try { propertyHTML.type = DrawView.currentTool.conf[property].type  } finally {};
+                try { propertyHTML.min = DrawView.currentTool.conf[property].min    } finally {};
+                try { propertyHTML.max = DrawView.currentTool.conf[property].max    } finally {};
+                try { propertyHTML.step = DrawView.currentTool.conf[property].step  } finally {};
+
+                switch (propertyHTML.type) {
+                    case "number":
+                        propertyHTML.oninput = function() {DrawView.currentTool.conf[property].value = parseInt(propertyHTML.value); console.log(propertyHTML.value)};
+                        break;
+                
+                    default:
+                        propertyHTML.oninput = function() {DrawView.currentTool.conf[property].value = (propertyHTML.value);};
+                        break;
+                }
 
                 console.log(`${property}`);
                 console.log(`${typeof(DrawView.currentTool.conf[property])}`);

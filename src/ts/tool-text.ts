@@ -1,6 +1,12 @@
 class TextTool extends Tool {
     conf = {
-        space : 1,
+        space : {
+            value : 1, 
+            type : "number", 
+            step : 1, 
+            min : 0, 
+            max : 10, 
+        },
     }
 
     letters = {
@@ -947,7 +953,7 @@ class TextTool extends Tool {
                         }
 
                         
-                        textCursorPosX += (letter.length + this.conf.space);    
+                        textCursorPosX += (letter.length + Math.round(this.conf.space.value));    
                     } catch (error) {
                         console.log('[TextTool] Could not print "'+inputText[i]+'"');   
                     }

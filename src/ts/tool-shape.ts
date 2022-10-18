@@ -19,7 +19,7 @@ class ShapeTool extends LineTool {
 
             //Variabler
             this.radius = 10; /* I bitmap pixlar */
-            this.numberOfSides = 4;
+            this.numberOfSides = 6;
             let angle = (2 * Math.PI) / this.numberOfSides;
 
             //Sätter den första koordinaten

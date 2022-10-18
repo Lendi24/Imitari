@@ -10,7 +10,7 @@ class ShapeTool extends LineTool {
                 this.onBegin();
             }
             this.radius = 10;
-            this.numberOfSides = 4;
+            this.numberOfSides = 6;
             let angle = (2 * Math.PI) / this.numberOfSides;
             this.firstPoint = {
                 x: this.center["x"] + Math.round(this.radius * Math.cos(angle)),
