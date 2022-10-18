@@ -136,7 +136,6 @@ class DrawView {
             DrawView.jsCanvas.height = DrawView.pixelSize * DrawView.getLayer(0).drawing[0].length;
             DrawView.pixelGapSize = Math.floor(DrawView.pixelSize * 0.05);
             console.log(DrawView.pixelGapSize);
-            DrawView.pixelGapSize = 1;
         }
     }
     static newLayer(x, y) {
@@ -149,7 +148,7 @@ class DrawView {
 DrawView.jsCanvas = document.getElementById("drawing-area");
 DrawView.jsCanvasCtx = DrawView.jsCanvas.getContext("2d");
 DrawView.pixelSize = 5;
-DrawView.pixelGapSize = 1;
+DrawView.pixelGapSize = 0;
 DrawView.zoom = 1;
 DrawView.offsetLeft = 0;
 DrawView.offsetTop = 0;

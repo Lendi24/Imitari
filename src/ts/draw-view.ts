@@ -138,7 +138,7 @@ class DrawView {
     static jsCanvasCtx = DrawView.jsCanvas.getContext("2d");
 
     static pixelSize = 5;
-    static pixelGapSize = 1;
+    static pixelGapSize = 0;
 
     static zoom = 1;
     static offsetLeft = 0;
@@ -220,7 +220,6 @@ class DrawView {
 
             DrawView.pixelGapSize = Math.floor(DrawView.pixelSize*0.05);
             console.log(DrawView.pixelGapSize)
-            DrawView.pixelGapSize = 1;
         }
     }
 

@@ -2,7 +2,16 @@
 class DrawTool extends ShapeTool {
     constructor() {
         super(...arguments);
-        this.size = 5;
+        this.conf = {
+            "Size": {
+                value: 1,
+                type: "number",
+                step: 1,
+                min: 1,
+                max: 50,
+                icon: "mdi-format-letter-spacing-variant",
+            },
+        };
         this.numberOfBrushSides = 1000;
     }
     onMouse(event) {
@@ -14,7 +23,7 @@ class DrawTool extends ShapeTool {
             if (this.point1["x"] && this.point1["y"]) {
                 this.onBegin();
             }
-            this.drawStroke(this.size, this.numberOfBrushSides, this.point1, this.point1);
+            this.drawStroke(this.conf["Size"].value - 1, this.numberOfBrushSides, this.point1, this.point1);
             this.point2 = undefined;
         }
         else if (CustomMouseEvent.mouseLeftDown) {
@@ -22,7 +31,7 @@ class DrawTool extends ShapeTool {
                 x: Util.screenToCordX(CustomMouseEvent.mouseX),
                 y: Util.screenToCordY(CustomMouseEvent.mouseY)
             };
-            this.drawStroke(this.size, this.numberOfBrushSides, this.point1, this.point2);
+            this.drawStroke(this.conf["Size"].value - 1, this.numberOfBrushSides, this.point1, this.point2);
             this.point1 = this.point2;
         }
         else if (!CustomMouseEvent.mouseLeftDown && CustomMouseEvent.mouseLeftChanged) {
