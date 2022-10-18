@@ -5,6 +5,10 @@
 /*--------------------------------
 -----------TOOL-SETTINGS----------
 --------------------------------*/
+#side-section {
+    width: 240px;
+    min-width: 240px;
+}
 
 #side-section-color>input {
     margin-bottom: 5px;

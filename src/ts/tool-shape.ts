@@ -1,8 +1,31 @@
 class ShapeTool extends LineTool {
 
+    conf = {
+        "Corners" : {
+            value : 6, 
+            type : "number", 
+            step : 1, 
+            min : 1, 
+            max : 100, 
+            icon : "mdi-shape-polygon-plus", 
+        },
+
+        "Radius" : {
+            value : 8, 
+            type : "number", 
+            step : 1, 
+            min : 1, 
+            max : 100, 
+            icon : "mdi-radius-outline", 
+        },
+    }
+
+    /*
     numberOfSides: number | undefined;
-    center: coordinate | undefined;
     radius: number | undefined;
+    */
+    
+    center: coordinate | undefined;
 
     onMouse(event: CustomMouseEvent) {
         if (CustomMouseEvent.mouseLeftDown && CustomMouseEvent.mouseLeftChanged) {
@@ -17,24 +40,25 @@ class ShapeTool extends LineTool {
                 this.onBegin();
             }
 
+            let radius = this.conf["Radius"].value;
+            let numberOfSides = this.conf["Corners"].value;
+
             //Variabler
-            this.radius = 10; /* I bitmap pixlar */
-            this.numberOfSides = 6;
-            let angle = (2 * Math.PI) / this.numberOfSides;
+            let angle = (2 * Math.PI) / numberOfSides;
 
             //Sätter den första koordinaten
             this.firstPoint = {
-                x: this.center["x"] + Math.round(this.radius * Math.cos(angle)),
-                y: this.center["y"] + Math.round(this.radius * Math.sin(angle))
+                x: this.center["x"] + Math.round(radius * Math.cos(angle)),
+                y: this.center["y"] + Math.round(radius * Math.sin(angle))
             }
 
             //Loopar igenom och skriver ut linjer för så många sidor som specificerats
-            for (let i = 0; i <= this.numberOfSides; i++) {
+            for (let i = 0; i <= numberOfSides; i++) {
 
                 //Sätter den andra koordinaten
                 this.secondPoint = {
-                    x: this.center["x"] + Math.round(this.radius * Math.cos(angle * i)),
-                    y: this.center["y"] + Math.round(this.radius * Math.sin(angle * i))
+                    x: this.center["x"] + Math.round(radius * Math.cos(angle * i)),
+                    y: this.center["y"] + Math.round(radius * Math.sin(angle * i))
                 }
 
                 /*Skriver ut linjen mellan den första och andra koordinaten och
@@ -44,7 +68,7 @@ class ShapeTool extends LineTool {
             }
 
             //Ritar ut formen
-            this.drawShape(this.numberOfSides, this.radius, this.center);
+            this.drawShape(numberOfSides, radius, this.center);
             
             //Funktionen har utförts
             this.onEnd();
