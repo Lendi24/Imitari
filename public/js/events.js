@@ -67,8 +67,10 @@ function switchTool(val) {
             let toolSettingsHTML = document.getElementById("side-section-layer");
             toolSettingsHTML === null || toolSettingsHTML === void 0 ? void 0 : toolSettingsHTML.innerHTML = "";
             for (const property in DrawView.currentTool.conf) {
+                let containerHTML = document.createElement("div");
+                let labelHTML = document.createElement("div");
                 let propertyHTML = document.createElement("input");
-                propertyHTML.innerHTML = property;
+                labelHTML.innerHTML += property;
                 propertyHTML.value = DrawView.currentTool.conf[property].value;
                 try {
                     propertyHTML.type = DrawView.currentTool.conf[property].type;
@@ -90,6 +92,12 @@ function switchTool(val) {
                 }
                 finally { }
                 ;
+                try {
+                    labelHTML.classList.add("mdi");
+                    labelHTML.classList.add(DrawView.currentTool.conf[property].icon);
+                }
+                finally { }
+                ;
                 switch (propertyHTML.type) {
                     case "number":
                         propertyHTML.oninput = function () { DrawView.currentTool.conf[property].value = parseInt(propertyHTML.value); console.log(propertyHTML.value); };
@@ -100,7 +108,9 @@ function switchTool(val) {
                 }
                 console.log(`${property}`);
                 console.log(`${typeof (DrawView.currentTool.conf[property])}`);
-                toolSettingsHTML === null || toolSettingsHTML === void 0 ? void 0 : toolSettingsHTML.appendChild(propertyHTML);
+                containerHTML === null || containerHTML === void 0 ? void 0 : containerHTML.appendChild(labelHTML);
+                containerHTML === null || containerHTML === void 0 ? void 0 : containerHTML.appendChild(propertyHTML);
+                toolSettingsHTML === null || toolSettingsHTML === void 0 ? void 0 : toolSettingsHTML.appendChild(containerHTML);
             }
         }
     }

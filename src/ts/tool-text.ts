@@ -1,11 +1,13 @@
 class TextTool extends Tool {
     conf = {
-        space : {
+        "Kerning" : {
             value : 1, 
             type : "number", 
             step : 1, 
             min : 0, 
             max : 10, 
+            icon : "mdi-format-letter-spacing-variant", 
+
         },
     }
 
@@ -953,7 +955,7 @@ class TextTool extends Tool {
                         }
 
                         
-                        textCursorPosX += (letter.length + Math.round(this.conf.space.value));    
+                        textCursorPosX += (letter.length + Math.round(this.conf["Kerning"].value));    
                     } catch (error) {
                         console.log('[TextTool] Could not print "'+inputText[i]+'"');   
                     }

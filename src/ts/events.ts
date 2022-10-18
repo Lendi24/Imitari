@@ -94,14 +94,22 @@ function switchTool(val:string) {
             toolSettingsHTML?.innerHTML = "";
 
             for (const property in DrawView.currentTool.conf) {
+
+                let containerHTML = document.createElement("div");
+                let labelHTML = document.createElement("div");
                 let propertyHTML = document.createElement("input");
-                propertyHTML.innerHTML = property;
+
+                labelHTML.innerHTML += property;
                 propertyHTML.value = DrawView.currentTool.conf[property].value;
+
 
                 try { propertyHTML.type = DrawView.currentTool.conf[property].type  } finally {};
                 try { propertyHTML.min = DrawView.currentTool.conf[property].min    } finally {};
                 try { propertyHTML.max = DrawView.currentTool.conf[property].max    } finally {};
                 try { propertyHTML.step = DrawView.currentTool.conf[property].step  } finally {};
+
+                try {labelHTML.classList.add("mdi"); labelHTML.classList.add(DrawView.currentTool.conf[property].icon); } finally {};
+
 
                 switch (propertyHTML.type) {
                     case "number":
@@ -116,8 +124,10 @@ function switchTool(val:string) {
                 console.log(`${property}`);
                 console.log(`${typeof(DrawView.currentTool.conf[property])}`);
 
+                containerHTML?.appendChild(labelHTML);
+                containerHTML?.appendChild(propertyHTML);
 
-                toolSettingsHTML?.appendChild(propertyHTML);
+                toolSettingsHTML?.appendChild(containerHTML);
             } 
         } 
     } catch (error) {
