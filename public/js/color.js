@@ -49,6 +49,23 @@ class ColorPicker {
     static setColorPreview(r, g, b, a) {
         ColorPicker.rgbaPreview.style.backgroundColor = "rgba(" + r.toString() + "," + g.toString() + "," + b.toString() + "," + a.toString() + ")";
     }
+    static getRGBA() {
+        return {
+            r: ColorPicker.r,
+            g: ColorPicker.g,
+            b: ColorPicker.b,
+            a: ColorPicker.a,
+        };
+    }
+    static mixTwoRgba(color1, color2) {
+        let newColor = {
+            r: Math.round(color1["r"] + (color2["r"] - color1["r"]) * ColorPicker.a),
+            g: Math.round(color1["g"] + (color2["g"] - color1["g"]) * ColorPicker.a),
+            b: Math.round(color1["b"] + (color2["b"] - color1["b"]) * ColorPicker.a),
+            a: color1["a"] + color2["a"]
+        };
+        return newColor;
+    }
 }
 ColorPicker.r = 0;
 ColorPicker.g = 0;

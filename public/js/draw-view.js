@@ -43,15 +43,19 @@ class DrawViewLayer {
     }
     placePixel(x, y) {
         try {
-            if (ColorPicker.a == 0) {
-                this.drawing[x][y].setRGBA(ColorPicker.r, ColorPicker.g, ColorPicker.b, ColorPicker.a);
-            }
-            else if (ColorPicker.a < 1) {
-                let oldValues = JSON.parse(JSON.stringify(this.drawing[x][y].getRGBA()));
-                this.drawing[x][y].setRGBA(((ColorPicker.r + oldValues["r"]) / 2) * Util.clamp((ColorPicker.a + oldValues["a"]), 1, 0), ((ColorPicker.g + oldValues["g"]) / 2) * Util.clamp((ColorPicker.a + oldValues["a"]), 1, 0), ((ColorPicker.b + oldValues["b"]) / 2) * Util.clamp((ColorPicker.a + oldValues["a"]), 1, 0), oldValues["a"]);
-            }
-            else {
-                this.drawing[x][y].setRGBA(ColorPicker.r, ColorPicker.g, ColorPicker.b, ColorPicker.a);
+            if (!DrawView.affectedPixels.includes(this.drawing[x][y])) {
+                if (ColorPicker.a == 0) {
+                    this.drawing[x][y].setRGBA(ColorPicker.r, ColorPicker.g, ColorPicker.b, ColorPicker.a);
+                }
+                else if (ColorPicker.a < 1) {
+                    let oldColor = JSON.parse(JSON.stringify(this.drawing[x][y].getRGBA()));
+                    let mixedColor = ColorPicker.mixTwoRgba(oldColor, ColorPicker.getRGBA());
+                    this.drawing[x][y].setRGBA(mixedColor["r"], mixedColor["g"], mixedColor["b"], mixedColor["a"]);
+                }
+                else {
+                    this.drawing[x][y].setRGBA(ColorPicker.r, ColorPicker.g, ColorPicker.b, ColorPicker.a);
+                }
+                DrawView.affectedPixels.push(this.drawing[x][y]);
             }
         }
         catch (error) { }
@@ -69,7 +73,6 @@ class DrawViewLayer {
         let canvas = DrawView.jsCanvas;
         canvas.style.imageRendering = "pixelated";
         let ctx = canvas.getContext("2d");
-        ctx.imageSmoothingEnabled = false;
         ctx.imageSmoothingEnabled = false;
         ctx['imageSmoothingEnabled'] = false;
         ctx.clearRect(0, 0, this.drawing.length * DrawView.pixelSize, this.drawing[0].length * DrawView.pixelSize);
@@ -135,7 +138,6 @@ class DrawView {
             DrawView.jsCanvas.width = DrawView.pixelSize * DrawView.getLayer(0).drawing.length;
             DrawView.jsCanvas.height = DrawView.pixelSize * DrawView.getLayer(0).drawing[0].length;
             DrawView.pixelGapSize = Math.floor(DrawView.pixelSize * 0.05);
-            console.log(DrawView.pixelGapSize);
         }
     }
     static newLayer(x, y) {
@@ -148,7 +150,7 @@ class DrawView {
 DrawView.jsCanvas = document.getElementById("drawing-area");
 DrawView.jsCanvasCtx = DrawView.jsCanvas.getContext("2d");
 DrawView.pixelSize = 5;
-DrawView.pixelGapSize = 0;
+DrawView.pixelGapSize = 1;
 DrawView.zoom = 1;
 DrawView.offsetLeft = 0;
 DrawView.offsetTop = 0;
@@ -157,6 +159,7 @@ DrawView.secondaryColour = new Pixel(0, 0, 0, 255);
 DrawView.currentTool = new Tool();
 DrawView.currentToolHTML = document.createElement("div");
 DrawView.layers = new Array();
+DrawView.affectedPixels = new Array();
 DrawView.currHistoryIndex = 0;
 DrawView.history = new Array();
 DrawView.lockedHTML = document.getElementById("lock");

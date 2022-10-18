@@ -6,6 +6,7 @@ class Tool {
     onMouse(event) { }
     onBegin() { }
     onEnd() {
+        DrawView.affectedPixels = new Array();
         DrawView.history[++DrawView.currHistoryIndex] = JSON.parse(JSON.stringify(DrawView.getLayer(0).drawing));
         if (DrawView.currHistoryIndex + 1 < DrawView.history.length) {
             let historyLength = DrawView.history.length;

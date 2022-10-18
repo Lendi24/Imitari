@@ -16,6 +16,7 @@ class DrawTool extends ShapeTool {
     point2: coordinate | undefined;
     //size = 5;
     numberOfBrushSides = 1000;
+    angle = 45;
 
     onMouse(event: CustomMouseEvent) {
         if (CustomMouseEvent.mouseLeftDown && CustomMouseEvent.mouseLeftChanged) {
@@ -29,7 +30,7 @@ class DrawTool extends ShapeTool {
                 this.onBegin();
             }
 
-            this.drawStroke(this.conf["Size"].value-1, this.numberOfBrushSides, this.point1, this.point1);
+            this.drawStroke(this.conf["Size"].value-1, this.numberOfBrushSides, this.angle, this.point1, this.point1);
             this.point2 = undefined;
         }
         else if (CustomMouseEvent.mouseLeftDown) {
@@ -39,7 +40,7 @@ class DrawTool extends ShapeTool {
                 y: Util.screenToCordY(CustomMouseEvent.mouseY)
             }
 
-            this.drawStroke(this.conf["Size"].value-1, this.numberOfBrushSides, this.point1!, this.point2);
+            this.drawStroke(this.conf["Size"].value-1, this.numberOfBrushSides, this.angle, this.point1!, this.point2);
             this.point1 = this.point2;
 
         }
@@ -50,11 +51,11 @@ class DrawTool extends ShapeTool {
         }
     }
 
-    drawStroke(size: number, sides: number, cord1: coordinate, cord2: coordinate) {
+    drawStroke(size: number, sides: number, offset: number, cord1: coordinate, cord2: coordinate) {
         let lineCoords = this.setLine(cord1, cord2);
         lineCoords.forEach(cord => {
             for (let i = 0; i <= size; i++) {
-                this.drawShape(sides, i, cord);
+                this.drawShape(sides, i, offset, cord);
             }
         });
     }

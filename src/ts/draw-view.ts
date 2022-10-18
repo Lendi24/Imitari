@@ -44,20 +44,24 @@ class DrawViewLayer {
 
     placePixel(x : number, y : number) {
         try {
-            if (ColorPicker.a == 0) {
-                this.drawing[x][y].setRGBA(ColorPicker.r,ColorPicker.g,ColorPicker.b,ColorPicker.a);
-            }
-            else if (ColorPicker.a < 1) {
-                let oldValues = JSON.parse(JSON.stringify(this.drawing[x][y].getRGBA()));
-                this.drawing[x][y].setRGBA(
-                    ((ColorPicker.r + oldValues["r"]) / 2) * Util.clamp((ColorPicker.a + oldValues["a"]), 1, 0),
-                    ((ColorPicker.g + oldValues["g"]) / 2) * Util.clamp((ColorPicker.a + oldValues["a"]), 1, 0),
-                    ((ColorPicker.b + oldValues["b"]) / 2) * Util.clamp((ColorPicker.a + oldValues["a"]), 1, 0),
-                    oldValues["a"]
-                );
-            }
-            else{
-                this.drawing[x][y].setRGBA(ColorPicker.r,ColorPicker.g,ColorPicker.b,ColorPicker.a);
+            if (!DrawView.affectedPixels.includes(this.drawing[x][y])) {
+                if (ColorPicker.a == 0) {
+                    this.drawing[x][y].setRGBA(ColorPicker.r,ColorPicker.g,ColorPicker.b,ColorPicker.a);
+                }
+                else if (ColorPicker.a < 1) {
+                    let oldColor = JSON.parse(JSON.stringify(this.drawing[x][y].getRGBA()));
+                    let mixedColor = ColorPicker.mixTwoRgba(oldColor, ColorPicker.getRGBA());
+                    this.drawing[x][y].setRGBA(
+                        mixedColor["r"],
+                        mixedColor["g"],
+                        mixedColor["b"],
+                        mixedColor["a"]
+                    );
+                }
+                else{
+                    this.drawing[x][y].setRGBA(ColorPicker.r,ColorPicker.g,ColorPicker.b,ColorPicker.a);
+                }
+                DrawView.affectedPixels.push(this.drawing[x][y]);
             }
         } catch (error) {  }
     }
@@ -95,7 +99,6 @@ class DrawViewLayer {
         canvas.style.imageRendering = "pixelated";
 
         let ctx = canvas.getContext("2d")!;
-        ctx.imageSmoothingEnabled = false; 
         ctx.imageSmoothingEnabled = false;
         ctx['imageSmoothingEnabled'] = false;       /* standard */
 
@@ -138,7 +141,7 @@ class DrawView {
     static jsCanvasCtx = DrawView.jsCanvas.getContext("2d");
 
     static pixelSize = 5;
-    static pixelGapSize = 0;
+    static pixelGapSize = 1;
 
     static zoom = 1;
     static offsetLeft = 0;
@@ -151,6 +154,7 @@ class DrawView {
     static currentToolHTML = document.createElement("div");
 
     static layers : Array<DrawViewLayer> = new Array();
+    static affectedPixels = new Array();
 
     static currHistoryIndex = 0;
     static history: Array<Array<Array<Pixel>>> = new Array();
@@ -219,7 +223,6 @@ class DrawView {
             DrawView.jsCanvas.height = DrawView.pixelSize * DrawView.getLayer(0).drawing[0].length;
 
             DrawView.pixelGapSize = Math.floor(DrawView.pixelSize*0.05);
-            console.log(DrawView.pixelGapSize)
         }
     }
 
