@@ -45,13 +45,32 @@ class uiLoader {
 let topBar = {
     "File": [
         {
-            "New": function () { console.log("New"); },
+            "New": function () {
+                let width = window.prompt("Width", "100");
+                if (parseInt(width)) {
+                    let height = window.prompt("Height", "80");
+                    if (parseInt(height)) {
+                        DrawView.newDrawView(parseInt(width), parseInt(height));
+                    }
+                }
+            },
             "Open": function () { console.log("New"); },
             "Save": Object,
         },
         {
             "Import": Object,
-            "Export": Object,
+            "Export": function () {
+                let filename = window.prompt("Export as png:", "image");
+                DrawView.jsCanvas.toBlob((blob) => {
+                    let a = document.createElement("a"), url = URL.createObjectURL(blob);
+                    a.href = url;
+                    a.download = filename + ".png";
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    window.URL.revokeObjectURL(url);
+                });
+            },
         }
     ],
     "Edit": [
@@ -65,7 +84,10 @@ let topBar = {
     ],
     "About": [
         {
-            "Imitari": function () { new CustomWindow("re", "http://127.0.0.1:5500/public/html/windows/top-bar/about/Imitari.html"); },
+            "Imitari": function () {
+                let path = window.location.pathname;
+                new CustomWindow("About", path.substring(0, path.lastIndexOf('/')) + "/html/windows/top-bar/about/Imitari.html");
+            },
         },
     ],
 };

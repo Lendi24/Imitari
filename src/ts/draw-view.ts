@@ -39,7 +39,7 @@ class Pixel {
 }
 
 class DrawViewLayer {
-    private targetFPS: number;
+    targetFPS: number;
     drawing: Pixel[][];
 
     placePixel(x : number, y : number) {
@@ -91,7 +91,7 @@ class DrawViewLayer {
         }
 
         let obj = this;
-        setInterval(function () {obj.drawToCanvas()}, 1000/this.targetFPS); 
+        DrawView.interval = setInterval(function () {obj.drawToCanvas()}, 1000/this.targetFPS); 
     }
 
     drawToCanvas() {
@@ -162,6 +162,8 @@ class DrawView {
     static lockedHTML = document.getElementById("lock")!;
     static locked = false;
 
+    static interval = 0;
+
     static changePixelSize() {
         
     }
@@ -172,6 +174,14 @@ class DrawView {
         this.newLayer(x, y);
         this.onResize();
         DrawView.history.push(JSON.parse(JSON.stringify(DrawView.getLayer(0).drawing)));
+    }
+
+    static newDrawView(x: number, y: number){
+        clearInterval(DrawView.interval);
+        DrawView.layers = new Array();
+        DrawView.history = new Array();
+        DrawView.init(x, y);
+        //DrawView.interval = setInterval(function () {DrawView.getLayer(0).drawToCanvas()}, 1000/DrawView.getLayer(0).targetFPS);
     }
 
     static undo(){

@@ -65,14 +65,40 @@ class uiLoader {
 let topBar: {[key : string]: any} = {
     "File"      : [
         {
-            "New"           : function () { console.log("New"); },  //1
+            "New"           : function () {
+                let width = window.prompt("Width", "100");
+                if (parseInt(width!)) {
+                    let height = window.prompt("Height", "80");
+                    if (parseInt(height!)) {
+                        DrawView.newDrawView(parseInt(width!), parseInt(height!));
+                    }
+                }
+            },
             "Open"          : function () { console.log("New"); },  //3
             "Save"          : Object,                               //3
         },
 
         {
             "Import"        : Object,                               //4
-            "Export"        : Object,                               //2
+            "Export"        : function () {
+                
+                let filename = window.prompt("Export as png:", "image");
+                //Credit to "mrJoe" from stack overflow
+                DrawView.jsCanvas.toBlob((blob: any) => {
+
+                    //Create download link
+                    let a = document.createElement("a"),
+                    url = URL.createObjectURL(blob);
+                    a.href = url;
+                    a.download = filename + ".png";
+
+                    //Downloads image
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    window.URL.revokeObjectURL(url);
+                });
+            },
         }
     ],
     
@@ -118,7 +144,10 @@ let topBar: {[key : string]: any} = {
 
     "About"      : [
         {
-            "Imitari"       : function() {new CustomWindow("re", "http://127.0.0.1:5500/public/html/windows/top-bar/about/Imitari.html"); },
+            "Imitari"       : function() {
+                let path = window.location.pathname
+                new CustomWindow("About", path.substring(0, path.lastIndexOf('/')) + "/html/windows/top-bar/about/Imitari.html"); 
+            },
         },
 ],
 }

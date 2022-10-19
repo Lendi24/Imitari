@@ -39,7 +39,7 @@ class DrawViewLayer {
             }
         }
         let obj = this;
-        setInterval(function () { obj.drawToCanvas(); }, 1000 / this.targetFPS);
+        DrawView.interval = setInterval(function () { obj.drawToCanvas(); }, 1000 / this.targetFPS);
     }
     placePixel(x, y) {
         try {
@@ -108,6 +108,12 @@ class DrawView {
         this.onResize();
         DrawView.history.push(JSON.parse(JSON.stringify(DrawView.getLayer(0).drawing)));
     }
+    static newDrawView(x, y) {
+        clearInterval(DrawView.interval);
+        DrawView.layers = new Array();
+        DrawView.history = new Array();
+        DrawView.init(x, y);
+    }
     static undo() {
         if (DrawView.currHistoryIndex > 0) {
             let newDrawing = DrawView.history[--DrawView.currHistoryIndex];
@@ -164,4 +170,5 @@ DrawView.currHistoryIndex = 0;
 DrawView.history = new Array();
 DrawView.lockedHTML = document.getElementById("lock");
 DrawView.locked = false;
+DrawView.interval = 0;
 DrawView.init(100, 80);
