@@ -59,24 +59,9 @@ let topBar = {
             "Undo": function () { DrawView.undo(); },
             "Redo": function () { DrawView.redo(); },
         },
-    ],
-    "Layer": [
-        {
-            "Create layer": Object,
-            "Remove layer": Object,
-        },
         {
             "Clear": function () { DrawView.getLayer(0).clearCurrentLayer(); },
         }
-    ],
-    "Settings": [
-        {
-            "Theme": Object,
-            "Zoom": Object,
-            "Offset": Object,
-            "Grid": Object,
-            "Render": Object,
-        },
     ],
     "About": [
         {
