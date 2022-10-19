@@ -44,10 +44,10 @@ window.onwheel = function (e) {
     }
     else {
         if (e.deltaY != 0 && e.deltaX == 0) {
-            moveCanvasY(e.deltaY * 0.01);
+            moveCanvasY(e.deltaY);
         }
         else {
-            moveCanvasX(e.deltaX * 0.01);
+            moveCanvasX(e.deltaX);
         }
     }
 };
@@ -56,7 +56,7 @@ function moveCanvasY(deltaY) {
     DrawView.jsCanvas.parentElement.style.marginTop = -DrawView.offsetTop + "px";
 }
 function moveCanvasX(deltaX) {
-    DrawView.offsetLeft += deltaX;
+    DrawView.offsetLeft += deltaX * 2;
     if (DrawView.offsetLeft > 0) {
         DrawView.jsCanvas.parentElement.style.marginLeft = -DrawView.offsetLeft + "px";
         DrawView.jsCanvas.parentElement.style.marginRight = "";

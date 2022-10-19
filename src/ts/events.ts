@@ -56,9 +56,9 @@ window.onwheel = function(e:WheelEvent) {
     } else {
         
         if (e.deltaY != 0 && e.deltaX == 0) {
-            moveCanvasY(e.deltaY * 0.01);
+            moveCanvasY(e.deltaY);
         } else {
-            moveCanvasX(e.deltaX * 0.01)
+            moveCanvasX(e.deltaX)
         }    
     }
 
@@ -80,7 +80,7 @@ function moveCanvasY(deltaY : number) {
 
 function moveCanvasX(deltaX : number) {
     //DrawView.offsetLeft = Util.clamp(DrawView.offsetLeft + deltaX, 2.50 * window.innerWidth, -2.50 * window.innerWidth);
-    DrawView.offsetLeft += deltaX;
+    DrawView.offsetLeft += deltaX*2;
     if (DrawView.offsetLeft>0) {
         DrawView.jsCanvas.parentElement!.style.marginLeft = -DrawView.offsetLeft+"px";/*`${(DrawView.offsetTop)}px;`;*/
         DrawView.jsCanvas.parentElement!.style.marginRight = "";
