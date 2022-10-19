@@ -61,7 +61,6 @@ class uiLoader {
     }
 }
 
-
 let topBar: {[key : string]: any} = {
     "File"      : [
         {
@@ -74,8 +73,8 @@ let topBar: {[key : string]: any} = {
                     }
                 }
             },
-            "Open"          : function () { console.log("New"); },  //3
-            "Save"          : Object,                               //3
+            "Open"          : function () { DrawView.load(); },  
+            "Save"          : function () { DrawView.save(); },                              //3
         },
 
         {

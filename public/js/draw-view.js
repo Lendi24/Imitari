@@ -114,6 +114,24 @@ class DrawView {
         DrawView.history = new Array();
         DrawView.init(x, y);
     }
+    static loadDrawView(layers, history, historyIndex) {
+        let width = layers[0].drawing.length;
+        let height = layers[0].drawing[0].length;
+        this.newDrawView(width, height);
+        for (let i = 0; i < layers.length; i++) {
+            for (let x = 0; x < width; x++) {
+                for (let y = 0; y < height; y++) {
+                    DrawView.layers[i].drawing[x][y].r = layers[i].drawing[x][y].r;
+                    DrawView.layers[i].drawing[x][y].g = layers[i].drawing[x][y].g;
+                    DrawView.layers[i].drawing[x][y].b = layers[i].drawing[x][y].b;
+                    DrawView.layers[i].drawing[x][y].a = layers[i].drawing[x][y].a;
+                }
+            }
+        }
+        DrawView.history = history;
+        DrawView.currHistoryIndex = historyIndex;
+        console.log("layers[0]");
+    }
     static undo() {
         if (DrawView.currHistoryIndex > 0) {
             let newDrawing = DrawView.history[--DrawView.currHistoryIndex];
@@ -137,6 +155,39 @@ class DrawView {
                 }
             }
         }
+    }
+    static save() {
+        let saveData = {
+            layerData: DrawView.layers,
+            history: DrawView.history,
+            historyIndex: DrawView.currHistoryIndex,
+        };
+        let jsonSaveData = JSON.stringify(saveData);
+        let a = document.createElement('a');
+        a.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(jsonSaveData));
+        a.download = prompt("Please enter a valid name", "imi") + '.tari';
+        a.click();
+    }
+    static load() {
+        let a = document.createElement('input');
+        a.type = "file";
+        a.accept = ".tari";
+        a.click();
+        a.addEventListener("change", function (e) {
+            if (e.target.files[0].name.split('.').pop().toLowerCase() == "tari") {
+                let reader = new FileReader();
+                let file = e.target.files[0];
+                reader.onload = function (e) {
+                    let contents = e.target.result;
+                    let saveData = (JSON.parse(contents));
+                    DrawView.loadDrawView(saveData.layerData, saveData.history, saveData.historyIndex);
+                };
+                reader.readAsText(file);
+            }
+            else {
+                alert("🖕 Not a .tari file >:(");
+            }
+        }, false);
     }
     static onResize() {
         if (DrawView.jsCanvas.parentElement != null) {

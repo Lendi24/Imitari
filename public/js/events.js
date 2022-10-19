@@ -21,6 +21,7 @@ DrawView.jsCanvas.onmouseleave = function (e) { e.preventDefault; CustomMouseEve
 window.onmousemove = function (e) { updateUIPos(e); };
 window.onkeydown = function (e) {
     if (e.ctrlKey) {
+        e.preventDefault();
         commands(e.key);
     }
     else {
@@ -140,6 +141,12 @@ function commands(val) {
             break;
         case "y":
             DrawView.redo();
+            break;
+        case "s":
+            DrawView.save();
+            break;
+        case "o":
+            DrawView.load();
             break;
     }
 }
