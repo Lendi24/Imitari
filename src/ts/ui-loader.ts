@@ -11,6 +11,7 @@ class uiLoader {
     
         for (let tool in tools) {
             let newHTML = tools[tool].html = document.createElement("span");
+            newHTML.setAttribute("title", tools[tool].tooltip);
             
             newHTML.onclick = function () {switchTool(tool);}
             classes.forEach(classStr => {
@@ -153,12 +154,12 @@ let topBar: {[key : string]: any} = {
 }
 
 let tools: {[key: string]: any} = { 
-    "b" : {obj : new DrawTool(),  html : "", icon : "mdi-brush"},
-    "l" : {obj : new LineTool(),  html : "", icon : "mdi-pencil-ruler"},
-    "f" : {obj : new FillTool(),  html : "", icon : "mdi-format-color-fill"},
-    "c" : {obj : new CloneTool(), html : "", icon : "mdi-stamper"}, //Clone?
-    "t" : {obj : new TextTool(),  html : "", icon : "mdi-format-color-text"}, 
-    "s" : {obj : new ShapeTool(), html : "", icon : "mdi-shape"},
-    "m" : {obj : new MoveTool(),  html : "", icon : "mdi-cursor-move"},
-    "p" : {obj : new PipetteTool(), html: "", icon : "mdi-eyedropper"}
+    "b" : {obj : new DrawTool(),    html : "", icon : "mdi-brush",              tooltip : "Brush (B)"},
+    "l" : {obj : new LineTool(),    html : "", icon : "mdi-pencil-ruler",       tooltip : "Line (L)"},
+    "f" : {obj : new FillTool(),    html : "", icon : "mdi-format-color-fill",  tooltip : "Fill (F)"},
+    "c" : {obj : new CloneTool(),   html : "", icon : "mdi-stamper",            tooltip : "Clone (C)"},
+    "t" : {obj : new TextTool(),    html : "", icon : "mdi-format-color-text",  tooltip : "Text (T)"}, 
+    "s" : {obj : new ShapeTool(),   html : "", icon : "mdi-shape",              tooltip : "Shape (S)"},
+    "m" : {obj : new MoveTool(),    html : "", icon : "mdi-cursor-move",        tooltip : "Move (M)"},
+    "p" : {obj : new PipetteTool(), html : "", icon : "mdi-eyedropper",         tooltip : "Pipette (P)"}
 };
