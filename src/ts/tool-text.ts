@@ -10,7 +10,7 @@ class TextTool extends Tool {
         },
 
         "Leading" : {
-            value : 6, 
+            value : 2, 
             type : "number", 
             step : 1, 
             min : 0, 
@@ -23,6 +23,10 @@ class TextTool extends Tool {
         " " : [
             [ 
                 false,        
+                false, 
+                false, 
+                false, 
+                false, 
             ],
         ],
 
@@ -1083,7 +1087,7 @@ class TextTool extends Tool {
                                 if (letter[x][y]) {
                                     if (textCursorPosX + (letter.length) > DrawView.getLayer(0).drawing.length) {
                                         textCursorPosX = 0;
-                                        textCursorPosY += (Math.round(this.conf["Leading"].value));
+                                        textCursorPosY += (letter[0].length + Math.round(this.conf["Leading"].value));
                                     }
 
                                     DrawView.getLayer(0).placePixel(
