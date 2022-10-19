@@ -65,16 +65,14 @@ class uiLoader {
 let topBar: {[key : string]: any} = {
     "File"      : [
         {
-            "New"           : function () { console.log("New"); },
-            "Open"          : function () { console.log("New"); },
-            "Save"          : Object,
+            "New"           : function () { console.log("New"); },  //1
+            "Open"          : function () { console.log("New"); },  //3
+            "Save"          : Object,                               //3
         },
 
-        
-
         {
-            "Import"        : Object,
-            "Export"        : Object,    
+            "Import"        : Object,                               //4
+            "Export"        : Object,                               //2
         }
     ],
     
@@ -84,8 +82,13 @@ let topBar: {[key : string]: any} = {
             "Undo"           : function () { DrawView.undo(); },
             "Redo"           : function () { DrawView.redo(); },
         },
-    ],
 
+        {
+            "Clear"         : function () { DrawView.getLayer(0).clearCurrentLayer(); },
+        }
+
+    ],
+/*
     "Layer"      : [
         {
             "Create layer"  : Object,
@@ -95,14 +98,14 @@ let topBar: {[key : string]: any} = {
         {
             "Clear"         : function () { DrawView.getLayer(0).clearCurrentLayer(); },
         }
-],
+],*/
 /*
     "Tools"      : [
         {
             "Tool"          : Object,
         },
 ],*/
-
+/*
     "Settings"      : [
         {
             "Theme"         : Object,
@@ -111,7 +114,7 @@ let topBar: {[key : string]: any} = {
             "Grid"          : Object,
             "Render"        : Object,
         },
-],
+],*/
 
     "About"      : [
         {
