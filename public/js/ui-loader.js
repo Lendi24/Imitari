@@ -55,8 +55,8 @@ let topBar = {
                     }
                 }
             },
-            "Open": function () { console.log("New"); },
-            "Save": Object,
+            "Open": function () { DrawView.load(); },
+            "Save": function () { DrawView.save(); },
         },
         {
             "Import": Object,

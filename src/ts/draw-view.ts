@@ -184,6 +184,47 @@ class DrawView {
         //DrawView.interval = setInterval(function () {DrawView.getLayer(0).drawToCanvas()}, 1000/DrawView.getLayer(0).targetFPS);
     }
 
+    static loadDrawView(layers : Object, history : Array<Object>, historyIndex : number){
+        let width = layers[0].drawing.length
+        let height = layers[0].drawing[0].length;
+
+        this.newDrawView(width, height);
+
+        for (let i = 0; i < layers.length; i++) {
+            for (let x = 0; x < width; x++) {
+                for (let y = 0; y < height; y++) {
+                    DrawView.layers[i].drawing[x][y].r = layers[i].drawing[x][y].r;
+                    DrawView.layers[i].drawing[x][y].g = layers[i].drawing[x][y].g;
+                    DrawView.layers[i].drawing[x][y].b = layers[i].drawing[x][y].b;
+                    DrawView.layers[i].drawing[x][y].a = layers[i].drawing[x][y].a;
+                }         
+            }
+        }
+
+        DrawView.history = history;
+        DrawView.currHistoryIndex = historyIndex;
+
+        console.log("layers[0]");
+        
+        
+        /*
+        clearInterval(DrawView.interval);
+        DrawView.layers = layers;
+        DrawView.history = history;
+        console.log(layers[0])
+
+        //DrawView.init(layers[0].drawing[0].length, layers[0].drawing[0][0].length);
+        //DrawView.init(100, 80);
+        //DrawView.interval = setInterval(function () {DrawView.getLayer(0).drawToCanvas()}, 1000/DrawView.getLayer(0).targetFPS);
+        this.jsCanvas.style.imageRendering = "pixelated";
+        this.currentTool = new DrawTool();
+        this.onResize();
+        DrawView.history.push(JSON.parse(JSON.stringify(DrawView.getLayer(0).drawing)));*/
+
+
+    }
+
+
     static undo(){
 
         //Undo-ar bara om det finns saker att undo-a
@@ -224,6 +265,49 @@ class DrawView {
                 }
             }
         }
+    }
+
+    static save() {
+        let saveData = {
+            layerData       : DrawView.layers,
+            history         : DrawView.history,
+            historyIndex    : DrawView.currHistoryIndex,
+        }
+    
+        let jsonSaveData = JSON.stringify(saveData);
+    
+        let a = document.createElement('a');
+        //a.href = (`data:${encodeURIComponent(jsonSaveData)}`);//'data:' + jsonSaveData;
+        a.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(jsonSaveData));
+    
+        a.download = prompt("Please enter a valid name", "imi")+'.tari';
+        a.click();    
+    }
+
+    static load() {
+        let a = document.createElement('input');
+        a.type = "file";
+        a.accept = ".tari";
+        a.click();
+        a.addEventListener("change", function(e){
+
+            if (e.target.files[0].name.split('.').pop().toLowerCase() == "tari") {
+                let reader = new FileReader();
+
+                let file = e.target.files[0];
+    
+                reader.onload = function(e) {
+                    let contents = e.target.result;
+                    let saveData = (JSON.parse(contents));
+    
+                    DrawView.loadDrawView(saveData.layerData, saveData.history, saveData.historyIndex);
+                };
+                
+                reader.readAsText(file);    
+    
+            } else { alert("🖕 Not a .tari file >:("); }
+        }, false);
+
     }
 
     static onResize(){

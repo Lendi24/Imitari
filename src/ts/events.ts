@@ -29,6 +29,7 @@ window.onmousemove              = function(e:MouseEvent) {updateUIPos(e);}
 
 window.onkeydown     = function(e:KeyboardEvent) {
     if (e.ctrlKey) {
+        e.preventDefault();
         commands(e.key);
     } else {
         switchTool(e.key);
@@ -157,8 +158,17 @@ function commands(val: string){
         case "z":
             DrawView.undo();
             break;
+
         case "y":
             DrawView.redo();
+            break;
+
+        case "s":
+            DrawView.save();
+            break;
+
+        case "o":
+            DrawView.load();
             break;
     }
 }
