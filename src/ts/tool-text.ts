@@ -7,7 +7,15 @@ class TextTool extends Tool {
             min : 0, 
             max : 10, 
             icon : "mdi-format-letter-spacing-variant", 
+        },
 
+        "Leading" : {
+            value : 6, 
+            type : "number", 
+            step : 1, 
+            min : 0, 
+            max : 10, 
+            icon : "mdi-format-line-height", 
         },
     }
 
@@ -17,6 +25,133 @@ class TextTool extends Tool {
                 false,        
             ],
         ],
+
+        "!" : [
+            [
+                true,       
+                true, 
+                true, 
+                false, 
+                true, 
+            ],
+        ],
+
+        "." : [
+            [
+                false,       
+                false, 
+                false, 
+                false, 
+                true, 
+            ],
+        ],
+
+        "," : [
+            [
+                false,       
+                false, 
+                false, 
+                true, 
+                true, 
+            ],
+        ],
+
+        ":" : [
+            [
+                false,       
+                true, 
+                false, 
+                true, 
+                false, 
+            ],
+        ],
+
+        ";" : [
+            [
+                false,       
+                true, 
+                false, 
+                true, 
+                true, 
+            ],
+        ],
+
+        "'" : [
+            [
+                true,       
+                true, 
+                false, 
+                false, 
+                false, 
+            ],
+        ],
+
+        '"' : [
+            [
+                true,       
+                true, 
+                false, 
+                false, 
+                false, 
+            ],
+
+            [
+                false,       
+                false, 
+                false, 
+                false, 
+                false, 
+            ],
+
+            [
+                true,       
+                true, 
+                false, 
+                false, 
+                false, 
+            ],
+        ],
+
+
+        "?" : [
+            [
+                false,       
+                true, 
+                false, 
+                false, 
+                false, 
+            ],
+
+            [
+                true,       
+                false, 
+                false, 
+                false, 
+                false, 
+            ],
+
+            [
+                true,       
+                false, 
+                true, 
+                false, 
+                true, 
+            ],
+
+            [
+                false,       
+                true, 
+                false, 
+                false, 
+                false, 
+            ],
+
+
+
+
+        ],
+
+
 
         "A" : [
             [
@@ -946,6 +1081,11 @@ class TextTool extends Tool {
                         for (let x = 0; x < letter.length; x++) {
                             for (let y = 0; y < letter[x].length; y++) {
                                 if (letter[x][y]) {
+                                    if (textCursorPosX + (letter.length) > DrawView.getLayer(0).drawing.length) {
+                                        textCursorPosX = 0;
+                                        textCursorPosY += (Math.round(this.conf["Leading"].value));
+                                    }
+
                                     DrawView.getLayer(0).placePixel(
                                         textCursorPosX + x,
                                         textCursorPosY + y,
