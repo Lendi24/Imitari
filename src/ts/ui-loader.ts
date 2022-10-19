@@ -79,7 +79,7 @@ let topBar: {[key : string]: any} = {
         },
 
         {
-            "Import"        : Object,                               //4
+            //"Import"        : Object,                               //4
             "Export"        : function () {
                 
                 let filename = window.prompt("Export as png:", "image");

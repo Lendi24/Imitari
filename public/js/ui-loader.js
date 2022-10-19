@@ -59,7 +59,6 @@ let topBar = {
             "Save": function () { DrawView.save(); },
         },
         {
-            "Import": Object,
             "Export": function () {
                 let filename = window.prompt("Export as png:", "image");
                 DrawView.jsCanvas.toBlob((blob) => {
